@@ -413,6 +413,51 @@ def selptcs(patches, numsel=None, method=None, thresh=None, sort=None):
 
 
 def geocluptcs(patches, TH=None, Rstar=None):
+    r"""
+
+    Classifies patches into smooth blocks and rough blocks
+
+    Parameters
+    ----------
+    patches : array_like
+        Image patches, a pH-pW-pC-pN numpy ndarray.
+    TH : int, float or None, optional
+        Threshold for .
+    Rstar : int, float or None, optional
+        Specifies which method to used for evaluating each patch. Option:
+        'std'(standard deviation), 'var'(variance),
+
+    Returns
+    -------
+    selpat : ndarray
+        A pH-pW-pC-pNx numpy ndarray.
+    idxsel : ndarray
+        A pNx numpy array, indicates the position of selpat in patches.
+    selptcs_scores: ndarray
+        A pNx numpy array, indicates the scores of selpat in patches, with
+        measurements specfied by method.
+
+    See Also
+    --------
+    imgs2ptcs, imgs2blks, blks2imgs, showblks.
+
+    Examples
+    --------
+    >>> patches = np.uint8(np.random.randint(0, 255, (8, 8, 3, 101)))
+    >>> # just compute scores:
+    >>> selpat, _, scores = geocluptcs(patches, method='std')
+    >>> # compute scores and sort by scores:
+    >>> selpat, _, scores = selptcs(patches, method='std', sort='descent')
+    >>> # compute scores and sort by scores, and just select scores > thresh
+    >>> selpat, idxsel, _ = selptcs(patches, method='std', thresh=15)
+    >>> # compute scores and sort by scores, and select scores > thresh, and
+    >>> # sort in descending order.
+    >>> selpat, idxsel, _ = selptcs(patches, method='std', thresh=15,
+        sort='descent')
+    >>>
+
+
+    """
     if not (isinstance(patches, np.ndarray) and patches.ndim == 4):
         raise TypeError('"patches" should be a pH-pW-pC-pN numpy array!')
     pH, pW, pC, pN = patches.shape
