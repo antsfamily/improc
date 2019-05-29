@@ -6,7 +6,7 @@
 # @Version : $1.1$
 
 
-"""
+r"""
 Functions for pre-processing images.
 
 Functions used by improc functions:
@@ -25,7 +25,7 @@ import numpy as np
 
 
 def scalearr(X, scaleto=[0, 1], scalefrom=None, istrunc=True, rich=False):
-    """
+    r"""
     Scale data.
 
         $x \in [a, b] --> y \in [c, d]$
@@ -80,7 +80,7 @@ def scalearr(X, scaleto=[0, 1], scalefrom=None, istrunc=True, rich=False):
 
 
 def imgdtype(arr, tdtype=None, isscale=False):
-    """
+    r"""
     Converts an numpy array to an image data type.
 
     Parameters
@@ -135,9 +135,9 @@ def imgdtype(arr, tdtype=None, isscale=False):
 
 
 def normalization(X, mod, scalefrom=None, scaleto=None):
-    """[summary]
+    r"""normalization
 
-    [data normalization]
+    data normalization
 
     Arguments:
         X {data to be normalized} -- [data to be normalized]

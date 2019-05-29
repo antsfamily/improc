@@ -15,7 +15,7 @@ from scipy.misc import imread, imsave
 import matplotlib.pyplot as plt
 from ..utils.prep import scalearr, imgdtype
 
-"""
+r"""
 Functions to split some images into blocks.
 
 Functions can split different size images randomly or orderly(column-wise or
@@ -107,7 +107,7 @@ def sampleimg(img, ptcsize, numSamples, imgB=None):
 
 
 def imgs2ptcs(imgs, ptcsize, numptcs):
-    """
+    r"""
     Sample patches from imgs.
 
     Parameters
@@ -207,7 +207,7 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
 
 
 def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
-    """
+    r"""
     Sampling patches from imgsA imgsB.
 
     Parameters
@@ -315,7 +315,7 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
 
 
 def selptcs(patches, numsel=None, method=None, thresh=None, sort=None):
-    """
+    r"""
     Selects some patches based on std, var...
 
     Parameters
@@ -595,7 +595,7 @@ def pimgs2blks(pimgs, blksize):
 
 
 def imgs2blks(imgs, blksize=[8, 8, 3], padmode='symmetric'):
-    """
+    r"""
     blks, imgsShape = imgs2blks(imgs, blksize) trys to split the imgs(an H-W-C
     -N numpy ndarray, or list of images filepathes) into image blocks(an bH-bW-
     bC-bN ndarray) orderly; imgsShape contains each image's size in imgs for
@@ -703,7 +703,7 @@ def _rmsingledim(arr):
 
 
 def blks2imgs(blks, imgsShape, index=None, tofolder=None):
-    """
+    r"""
     Fight image blocks back to images.
 
     Parameters
@@ -786,7 +786,7 @@ def blks2imgs(blks, imgsShape, index=None, tofolder=None):
 
 def showblks(blks,
              rcsize=None, stride=None, plot=True, bgcolor='w', cmap=None, title=None, xlabel=None, ylabel=None):
-    """
+    r"""
     Trys to show image blocks in one image.
 
     Parameters
@@ -886,7 +886,7 @@ def showblks(blks,
 
 def showfilters(filters, fsize=None, rcsize=None, stride=None, plot=None,
                 bgcolor='w', title=None, isscale=True):
-    """
+    r"""
     Trys to show weight filters in one image.
 
     Parameters

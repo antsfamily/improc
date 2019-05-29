@@ -10,7 +10,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 
-"""
+r"""
 Functions to split some images into blocks.
 
 Functions can split different size images randomly or orderly(column-wise or
@@ -32,7 +32,7 @@ def mse(x, y):
 
 
 def psnr(ref, A, Vpeak=None, mode='simple'):
-    """
+    r"""
     Peak Signal to Noise Ratio.
         $10 \log10(\frac{V_{peak}^2}{MSE} )$
 

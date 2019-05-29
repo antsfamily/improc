@@ -7,3 +7,4 @@ improc
    improc
    setup
    tests
+   examples

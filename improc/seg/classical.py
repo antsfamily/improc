@@ -12,7 +12,7 @@ import numpy as np
 from scipy.misc import imread, imsave
 import matplotlib.pyplot as plt
 
-"""
+r"""
 Image Segmentation functions.
 
 Functions can split different size images randomly or orderly(column-wise or
