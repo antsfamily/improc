@@ -152,6 +152,8 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
         ptcsize = (8, 8, 1)
     if numptcs is None:
         numptcs = 100
+    ptcsize = list(ptcsize)
+
 # numpy ndarray H-W-C-N
     if isinstance(imgs, np.ndarray) and np.ndim(imgs) == 4:
         numimgs = np.size(imgs, 3)
@@ -184,7 +186,7 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
         cpos = 0
         for imgpath in imgs:
             flag, _, ndim, img = _imageinfo(imgpath)
-            print(img.shape)
+            print(img.shape, imgpath)
             if flag:
                 if ndim == ndim0:
                     ptcs[:, :, :, cpos:cpos + numSamples[i]] = sampleimg(
@@ -783,7 +785,7 @@ def blks2imgs(blks, imgsShape, index=None, tofolder=None):
 
 
 def showblks(blks,
-             rcsize=None, stride=None, plot=True, bgcolor='w', title=None):
+             rcsize=None, stride=None, plot=True, bgcolor='w', cmap=None, title=None, xlabel=None, ylabel=None):
     """
     Trys to show image blocks in one image.
 
@@ -819,8 +821,6 @@ def showblks(blks,
     >>> showblks(blks, bgcolor='k')
 
     """
-
-    cmap = 'Spectral'
 
     if plot is None:
         plot = True
@@ -869,7 +869,6 @@ def showblks(blks,
     A = A[0:aH - stride[0], 0:aW - stride[1], :]
     if aC == 1:
         A = A[:, :, 0]
-        cmap = 'gray'
 
     if title is None:
         title = 'Show ' + str(bN) + ' blocks in ' + str(rows) + \
@@ -878,6 +877,8 @@ def showblks(blks,
         plt.figure()
         plt.imshow(A, cmap=cmap)
         plt.title(title)
+        plt.xlabel(xlabel)
+        plt.ylabel(ylabel)
         plt.show()
 
     return A    # H-W-C
