@@ -11,7 +11,8 @@ import os
 import math
 import random
 import numpy as np
-from scipy.misc import imread, imsave
+# from scipy.misc import imread,
+from ..io.image import imreadadv, imsaveadv
 import matplotlib.pyplot as plt
 from ..utils.prep import scalearr, imgdtype
 
@@ -52,7 +53,7 @@ def _hw1n2hwn(arr):
 def _imageinfo(imgpath):
     flag = False
     if os.path.isfile(imgpath):
-        img = imread(imgpath)
+        img = imreadadv(imgpath)
         # print(img)
         imgdim = np.ndim(img)
         if np.ndim(img) == 2:
@@ -75,35 +76,46 @@ def _cmpNumSamples(numptcs, numImages):
     return numSamples
 
 
-def sampleimg(img, ptcsize, numSamples, imgB=None):
-    imgSize = img.shape
-#    print("====:", img.shape, imgB.shape)
+def sampleimg(imgA, ptcsize, numSamples, imgB=None, imgC=None):
+    imgSize = imgA.shape
+#    print("====:", imgA.shape, imgB.shape)
     if imgB is None:
-        patches1img = np.zeros(ptcsize + [numSamples], img.dtype)
+        patches1imgA = np.zeros(ptcsize + [numSamples], imgA.dtype)
 
         for s in range(numSamples):
             y = random.randint(0, imgSize[0] - ptcsize[0])
             x = random.randint(0, imgSize[1] - ptcsize[1])
             z = random.randint(0, imgSize[2] - ptcsize[2])
-            patches1img[:, :, :, s] = img[
+            patches1imgA[:, :, :, s] = imgA[
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
-        return patches1img
-    else:
-        patches1img = np.zeros(ptcsize + [numSamples], img.dtype)
-        patches1imgB = np.zeros(ptcsize + [numSamples], img.dtype)
-#	print("====:", patches1img.shape, patches1imgB.shape)
-#       print(img.shape, imgB.shape)
+        return patches1imgA
+    if imgC is None:
+        patches1imgA = np.zeros(ptcsize + [numSamples], imgA.dtype)
+        patches1imgB = np.zeros(ptcsize + [numSamples], imgB.dtype)
         for s in range(numSamples):
             y = random.randint(0, imgSize[0] - ptcsize[0])
             x = random.randint(0, imgSize[1] - ptcsize[1])
             z = random.randint(0, imgSize[2] - ptcsize[2])
-#            print("+++",x, y, z)
-#            print("-----",y, y + ptcsize[0], x, x + ptcsize[1], z, z + ptcsize[2])
-            patches1img[:, :, :, s] = img[
+            patches1imgA[:, :, :, s] = imgA[
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
             patches1imgB[:, :, :, s] = imgB[
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
-        return patches1img, patches1imgB
+        return patches1imgA, patches1imgB
+    else:
+        patches1imgA = np.zeros(ptcsize + [numSamples], imgA.dtype)
+        patches1imgB = np.zeros(ptcsize + [numSamples], imgB.dtype)
+        patches1imgC = np.zeros(ptcsize + [numSamples], imgC.dtype)
+        for s in range(numSamples):
+            y = random.randint(0, imgSize[0] - ptcsize[0])
+            x = random.randint(0, imgSize[1] - ptcsize[1])
+            z = random.randint(0, imgSize[2] - ptcsize[2])
+            patches1imgA[:, :, :, s] = imgA[
+                y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
+            patches1imgB[:, :, :, s] = imgB[
+                y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
+            patches1imgC[:, :, :, s] = imgC[
+                y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
+        return patches1imgA, patches1imgB, patches1imgC
 
 
 def imgs2ptcs(imgs, ptcsize, numptcs):
@@ -174,7 +186,7 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
         else:
             numSamples = _cmpNumSamples(numptcs, numimgs)
         # get image data type
-        flag, dtype, ndim0, _ = _imageinfo(imgs[0])
+        flag, dtype, ndimA, _ = _imageinfo(imgs[0])
         if flag:
             ptcs = np.zeros(ptcsize + [numptcs], dtype)
 
@@ -188,7 +200,7 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
             flag, _, ndim, img = _imageinfo(imgpath)
             print(img.shape, imgpath)
             if flag:
-                if ndim == ndim0:
+                if ndim == ndimA:
                     ptcs[:, :, :, cpos:cpos + numSamples[i]] = sampleimg(
                         img, ptcsize, numSamples[i])
                     cpos += numSamples[i]
@@ -196,7 +208,7 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
                 else:
                     raise TypeError(
                         'I have got images with different' +
-                        'ndim:', ndim0, ndim)
+                        'ndim:', ndimA, ndim)
             else:
                 raise TypeError('Not an image!')
         return ptcs
@@ -277,7 +289,7 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
         else:
             numSamples = _cmpNumSamples(numptcs, numimgs)
         # get image data type
-        flag, dtype, ndim0, _ = _imageinfo(imgsA[0])
+        flag, dtype, ndimA, _ = _imageinfo(imgsA[0])
         if flag:
             ptcsA = np.zeros(ptcsize + [numptcs], dtype)
             ptcsB = np.zeros(ptcsize + [numptcs], dtype)
@@ -295,7 +307,7 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
             flag, _, ndim, imgB = _imageinfo(imgpathB)
             flag, _, ndim, imgA = _imageinfo(imgpathA)
             if flag:
-                if ndim == ndim0:
+                if ndim == ndimA:
 
                     ptcA, ptcB = sampleimg(imgA, ptcsize, numSamples[n], imgB)
                     ptcsA[:, :, :, cpos:cpos + numSamples[n]] = ptcA
@@ -304,10 +316,131 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
                 else:
                     raise TypeError(
                         'I have got images with different' +
-                        'ndim:', ndim0, ndim)
+                        'ndim:', ndimA, ndim)
             else:
                 raise TypeError('Not an image!')
         return ptcsA, ptcsB
+        # return patches
+    else:
+        raise TypeError(
+            '"imgs" should be a path list or H-W-C-N numpy ndarray!')
+
+
+def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs):
+    r"""
+    Sampling patches from imgsA imgsB imgsC.
+
+    Parameters
+    ----------
+    imgsA/B/C : array_like, or list of image pathes.
+        Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
+        pathes with diffrent image shapes.
+    ptcsize : int tuple, list or None, optional
+        Specifies the each patch size (rows, cols, channel) that you want to
+        sampled. If not given, ptcsize=[8, 8, 1].
+    numptcs : int or None, optional
+        The number of patches that you want to sample, if None, numptcs=100.
+
+    Returns
+    -------
+    ptcsA : ndarray
+        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
+
+    ptcsB : ndarray
+        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
+    ptcsC : ndarray
+        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
+    See Also
+    --------
+    imgs2blks, blks2imgs, showblks.
+
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> from matplotlib import pyplot as plt
+    >>> from imgblk import imgs2ptcs, showblks
+    >>> ptcsize = [128, 128, 3]
+    >>> numptcs = 20
+    >>> imgspathesA = ['/mnt/d/DataSets/oi/nsi/classical/BaboonRGB.bmp']
+        imgspathesB = ['/mnt/d/DataSets/oi/nsi/classical/LenaRGB.bmp']
+    >>> ptcsA, ptcsB = imgsAB2ptcs(imgspathesA, imgspathesB, ptcsize , numptcs)
+    >>> print(ptcsA.dtype, ptcsA.shape)
+    >>> # show
+    >>> showblks(ptcsA, rcsize=(10,10))
+
+    See "test_imgs2ptcs.py", "test_imgs2blks.py", "test_blks2imgs.py",
+    "test_showblks.py" for more Examples.
+
+    """
+    if ptcsize is None:
+        ptcsize = (8, 8, 1)
+    if numptcs is None:
+        numptcs = 100
+    # numpy ndarray H-W-C-N
+    if isinstance(imgsA, np.ndarray) and np.ndim(imgsA) == 4:
+        numimgs = np.size(imgsA, 3)
+        numSamples = _cmpNumSamples(numptcs, numimgs)
+
+        ptcsA = np.zeros(ptcsize + [numptcs], imgsA.dtype)
+        ptcsB = np.zeros(ptcsize + [numptcs], imgsB.dtype)
+        ptcsC = np.zeros(ptcsize + [numptcs], imgsC.dtype)
+
+        for i in range(numimgs):
+            # print(i, numimgs)
+            # print(imgsA.shape, imgsB.shape, imgsC.shape)
+            ptcA, ptcB, ptcC = sampleimg(imgsA[:, :, :, i], ptcsize,
+                                         numSamples[i],
+                                         imgsB[:, :, :, i],
+                                         imgsC[:, :, :, i])
+            # print(ptcA.shape, ptcB.shape, ptcC.shape)
+            ptcsA[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcA
+            ptcsB[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcB
+            ptcsC[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcC
+
+        return ptcsA, ptcsB, ptcsC
+    # image path list
+    elif isinstance(imgsA, list):
+        numimgs = len(imgsA)
+        if numimgs == 0:
+            return
+        else:
+            numSamples = _cmpNumSamples(numptcs, numimgs)
+        # get image data type
+        flag, dtype, ndimA, _ = _imageinfo(imgsA[0])
+        if flag:
+            ptcsA = np.zeros(ptcsize + [numptcs], dtype)
+            ptcsB = np.zeros(ptcsize + [numptcs], dtype)
+
+        else:
+            raise TypeError(
+                'bad image pathes list type,'
+                'each element of the list should be string')
+
+        cpos = 0
+        for n in range(numimgs):
+            imgpathA = imgsA[n]
+            imgpathB = imgsB[n]
+            imgpathC = imgsC[n]
+            flag, _, ndimA, imgA = _imageinfo(imgpathA)
+            flag, _, ndimB, imgB = _imageinfo(imgpathB)
+            flag, _, ndimC, imgC = _imageinfo(imgpathC)
+            if flag:
+                if (ndimC == ndimA) and (ndimB == ndimA) and (ndimB == ndimC):
+
+                    ptcA, ptcB, ptcC = sampleimg(
+                        imgA, ptcsize, numSamples[n], imgB, imgC)
+                    ptcsA[:, :, :, cpos:cpos + numSamples[n]] = ptcA
+                    ptcsB[:, :, :, cpos:cpos + numSamples[n]] = ptcB
+                    ptcsC[:, :, :, cpos:cpos + numSamples[n]] = ptcC
+                    cpos += numSamples[n]
+                else:
+                    raise TypeError(
+                        'I have got images with different dim %f, %f, %f '
+                        % (ndimA, ndimB, ndimC))
+            else:
+                raise TypeError('Not an image!')
+        return ptcsA, ptcsB, ptcsC
         # return patches
     else:
         raise TypeError(
@@ -779,13 +912,12 @@ def blks2imgs(blks, imgsShape, index=None, tofolder=None):
         imgs.append(img)
 
         if tofolder is not None:
-            imsave(tofolder + '/image_' + str(n) + '.png', img)
+            imsaveadv(tofolder + '/image_' + str(n) + '.png', img)
 
     return imgs  # list contains N images numpy ndarray
 
 
-def showblks(blks,
-             rcsize=None, stride=None, plot=True, bgcolor='w', cmap=None, title=None, xlabel=None, ylabel=None):
+def showblks(blks, rcsize=None, stride=None, plot=True, bgcolor='w', cmap=None, title=None, xlabel=None, ylabel=None):
     r"""
     Trys to show image blocks in one image.
 
@@ -824,7 +956,7 @@ def showblks(blks,
 
     if plot is None:
         plot = True
-
+    print(blks.min(), blks.max(), "'''", blks.shape, np.mean(blks))
     if blks.size == 0:
         return blks
     if not (isinstance(blks, np.ndarray) and blks.ndim == 4):

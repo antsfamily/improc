@@ -6,7 +6,10 @@ from .version import __version__
 __all__ = ['__version__']
 
 from . import blkptcs
-from .blkptcs import imgs2ptcs, imgsAB2ptcs, imgs2blks, blks2imgs, showblks, showfilters, selptcs, geocluptcs
+from .blkptcs.patches import imgs2ptcs, imgsAB2ptcs, imgsABC2ptcs, selptcs, geocluptcs
+from .blkptcs.blocks import imgs2blks, blks2imgs
+from .blkptcs.visual import showblks, showfilters
+
 
 from . import encoding
 from .encoding.huffman import HeapNode, HuffmanCoding
@@ -19,3 +22,10 @@ from .seg.classical import imgs2bw
 
 from . import utils
 from .utils.prep import normalization, denormalization, scalearr, imgdtype
+
+from . import io
+from .io.tiff import tifread, tifsave
+from .io.image import imreadadv, imsaveadv
+
+
+
