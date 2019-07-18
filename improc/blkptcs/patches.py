@@ -12,7 +12,7 @@ import math
 import random
 import numpy as np
 # from scipy.misc import imread,
-from ..io.image import imreadadv, imsaveadv
+from ..io.image import imreadadv, imswriteadv
 import matplotlib.pyplot as plt
 from ..utils.prep import scalearr, imgdtype
 

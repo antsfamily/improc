@@ -8,18 +8,24 @@ import scipy.io as scio
 patchSize = [480, 480, 4]
 # patchSize = [240, 240, 4]
 # patchSize = [32, 32, 4]
-numPatches = 8
+numPatches = 2000
 numSelPtcs = 100
 sortway = 'ascent'
 sortway = 'descent'
 # sortway = None
 startid = 0
 
+datasetname = 'RSSRAI2019TRAIN'
+# datasetname = 'RSSRAI2019VAL'
+
 # --------------------------------------
 folderIN = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/train/train/'
 folderOUT = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/train/samples/'
-folderIN = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/val/'
-folderOUT = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/samples/'
+# folderIN = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/val/'
+# folderOUT = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/samples/'
+
+num = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 20]
+# num = [15]
 
 folderA = 'img_2017'
 folderB = 'img_2018'
@@ -39,8 +45,7 @@ os.makedirs(folderBout, exist_ok=True)
 os.makedirs(folderCout, exist_ok=True)
 
 
-num = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 20]
-num = [15]
+
 imageNameA = 'image_2017_960_960_'
 imageNameB = 'image_2018_960_960_'
 imageNameC = 'mask_2017_2018_960_960_'
@@ -123,8 +128,38 @@ for patchA, patchB, patchC in zip(patchesA, patchesB, patchesC):
     # print(outfileA)
     # print(outfileB)
     # print(outfileC)
-    imp.imsaveadv(outfileA, imgA)
-    imp.imsaveadv(outfileB, imgB)
-    imp.imsaveadv(outfileC, imgC)
+    imp.imswriteadv(outfileA, imgA)
+    imp.imswriteadv(outfileB, imgB)
+    imp.imswriteadv(outfileC, imgC)
+
+
+# ------------write to file
+
+npA, hpA, wpA, cpA = patchesA.shape
+npB, hpB, wpB, cpB = patchesB.shape
+npC, hpC, wpC, cpC = patchesC.shape
+
+print("npA, hpA, wpA, cpA: ", npA, hpA, wpA, cpA)
+print("npB, hpB, wpB, cpB: ", npB, hpB, wpB, cpB)
+print("npC, hpC, wpC, cpC: ", npC, hpC, wpC, cpC)
+
+data = {}
+data['T1'] = patchesA
+data['T2'] = patchesB
+data['GT'] = patchesC[:, :, :, 0]
+data['info'] = '(N, H, W, C) --> T1(%d, %d, %d, %d); T2(%d, %d, %d, %d); GT(%d, %d, %d)' % (
+    npA, hpA, wpA, cpA, npB, hpB, wpB, cpB, npC, hpC, wpC)
+
+FMT = '.pkl'
+filename = datasetname + str(numPatches) + 'SamplesWithPatchSize' + str(
+    patchSize[0]) + 'x' + str(patchSize[1]) + 'x' + str(patchSize[2]) + FMT
+outfile = os.path.join(folderOUT, filename)
+imp.save(data, outfile)
+data = imp.load(outfile)
+
+print(data['info'])
+print(data['T1'].shape)
+print(data['T2'].shape)
+print(data['GT'].shape)
 
 plt.show()

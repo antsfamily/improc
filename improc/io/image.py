@@ -26,7 +26,7 @@ def imreadadv(filepath, verbose=False):
     return A
 
 
-def imsaveadv(filepath, A):
+def imswriteadv(filepath, A):
     ext = os.path.splitext(filepath)[-1]
 
     if ext in ['.tif', '.tiff', '.TIF', '.TIFF']:

@@ -9,7 +9,7 @@
 from __future__ import absolute_import
 import os
 import numpy as np
-from ..io.image import imreadadv, imsaveadv
+from ..io.image import imreadadv, imswriteadv
 
 
 def _hw1n2hwn(arr):

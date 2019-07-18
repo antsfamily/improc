@@ -25,7 +25,6 @@ from .utils.prep import normalization, denormalization, scalearr, imgdtype
 
 from . import io
 from .io.tiff import tifread, tifsave
-from .io.image import imreadadv, imsaveadv
-
-
+from .io.image import imreadadv, imswriteadv
+from .io.data import load, save
 

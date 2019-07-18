@@ -12,7 +12,7 @@ import math
 import random
 import numpy as np
 # from scipy.misc import imread,
-from ..io.image import imreadadv, imsaveadv
+from ..io.image import imreadadv, imswriteadv
 import matplotlib.pyplot as plt
 from ..utils.prep import scalearr, imgdtype
 
@@ -912,7 +912,7 @@ def blks2imgs(blks, imgsShape, index=None, tofolder=None):
         imgs.append(img)
 
         if tofolder is not None:
-            imsaveadv(tofolder + '/image_' + str(n) + '.png', img)
+            imswriteadv(tofolder + '/image_' + str(n) + '.png', img)
 
     return imgs  # list contains N images numpy ndarray
 
