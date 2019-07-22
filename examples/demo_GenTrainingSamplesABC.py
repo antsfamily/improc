@@ -8,24 +8,27 @@ import scipy.io as scio
 patchSize = [480, 480, 4]
 # patchSize = [240, 240, 4]
 # patchSize = [32, 32, 4]
-numPatches = 2000
+numPatches = 200
 numSelPtcs = 100
 sortway = 'ascent'
 sortway = 'descent'
 # sortway = None
 startid = 0
+noise = 'wgn'
+# noise = None
+SNR = 30
 
-datasetname = 'RSSRAI2019TRAIN'
-# datasetname = 'RSSRAI2019VAL'
+# datasetname = 'RSSRAI2019TRAIN'
+datasetname = 'RSSRAI2019VAL'
 
 # --------------------------------------
 folderIN = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/train/train/'
 folderOUT = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/train/samples/'
-# folderIN = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/val/'
-# folderOUT = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/samples/'
+folderIN = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/val/'
+folderOUT = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/val/samples/'
 
 num = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 20]
-# num = [15]
+num = [15]
 
 folderA = 'img_2017'
 folderB = 'img_2018'
@@ -43,7 +46,6 @@ folderCout = os.path.join(folderOUT, folderC)
 os.makedirs(folderAout, exist_ok=True)
 os.makedirs(folderBout, exist_ok=True)
 os.makedirs(folderCout, exist_ok=True)
-
 
 
 imageNameA = 'image_2017_960_960_'
@@ -90,6 +92,11 @@ print(C.min(), C.max())
 
 patchesA, patchesB, patchesC = imp.imgsABC2ptcs(A, B, C, patchSize, numPatches)
 
+if noise is not None:
+    PEAK = imp.peakvalue(patchesA)
+    patchesA = imp.matnoise(patchesA, noise=noise, PEAK=PEAK)
+    PEAK = imp.peakvalue(patchesB)
+    patchesB = imp.matnoise(patchesB, noise=noise, PEAK=PEAK)
 
 print(patchesA.dtype, patchesA.shape)
 print(patchesB.dtype, patchesB.shape)
@@ -128,9 +135,9 @@ for patchA, patchB, patchC in zip(patchesA, patchesB, patchesC):
     # print(outfileA)
     # print(outfileB)
     # print(outfileC)
-    imp.imswriteadv(outfileA, imgA)
-    imp.imswriteadv(outfileB, imgB)
-    imp.imswriteadv(outfileC, imgC)
+    imp.imwriteadv(outfileA, imgA)
+    imp.imwriteadv(outfileB, imgB)
+    imp.imwriteadv(outfileC, imgC)
 
 
 # ------------write to file

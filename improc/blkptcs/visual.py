@@ -10,9 +10,11 @@ from __future__ import absolute_import
 import math
 import numpy as np
 # from scipy.misc import imread,
-from ..io.image import imreadadv, imswriteadv
+from ..io.image import imreadadv, imwriteadv
 import matplotlib.pyplot as plt
-from ..utils.prep import scalearr, imgdtype
+from ..utils.preprocessing import scalearr, imgdtype
+from ..utils.log import *
+
 
 r"""
 Functions to visualize blocks or patches.
@@ -34,24 +36,24 @@ def showblks(blks, rcsize=None, stride=None, plot=True, bgcolor='w', cmap=None, 
 
     Parameters
     ----------
-    blks : array_like
+    blks : {array_like}
         Blocks to be shown, a bH-bW-bC-bN numpy ndarray.
-    rcsize : int tuple or None, optional
+    rcsize : {int tuple or None, optional}
         Specifies how many rows and cols of blocks that you want to show,
         e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed
         automaticly.
-    stride : int tuple or None, optional
+    stride : {int tuple or None, optional}
         The step size (blank pixels nums) in row and col between two blocks.
         If not given, stride=(1,1).
-    plot : bool, optional
+    plot : {bool, optional}
         True for ploting, False for silent and returns a H-W-C numpy ndarray
         for showing.
-    bgcolor : char or None, optional
+    bgcolor : {char or None, optional}
         The background color, 'w' for white, 'k' for black. Default, 'w'.
 
     Returns
     -------
-    out : ndarray or bool
+    out : {ndarray or bool}
         A H-W-C numpy ndarray for showing.
 
     See Also
@@ -64,6 +66,8 @@ def showblks(blks, rcsize=None, stride=None, plot=True, bgcolor='w', cmap=None, 
     >>> showblks(blks, bgcolor='k')
 
     """
+
+    logging.info("---In showblks...")
 
     if plot is None:
         plot = True
@@ -123,6 +127,7 @@ def showblks(blks, rcsize=None, stride=None, plot=True, bgcolor='w', cmap=None, 
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.show()
+    logging.info("---Out showblks.")
 
     return A    # H-W-C
 
@@ -134,31 +139,31 @@ def showfilters(filters, fsize=None, rcsize=None, stride=None, plot=None,
 
     Parameters
     ----------
-    filters : array_like
+    filters : {array_like}
         Weights to be shown, a fdim-by-numf numpy ndarray.
-    fsize : int tuple list or None, optional
+    fsize : {int tuple list or None, optional}
         Specifies the height and width of one filter, e.g. (hf, wf, cf). If not
         given, fsize=(hf, wf, cf) will be computed automaticly, but may wrong.
-    rcsize : int tuple list or None, optional
+    rcsize : {int tuple list or None, optional}
         Specifies how many rows and cols of filters that you want to show,
         e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed
         automaticly.
-    stride : int tuple or None, optional
+    stride : {int tuple or None, optional}
         The step size (blank pixels nums) in row and col between two filters.
         If not given, stride=(1,1).
-    plot : bool or None, optional
+    plot : {bool or None, optional}
         True for ploting, False for silent and returns a H-W-C numpy ndarray
         for showing. If not given, plot = True.
-    bgcolor : char or None, optional
+    bgcolor : {char or None, optional}
         The background color, 'w' for white, 'k' for black. Default, 'w'.
-    title : str or None
+    title : {str or None}
         If plot, title is used to specify the title.
-    isscale : bool or None, optional
+    isscale : {bool or None, optional}
         If True, scale to [0, 255], else does nothing.
 
     Returns
     -------
-    out : ndarray or bool
+    out : {ndarray or bool}
         A H-W-C numpy ndarray for showing.
 
     See Also
@@ -171,6 +176,8 @@ def showfilters(filters, fsize=None, rcsize=None, stride=None, plot=None,
     >>> showfilters(filters, bgcolor='k')
 
     """
+
+    logging.info("---In showfilters...")
 
     if filters is None:
         raise ValueError('You should give me filters')
@@ -200,5 +207,8 @@ def showfilters(filters, fsize=None, rcsize=None, stride=None, plot=None,
         filters = scalearr(filters, (0, 255))
     filters = filters.reshape(
         (fsize[2], fsize[0], fsize[1], numfs)).transpose(1, 2, 0, 3)
+
+    logging.info("---Out showfilters.")
+
     return showblks(filters, rcsize=rcsize, stride=stride,
                     plot=plot, bgcolor=bgcolor, title=title)

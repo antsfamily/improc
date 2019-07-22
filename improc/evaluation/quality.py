@@ -9,6 +9,9 @@ import os
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+from ..common.typevalue import peakvalue
+from ..utils.log import *
+
 
 r"""
 Functions to split some images into blocks.
@@ -27,8 +30,30 @@ row-wise):
 """
 
 
-def mse(x, y):
-    return np.mean((x.astype(float) - y.astype(float)) ** 2)
+def mse(o, r):
+    r"""Mean Squared Error
+
+    The Mean Squared Error (MSE) is expressed as
+
+    .. math::
+        {\rm MSE} = \frac{1}{MN}\sum_{i=1}^{M}\sum_{j=0}^{N}[|{\bm I}(i,j)|, |\hat{\bm I}(i, j)|]^2
+
+    Arguments
+    ---------------
+    o : ndarray
+        Orignal signal matrix.
+
+    r : ndarray
+        Reconstructed signal matrix
+
+    Returns
+    ---------------
+    MSE : float
+        Mean Squared Error
+
+    """
+
+    return np.mean(np.square((np.abs(o).astype(float) - np.abs(r).astype(float))))
 
 
 def psnr(ref, A, Vpeak=None, mode='simple'):
@@ -42,19 +67,19 @@ def psnr(ref, A, Vpeak=None, mode='simple'):
 
     Parameters
     ----------
-    ref : array_like
+    ref : {array_like}
         Reference data array. For image, it's the original image.
-    A : array_like
+    A : {array_like}
         The data to be compared. For image, it's the reconstructed image.
-    Vpeak : float, int or None, optional
+    Vpeak : {float, int or None, optional}
         The peak value. If None, computes automaticly.
-    mode : str or None, optional
+    mode : {str or None, optional}
         'simple' or 'rich'. If Not given or False, just return psnr i.e.
         'simple', else return psnr, mse, Vpeak, imgtype, i.e. 'rich'.
 
     Returns
     -------
-    out : float
+    out : {float}
         Peak Signal to Noise Ratio value.
 
     """
@@ -64,16 +89,7 @@ def psnr(ref, A, Vpeak=None, mode='simple'):
               ")have different type! PSNR may not right!")
 
     if Vpeak is None:
-        if ref.dtype in ('float', 'float16', 'float32', 'float64'):
-            Vpeak = 1
-        elif ref.dtype in ('uint8', 'uint16', 'uint32', 'uint64'):
-            datatype = str(ref.dtype)
-            Vpeak = 2 ** int(datatype[4:]) - 1
-        elif ref.dtype in ('int64', 'int32', 'int16', 'int8'):
-            datatype = str(ref.dtype)
-            Vpeak = 2 ** int(datatype[3:]) / 2 - 1
-        else:
-            raise TypeError('Unrecognized type!')
+        peakvalue(ref, ref.dtype)
 
     MSE = mse(ref, A)
     PSNR = 10 * np.log10((Vpeak ** 2) / MSE)

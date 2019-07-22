@@ -16,7 +16,8 @@ Functions used by improc functions:
 
     scalearr
     imgdtype
-
+    normalization
+    denormalization
 
 """
 

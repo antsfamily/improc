@@ -9,6 +9,7 @@ Subpackages
     improc.blkptcs
     improc.encoding
     improc.evaluation
+    improc.io
     improc.seg
     improc.utils
 

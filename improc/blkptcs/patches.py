@@ -12,11 +12,12 @@ import math
 import random
 import numpy as np
 # from scipy.misc import imread,
-from ..io.image import imreadadv, imswriteadv
+from ..io.image import imreadadv, imwriteadv
 import matplotlib.pyplot as plt
-from ..utils.prep import scalearr, imgdtype
+from ..utils.preprocessing import scalearr, imgdtype
 
 from .utils import _hw1n2hwn, _imageinfo
+from ..utils.log import *
 
 
 r"""
@@ -46,9 +47,9 @@ def _cmpNumSamples(numptcs, numImages):
     return numSamples
 
 
-def sampleimg(imgA, ptcsize, numSamples, imgB=None, imgC=None):
+def sampleimg(imgA, ptcsize, numSamples, imgB=None, imgC=None, seed=None):
     imgSize = imgA.shape
-#    print("====:", imgA.shape, imgB.shape)
+    np.random.seed(seed)
     if imgB is None:
         patches1imgA = np.zeros(ptcsize + [numSamples], imgA.dtype)
 
@@ -85,27 +86,30 @@ def sampleimg(imgA, ptcsize, numSamples, imgB=None, imgC=None):
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
             patches1imgC[:, :, :, s] = imgC[
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
+
         return patches1imgA, patches1imgB, patches1imgC
 
 
-def imgs2ptcs(imgs, ptcsize, numptcs):
+def imgs2ptcs(imgs, ptcsize, numptcs, seed=None):
     r"""
     Sample patches from imgs.
 
     Parameters
     ----------
-    imgs : array_like, or list of image pathes.
+    imgs : {array_like, or list of image pathes}.
         Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
         pathes with diffrent image shapes.
-    ptcsize : int tuple, list or None, optional
+    ptcsize : {int tuple, list or None, optional}
         Specifies the each patch size (rows, cols, channel) that you want to
         sampled. If not given, ptcsize=[8, 8, 1].
-    numptcs : int or None, optional
+    numptcs : {int or None, optional}
         The number of patches that you want to sample, if None, numptcs=100.
+    seed : {int or None, optional}
+        Random seed, default None(differ each time.
 
     Returns
     -------
-    ptcs : ndarray
+    ptcs : {ndarray}
         A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
 
     See Also
@@ -136,23 +140,26 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
         numptcs = 100
     ptcsize = list(ptcsize)
 
-# numpy ndarray H-W-C-N
+    logging.info("---In imgs2ptcs...")
+    # numpy ndarray H-W-C-N
     if isinstance(imgs, np.ndarray) and np.ndim(imgs) == 4:
         numimgs = np.size(imgs, 3)
         numSamples = _cmpNumSamples(numptcs, numimgs)
 
         ptcs = np.zeros(ptcsize + [numptcs], imgs.dtype)
+        cpos = 0
         for i in range(numimgs):
+            ptcs[:, :, :, cpos:cpos + numSamples[i]] = sampleimg(
+                imgs[:, :, :, i], ptcsize, numSamples[i], seed=seed)
+            cpos += numSamples[i]
 
-            ptcs[:, :, :, i * numSamples[i]:
-                 (i + 1) * numSamples[i]] = sampleimg(
-                imgs[:, :, :, i], ptcsize, numSamples[i])
         return ptcs
     # image path list
     elif isinstance(imgs, list):
         numimgs = len(imgs)
         if numimgs == 0:
-            return
+            logging.info("---Out imgs2ptcs...")
+            return None
         else:
             numSamples = _cmpNumSamples(numptcs, numimgs)
         # get image data type
@@ -172,7 +179,7 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
             if flag:
                 if ndim == ndimA:
                     ptcs[:, :, :, cpos:cpos + numSamples[i]] = sampleimg(
-                        img, ptcsize, numSamples[i])
+                        img, ptcsize, numSamples[i], seed=seed)
                     cpos += numSamples[i]
                     i = i + 1
                 else:
@@ -181,34 +188,38 @@ def imgs2ptcs(imgs, ptcsize, numptcs):
                         'ndim:', ndimA, ndim)
             else:
                 raise TypeError('Not an image!')
+        logging.info("---Out imgs2ptcs...")
+
         return ptcs
-        # return patches
     else:
         raise TypeError(
             '"imgs" should be a path list or H-W-C-N numpy ndarray!')
+    logging.info("---Out imgs2ptcs...")
 
 
-def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
+def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs, seed=None):
     r"""
     Sampling patches from imgsA imgsB.
 
     Parameters
     ----------
-    imgsA/B : array_like, or list of image pathes.
+    imgsA/B : {array_like, or list of image pathes.}
         Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
         pathes with diffrent image shapes.
-    ptcsize : int tuple, list or None, optional
+    ptcsize : {int tuple, list or None, optional}
         Specifies the each patch size (rows, cols, channel) that you want to
         sampled. If not given, ptcsize=[8, 8, 1].
-    numptcs : int or None, optional
+    numptcs : {int or None, optional}
         The number of patches that you want to sample, if None, numptcs=100.
+    seed : {int or None, optional}
+        Random seed, default None(differ each time.
 
     Returns
     -------
-    ptcsA : ndarray
+    ptcsA : {ndarray}
         A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
 
-    ptcsB : ndarray
+    ptcsB : {ndarray}
         A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
     See Also
     --------
@@ -233,29 +244,38 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
     "test_showblks.py" for more Examples.
 
     """
+
+    logging.info("---In imgsAB2ptcs...")
+
     if ptcsize is None:
         ptcsize = (8, 8, 1)
     if numptcs is None:
         numptcs = 100
-# numpy ndarray H-W-C-N
+
+    # numpy ndarray H-W-C-N
     if isinstance(imgsA, np.ndarray) and np.ndim(imgsA) == 4:
         numimgs = np.size(imgsA, 3)
         numSamples = _cmpNumSamples(numptcs, numimgs)
 
         ptcsA = np.zeros(ptcsize + [numptcs], imgsA.dtype)
         ptcsB = np.zeros(ptcsize + [numptcs], imgsB.dtype)
+        cpos = 0
         for i in range(numimgs):
             ptcA, ptcB = sampleimg(imgsA[:, :, :, i], ptcsize, numSamples[
-                                   i], imgsB[:, :, :, i])
-            ptcsA[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcA
-            ptcsB[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcB
-
+                                   i], imgsB[:, :, :, i], seed=seed)
+            ptcsA[:, :, :, cpos:cpos + numSamples[i]] = ptcA
+            ptcsB[:, :, :, cpos:cpos + numSamples[i]] = ptcB
+            cpos += numSamples[i]
+        logging.info("---Out imgsAB2ptcs...")
         return ptcsA, ptcsB
+
     # image path list
     elif isinstance(imgsA, list):
         numimgs = len(imgsA)
         if numimgs == 0:
-            return
+            logging.info("~~~No Images!")
+            logging.info("---Out imgsAB2ptcs...")
+            return None
         else:
             numSamples = _cmpNumSamples(numptcs, numimgs)
         # get image data type
@@ -279,7 +299,8 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
             if flag:
                 if ndim == ndimA:
 
-                    ptcA, ptcB = sampleimg(imgA, ptcsize, numSamples[n], imgB)
+                    ptcA, ptcB = sampleimg(imgA, ptcsize, numSamples[
+                                           n], imgB, seed=seed)
                     ptcsA[:, :, :, cpos:cpos + numSamples[n]] = ptcA
                     ptcsB[:, :, :, cpos:cpos + numSamples[n]] = ptcB
                     cpos += numSamples[n]
@@ -289,6 +310,8 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
                         'ndim:', ndimA, ndim)
             else:
                 raise TypeError('Not an image!')
+        logging.info("---Out imgsAB2ptcs...")
+
         return ptcsA, ptcsB
         # return patches
     else:
@@ -296,29 +319,31 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs):
             '"imgs" should be a path list or H-W-C-N numpy ndarray!')
 
 
-def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs):
+def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs, seed=None):
     r"""
     Sampling patches from imgsA imgsB imgsC.
 
     Parameters
     ----------
-    imgsA/B/C : array_like, or list of image pathes.
+    imgsA/B/C : {array_like, or list of image pathes}.
         Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
         pathes with diffrent image shapes.
-    ptcsize : int tuple, list or None, optional
+    ptcsize : {int tuple, list or None, optional}
         Specifies the each patch size (rows, cols, channel) that you want to
         sampled. If not given, ptcsize=[8, 8, 1].
-    numptcs : int or None, optional
+    numptcs : {int or None, optional}
         The number of patches that you want to sample, if None, numptcs=100.
+    seed : {int or None, optional}
+        Random seed, default None(differ each time.
 
     Returns
     -------
-    ptcsA : ndarray
+    ptcsA : {ndarray}
         A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
 
-    ptcsB : ndarray
+    ptcsB : {ndarray}
         A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
-    ptcsC : ndarray
+    ptcsC : {ndarray}
         A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.
     See Also
     --------
@@ -343,6 +368,9 @@ def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs):
     "test_showblks.py" for more Examples.
 
     """
+
+    logging.info("---IN imgsABC2ptcs...")
+
     if ptcsize is None:
         ptcsize = (8, 8, 1)
     if numptcs is None:
@@ -356,24 +384,31 @@ def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs):
         ptcsB = np.zeros(ptcsize + [numptcs], imgsB.dtype)
         ptcsC = np.zeros(ptcsize + [numptcs], imgsC.dtype)
 
+        cpos = 0
         for i in range(numimgs):
             # print(i, numimgs)
             # print(imgsA.shape, imgsB.shape, imgsC.shape)
-            ptcA, ptcB, ptcC = sampleimg(imgsA[:, :, :, i], ptcsize,
-                                         numSamples[i],
+            ptcA, ptcB, ptcC = sampleimg(imgsA[:, :, :, i],
+                                         ptcsize, numSamples[i],
                                          imgsB[:, :, :, i],
-                                         imgsC[:, :, :, i])
+                                         imgsC[:, :, :, i], seed=seed)
             # print(ptcA.shape, ptcB.shape, ptcC.shape)
-            ptcsA[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcA
-            ptcsB[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcB
-            ptcsC[:, :, :, i * numSamples[i]:(i + 1) * numSamples[i]] = ptcC
+            # print(i, numSamples[i], ptcA.shape, ptcB.shape, ptcC.shape)
+            ptcsA[:, :, :, cpos:cpos + numSamples[i]] = ptcA
+            ptcsB[:, :, :, cpos:cpos + numSamples[i]] = ptcB
+            ptcsC[:, :, :, cpos:cpos + numSamples[i]] = ptcC
+            cpos += numSamples[i]
 
+        logging.info("---Out imgsABC2ptcs...")
         return ptcsA, ptcsB, ptcsC
     # image path list
     elif isinstance(imgsA, list):
         numimgs = len(imgsA)
         if numimgs == 0:
-            return
+            logging.info("~~~No images!")
+            logging.info("---Out imgsABC2ptcs...")
+
+            return None
         else:
             numSamples = _cmpNumSamples(numptcs, numimgs)
         # get image data type
@@ -399,7 +434,7 @@ def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs):
                 if (ndimC == ndimA) and (ndimB == ndimA) and (ndimB == ndimC):
 
                     ptcA, ptcB, ptcC = sampleimg(
-                        imgA, ptcsize, numSamples[n], imgB, imgC)
+                        imgA, ptcsize, numSamples[n], imgB, imgC, seed=seed)
                     ptcsA[:, :, :, cpos:cpos + numSamples[n]] = ptcA
                     ptcsB[:, :, :, cpos:cpos + numSamples[n]] = ptcB
                     ptcsC[:, :, :, cpos:cpos + numSamples[n]] = ptcC
@@ -410,6 +445,9 @@ def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs):
                         % (ndimA, ndimB, ndimC))
             else:
                 raise TypeError('Not an image!')
+
+        logging.info("---Out imgsAB2ptcs...")
+
         return ptcsA, ptcsB, ptcsC
         # return patches
     else:
@@ -423,31 +461,31 @@ def selptcs(patches, numsel=None, method=None, thresh=None, sort=None):
 
     Parameters
     ----------
-    patches : array_like
+    patches : {array_like}
         Image patches, a pH-pW-pC-pN numpy ndarray.
-    numsel : int, float or None, optional
+    numsel : {int, float or None, optional}
         How many patches you want to select. If integer, then returns numsel
         patches; If float in [0,1], then numsel*100 percent of the patches
         will be returned. If not given, does not affect.
-    method : str or None, optional
+    method : {str or None, optional}
         Specifies which method to used for evaluating each patch. Option:
         'std'(standard deviation), 'var'(variance),
         the first numsel patch scores will be returned.
         If not given, does nothing.
-    thresh : float, optional
+    thresh : {float, optional}
         When method are specified, using thresh as the threshold, and those
         patches whose scores are larger(>=) then thresh will be returned.
-    sort : str or None, optional
+    sort : {str or None, optional}
         Sorts the patches according to pathes scores in sort way('descent',
         'ascent'). If not given, does not affect, i.e. origional order.
 
     Returns
     -------
-    selpat : ndarray
+    selpat : {ndarray}
         A pH-pW-pC-pNx numpy ndarray.
-    idxsel : ndarray
+    idxsel : {ndarray}
         A pNx numpy array, indicates the position of selpat in patches.
-    selptcs_scores: ndarray
+    selptcs_scores: {ndarray}
         A pNx numpy array, indicates the scores of selpat in patches, with
         measurements specfied by method.
 
@@ -473,6 +511,8 @@ def selptcs(patches, numsel=None, method=None, thresh=None, sort=None):
 
     """
 
+    logging.info("---In selptcs...")
+
     if isinstance(patches, np.ndarray):
         pH, pW, pC, pN = patches.shape
     else:
@@ -486,6 +526,7 @@ def selptcs(patches, numsel=None, method=None, thresh=None, sort=None):
     idxsel = np.array(range(0, pN))
     # check method
     if method is None:
+        logging.info("---Out selptcs.")
         return patches, idxsel[0:min(numsel, pN)], None
     elif method == 'var':
         selptcs_scores = np.reshape(patches, (pH * pW * pC, pN))  # pH*pW*pC-pN
@@ -514,6 +555,8 @@ def selptcs(patches, numsel=None, method=None, thresh=None, sort=None):
         raise ValueError('"sort" should be ascent, descent or None!')
     idxsel = idxsel[0:min(numsel, pN)]
 
+    logging.info("---Out selptcs.")
+
     return patches[:, :, :, idxsel], idxsel, selptcs_scores
 
 
@@ -524,21 +567,21 @@ def geocluptcs(patches, TH=None, Rstar=None):
 
     Parameters
     ----------
-    patches : array_like
+    patches : {array_like}
         Image patches, a pH-pW-pC-pN numpy ndarray.
-    TH : int, float or None, optional
+    TH : {int, float or None, optional}
         Threshold for .
-    Rstar : int, float or None, optional
+    Rstar : {int, float or None, optional}
         Specifies which method to used for evaluating each patch. Option:
         'std'(standard deviation), 'var'(variance),
 
     Returns
     -------
-    selpat : ndarray
+    selpat : {ndarray}
         A pH-pW-pC-pNx numpy ndarray.
-    idxsel : ndarray
+    idxsel : {ndarray}
         A pNx numpy array, indicates the position of selpat in patches.
-    selptcs_scores: ndarray
+    selptcs_scores: {ndarray}
         A pNx numpy array, indicates the scores of selpat in patches, with
         measurements specfied by method.
 
@@ -563,6 +606,9 @@ def geocluptcs(patches, TH=None, Rstar=None):
 
 
     """
+
+    logging.info("---In geocluptcs...")
+
     if not (isinstance(patches, np.ndarray) and patches.ndim == 4):
         raise TypeError('"patches" should be a pH-pW-pC-pN numpy array!')
     pH, pW, pC, pN = patches.shape
@@ -638,6 +684,8 @@ def geocluptcs(patches, TH=None, Rstar=None):
         smoothptcs = np.array([])
     if len(stochasticptcs_idx) == 0:
         stochasticptcs = np.array([])
+
+    logging.info("---Out geocluptcs.")
 
     return smoothptcs, dominantptcs, stochasticptcs,\
         smoothptcs_idx, dominantptcs_idx, stochasticptcs_idx

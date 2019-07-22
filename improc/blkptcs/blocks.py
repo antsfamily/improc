@@ -12,9 +12,11 @@ import math
 import random
 import numpy as np
 # from scipy.misc import imread,
-from ..io.image import imreadadv, imswriteadv
+from ..io.image import imreadadv, imwriteadv
 import matplotlib.pyplot as plt
-from ..utils.prep import scalearr, imgdtype
+from ..utils.preprocessing import scalearr, imgdtype
+from ..utils.log import *
+
 
 r"""
 Functions to split some images into blocks.
@@ -35,7 +37,6 @@ row-wise):
 
 def _padhwc(imgsize, blksize):
     # computes pad h w c
-    print(imgsize, blksize, "+++++++")
     hpad = np.mod(imgsize[0], blksize[0])
     wpad = np.mod(imgsize[1], blksize[1])
     cpad = np.mod(imgsize[2], blksize[2])
@@ -100,13 +101,13 @@ def imgs2blks(imgs, blksize=[8, 8, 3], padmode='symmetric'):
 
     Parameters
     ----------
-    imgs : array_like, or list of image pathes.
+    imgs : {array_like, or list of image pathes}.
         Images to be splited, a H-W-C-N numpy ndarray, or a list of image
         pathes with diffrent image shapes.
-    blksize : int tuple, list or None, optional
+    blksize : {int tuple, list or None, optional}
         Specifies the each block size (rows, cols, channel) that you want to
         split. If not given, blksize=[8, 8, 3].
-    padmode : str or None, optional
+    padmode : {str or None, optional}
         Padding mode when an image can't be split fully. 'symmetric' or 'edge'
         can be choosen, see np.pad for more option. The Channel will also be
         pad if it is not enough, e.g., for an H-W-1(gray) image, if you want
@@ -114,9 +115,9 @@ def imgs2blks(imgs, blksize=[8, 8, 3], padmode='symmetric'):
 
     Returns
     -------
-    blks : ndarray
+    blks : {ndarray}
         A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == blksize.
-    imgsshape : tuple
+    imgsshape : {tuple}
         A tuple contains the shape of each image in imgs. Even if all images
         have the same size, imgsshape will still contain each image size like
         ((H, W, C), (H, W, C)).
@@ -130,6 +131,8 @@ def imgs2blks(imgs, blksize=[8, 8, 3], padmode='symmetric'):
     >>> blks, imgsInfo = imgs2blks(imgspathes, [8, 8, 1], 'symmetric')
 
 """
+    logging.info("---In imgs2blks...")
+
     # numpy ndarray H-W-C-N
     if isinstance(imgs, np.ndarray) and np.ndim(imgs) == 4:
         imgsShape = imgs.shape
@@ -141,6 +144,8 @@ def imgs2blks(imgs, blksize=[8, 8, 3], padmode='symmetric'):
         # splits padded images into blocks bH-bW-bC-bN,
         #   where bN = bN1+bN2+...+bNn
         # bN1: blks of image_1, bNn blks of image_n
+        logging.info("---Out imgs2blks...")
+
         return pimgs2blks(pimgs, blksize), imgsShape
     # image path list
     elif isinstance(imgs, list):
@@ -173,6 +178,7 @@ def imgs2blks(imgs, blksize=[8, 8, 3], padmode='symmetric'):
                     (blks, pimgs2blks(pimgs, blksize)), axis=3)
                 numimgs = numimgs + 1
         if numimgs != 0:
+            logging.info("---Out imgs2blks...")
             return blks[:, :, :, 1:], imgsShape  # blks[:,:,:,0] all zeros
         else:
             raise TypeError('No avaliable image!')
@@ -180,6 +186,7 @@ def imgs2blks(imgs, blksize=[8, 8, 3], padmode='symmetric'):
     else:
         raise TypeError(
             '"imgs" should be a path list or H-W-C-N numpy ndarray!')
+    logging.info("---Out imgs2blks.")
 
 
 def _get_pimgshape(imgShape, blkSize):
@@ -202,21 +209,21 @@ def blks2imgs(blks, imgsShape, index=None, tofolder=None):
 
     Parameters
     ----------
-    blks : array_like
+    blks : {array_like}
         A bH-bW-bC-bN numpy ndarray, where, bH, bW, bC, bN specify height,
         width, channels, number of images respectivelly. If blks Contains
         Gray Images and RGB Images, then bC = 3, and Gray Images is copied.
-    imgsShape : tuple or list
+    imgsShape : {tuple or list}
         Specify each image's size.
-    index : int, optional
+    index : {int, optional}
         The image that you want to fight back.
-    tofolder : str (path), optional
+    tofolder : {str (path), optional}
         Save specified images into files: image_0.png, image_i.png, ... ,
         image_N.png
 
     Returns
     -------
-    out : ndarray or bool
+    out : {ndarray or bool}
         A list of image numpy ndarray(H-W-C).
 
     See Also
@@ -224,6 +231,9 @@ def blks2imgs(blks, imgsShape, index=None, tofolder=None):
     imgs2ptcs, imgs2blks.
 
     """
+
+    logging.info("---In blks2imgs...")
+
     if np.ndim(blks) != 4:
         raise TypeError(
             "blks must be a bH-bW-bC-bN 4-dimentional numpy ndarray!")
@@ -273,6 +283,8 @@ def blks2imgs(blks, imgsShape, index=None, tofolder=None):
         imgs.append(img)
 
         if tofolder is not None:
-            imswriteadv(tofolder + '/image_' + str(n) + '.png', img)
+            imwriteadv(tofolder + '/image_' + str(n) + '.png', img)
+
+    logging.info("---Out blks2imgs.")
 
     return imgs  # list contains N images numpy ndarray
