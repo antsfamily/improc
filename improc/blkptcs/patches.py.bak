@@ -19,8 +19,6 @@ from ..utils.preprocessing import scalearr, imgdtype
 from .utils import _hw1n2hwn, _imageinfo
 from ..utils.log import *
 
-from ..common.randomfunc import randperm2d
-
 
 r"""
 Functions to sample some images into patches.
@@ -52,26 +50,23 @@ def _cmpNumSamples(numptcs, numImages):
 def sampleimg(imgA, ptcsize, numSamples, imgB=None, imgC=None, seed=None):
     imgSize = imgA.shape
     np.random.seed(seed)
-
-    P = np.reshape(np.array(range(0, imgSize[0] * imgSize[1])), imgSize[0:2])[0:imgSize[0] - ptcsize[0], 0:imgSize[1] - ptcsize[1]]
-    ys, xs = randperm2d(imgSize[0], imgSize[1], numSamples, P)
-    if imgSize[2] == ptcsize[2]:
-        zs = [0] * numSamples
-    else:
-        zs = random.randint(0, imgSize[2] - ptcsize[2], numSamples)
-
     if imgB is None:
         patches1imgA = np.zeros(ptcsize + [numSamples], imgA.dtype)
 
-        for s, y, x, z in zip(range(numSamples), ys, xs, zs):
+        for s in range(numSamples):
+            y = random.randint(0, imgSize[0] - ptcsize[0])
+            x = random.randint(0, imgSize[1] - ptcsize[1])
+            z = random.randint(0, imgSize[2] - ptcsize[2])
             patches1imgA[:, :, :, s] = imgA[
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
         return patches1imgA
     if imgC is None:
         patches1imgA = np.zeros(ptcsize + [numSamples], imgA.dtype)
         patches1imgB = np.zeros(ptcsize + [numSamples], imgB.dtype)
-
-        for s, y, x, z in zip(range(numSamples), ys, xs, zs):
+        for s in range(numSamples):
+            y = random.randint(0, imgSize[0] - ptcsize[0])
+            x = random.randint(0, imgSize[1] - ptcsize[1])
+            z = random.randint(0, imgSize[2] - ptcsize[2])
             patches1imgA[:, :, :, s] = imgA[
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
             patches1imgB[:, :, :, s] = imgB[
@@ -81,8 +76,10 @@ def sampleimg(imgA, ptcsize, numSamples, imgB=None, imgC=None, seed=None):
         patches1imgA = np.zeros(ptcsize + [numSamples], imgA.dtype)
         patches1imgB = np.zeros(ptcsize + [numSamples], imgB.dtype)
         patches1imgC = np.zeros(ptcsize + [numSamples], imgC.dtype)
-
-        for s, y, x, z in zip(range(numSamples), ys, xs, zs):
+        for s in range(numSamples):
+            y = random.randint(0, imgSize[0] - ptcsize[0])
+            x = random.randint(0, imgSize[1] - ptcsize[1])
+            z = random.randint(0, imgSize[2] - ptcsize[2])
             patches1imgA[:, :, :, s] = imgA[
                 y:y + ptcsize[0], x:x + ptcsize[1], z:z + ptcsize[2]]
             patches1imgB[:, :, :, s] = imgB[
@@ -95,7 +92,7 @@ def sampleimg(imgA, ptcsize, numSamples, imgB=None, imgC=None, seed=None):
 
 def imgs2ptcs(imgs, ptcsize, numptcs, seed=None):
     r"""
-    Sample diffrent patches from imgs.
+    Sample patches from imgs.
 
     Parameters
     ----------
@@ -202,7 +199,7 @@ def imgs2ptcs(imgs, ptcsize, numptcs, seed=None):
 
 def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs, seed=None):
     r"""
-    Sampling diffrent patches from imgsA imgsB.
+    Sampling patches from imgsA imgsB.
 
     Parameters
     ----------
@@ -265,7 +262,7 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs, seed=None):
         cpos = 0
         for i in range(numimgs):
             ptcA, ptcB = sampleimg(imgsA[:, :, :, i], ptcsize, numSamples[
-                i], imgsB[:, :, :, i], seed=seed)
+                                   i], imgsB[:, :, :, i], seed=seed)
             ptcsA[:, :, :, cpos:cpos + numSamples[i]] = ptcA
             ptcsB[:, :, :, cpos:cpos + numSamples[i]] = ptcB
             cpos += numSamples[i]
@@ -303,7 +300,7 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs, seed=None):
                 if ndim == ndimA:
 
                     ptcA, ptcB = sampleimg(imgA, ptcsize, numSamples[
-                        n], imgB, seed=seed)
+                                           n], imgB, seed=seed)
                     ptcsA[:, :, :, cpos:cpos + numSamples[n]] = ptcA
                     ptcsB[:, :, :, cpos:cpos + numSamples[n]] = ptcB
                     cpos += numSamples[n]
@@ -324,7 +321,7 @@ def imgsAB2ptcs(imgsA, imgsB, ptcsize, numptcs, seed=None):
 
 def imgsABC2ptcs(imgsA, imgsB, imgsC, ptcsize, numptcs, seed=None):
     r"""
-    Sampling diffrent patches from imgsA imgsB imgsC.
+    Sampling patches from imgsA imgsB imgsC.
 
     Parameters
     ----------

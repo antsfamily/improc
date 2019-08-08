@@ -5,46 +5,78 @@
 # @Link    : http://iridescent.ink
 # @Version : $1.0$
 
-from libtiff import TIFF, TIFFfile
+import libtiff
 import tifffile
 
 
+def tifwrite(filepath, A, Info=None):
+    r"""save array to tif file
+
+    save image array to tif file
+
+    Parameters
+    ----------
+    filepath : {str}
+        file path for saving data
+    A : {numpy array}
+        data (:math:`H×W×C`) to be saved
+    Info : {information}, optional
+        image information (the default is None)
+
+    Returns
+    -------
+    number
+        if 0, successed
+    """
+    if np.ndim(A) > 2:
+        H, W, C = A.shape
+    else:
+        H, W = A.shape
+    Info['ResolutionUnit'] = 'Inch'
+
+    with tifffile.TiffWriter(filepath) as tif:
+        tif.save(A, compress=0, photometric='minisblack')
+
+    # self, data=None, shape=None, dtype=None, returnoffset=False,
+    #              photometric=None, planarconfig=None, extrasamples=None, tile=None,
+    #              contiguous=True, align=16, truncate=False, compress=0,
+    #              rowsperstrip=None, predictor=False, subsampling=None,
+    #              colormap=None, description=None, datetime=None, resolution=None,
+    #              subfiletype=0, software='tifffile.py', metadata={},
+    #              ijmetadata=None, extratags=()
+    return 0
+
+
 def tifsave(filepath, A, Info=None):
+    r"""save array to tif file
 
-    # tif = TIFF.open(filepath, mode='w')
-    # A = np.transpose(A, (2, 0, 1))
+    save image array to tif file
 
-    # C, H, W = A.shape
+    Parameters
+    ----------
+    filepath : {str}
+        file path for saving data
+    A : {numpy array}
+        data (:math:`H×W×C`) to be saved
+    Info : {information}, optional
+        image information (the default is None)
 
-    # A = A.copy(order='K')
+    Returns
+    -------
+    number
+        if 0, successed
+    """
 
-    # tif.SetField('ImageDescription', Info['ImageDescription'])
-    # tif.SetField('ImageWidth', Info['ImageWidth'])
-    # tif.SetField('ImageLength', Info['ImageLength'])
-    # tif.SetField('SamplesPerPixel', Info['SamplesPerPixel'])
-    # tif.SetField('BitsPerSample', Info['BitsPerSample'])
-    # tif.SetField('SampleFormat', Info['SampleFormat'])
-    # tif.SetField('Compression', Info['Compression'])
-    # tif.SetField('RowsPerStrip', Info['RowsPerStrip'])
-    # tif.SetField('StripByteCounts', Info['StripByteCounts'].value)
-    # tif.SetField('XResolution', Info['XResolution'])
-    # tif.SetField('XResolution', 1)
-    # tif.SetField('YResolution', Info['YResolution'])
-    # tif.SetField('YResolution', 1)
-    # tif.SetField('Orientation', 1)
-    # tif.SetField('Orientation', Info['Orientation'])
-
-    # if Info is not None:
-    #     for k, v in Info.items():
-    #         print(k, v)
-    #         if k is 'StripByteCounts':
-    #             tif.SetField(k, v.value)
-    #         else:
-    #             if v is not None:
-    #                 tif.SetField(k, v)
-
-    # tif.write_image(A, compression='jpeg', write_rgb=False)
-    # tif.close()
+    with tifffile.TiffWriter(filepath) as tif:
+        # print(tif.sampleformat)
+        tif.save(A,
+                 photometric=TIFF.PHOTOMETRIC.MINISBLACK,
+                 planarconfig=TIFF.PLANARCONFIG.CONTIG,
+                 compress=0,
+                 resolution=(None, None, TIFF.RESUNIT.INCH),
+                 rowsperstrip=8,
+                 # orientation=TIFF.ORIENTATION.TOPLEFT,
+                 contiguous=False)
 
     tifffile.imsave(filepath, A)
 
@@ -52,7 +84,7 @@ def tifsave(filepath, A, Info=None):
 
 
 def tifinfo(filepath):
-    """Get tif file information
+    r"""Get tif file information
 
     Get tif file information
 
@@ -80,51 +112,60 @@ def tifinfo(filepath):
         Information dict
     """
 
-    tif = TIFF.open(filepath, mode='r')
+    # tif = TIFF.open(filepath, mode='r')
 
     Info = dict()
 
-    Info['ImageDescription'] = tif.GetField('ImageDescription')
-    Info['ImageWidth'] = tif.GetField('ImageWidth')
-    Info['ImageLength'] = tif.GetField('ImageLength')
-    Info['SamplesPerPixel'] = tif.GetField('SamplesPerPixel')
-    Info['BitsPerSample'] = tif.GetField('BitsPerSample')
-    Info['SampleFormat'] = tif.GetField('SampleFormat')
-    Info['Compression'] = tif.GetField('Compression')
-    Info['RowsPerStrip'] = tif.GetField('RowsPerStrip')
-    Info['StripByteCounts'] = tif.GetField('StripByteCounts')
-    Info['XResolution'] = tif.GetField('XResolution')
-    Info['YResolution'] = tif.GetField('YResolution')
-    Info['Orientation'] = tif.GetField('Orientation')
-    # Info['PhotometricInterpretation'] = tif.GetField('PhotometricInterpretation')
-    # Info['PlanarConfiguration'] = tif.GetField('PlanarConfiguration')
+    # Info['ImageDescription'] = tif.GetField('ImageDescription')
+    # Info['ImageWidth'] = tif.GetField('ImageWidth')
+    # Info['ImageLength'] = tif.GetField('ImageLength')
+    # Info['SamplesPerPixel'] = tif.GetField('SamplesPerPixel')
+    # Info['BitsPerSample'] = tif.GetField('BitsPerSample')
+    # Info['SampleFormat'] = tif.GetField('SampleFormat')
+    # Info['Compression'] = tif.GetField('Compression')
+    # Info['RowsPerStrip'] = tif.GetField('RowsPerStrip')
+    # Info['StripByteCounts'] = tif.GetField('StripByteCounts')
+    # Info['XResolution'] = tif.GetField('XResolution')
+    # Info['YResolution'] = tif.GetField('YResolution')
+    # Info['Orientation'] = tif.GetField('Orientation')
+    # # Info['PhotometricInterpretation'] = tif.GetField('PhotometricInterpretation')
+    # # Info['PlanarConfiguration'] = tif.GetField('PlanarConfiguration')
 
-    tif.close()
+    # tif.close()
 
-    print("ImageDescription: ", Info['ImageDescription'])
-    print("ImageWidth: ", Info['ImageWidth'])
-    print("ImageLength: ", Info['ImageLength'])
-    print("SamplesPerPixel: ", Info['SamplesPerPixel'])
-    print("BitsPerSample: ", Info['BitsPerSample'])
-    print("SampleFormat: ", Info['SampleFormat'])
-    print("Compression: ", Info['Compression'])
-    print("RowsPerStrip: ", Info['RowsPerStrip'])
-    print("StripByteCounts: ", Info['StripByteCounts'])
-    print("XResolution: ", Info['XResolution'])
-    print("YResolution: ", Info['YResolution'])
-    print("Orientation: ", Info['Orientation'])
-    # print("PhotometricInterpretation: ", Info['PhotometricInterpretation'])
-    # print("PlanarConfiguration: ", Info['PlanarConfiguration'])
+
+    with tifffile.TiffFile(filepath) as tif:
+        # image_stack = tif.asarray()
+        for page in tif.pages:
+            for tag in page.tags.values():
+                tag_name, tag_value = tag.name, tag.value
+                Info[tag_name] = tag_value
 
     return Info
 
 
 def tifread(filepath, verbose=False):
+    r"""read data from tif file
+
+    read data from tif file
+
+    Parameters
+    ----------
+    filepath : {string}
+        tif file path
+    verbose : {bool}, optional
+        show more image information (the default is False)
+
+    Returns
+    -------
+    numpy array
+        data array :math:`H×W×C`
+    """
 
     if verbose:
         Info = tifinfo(filepath)
 
-    tif = TIFF.open(filepath, mode='r')
+    tif = libtiff.TIFF.open(filepath, mode='r')
     A = tif.read_image()
     tif.close()
 
@@ -140,33 +181,36 @@ if __name__ == '__main__':
 
     import numpy as np
     import matplotlib.pyplot as plt
-    import tifffile
 
-    # inimgfile = '/mnt/d/DataSets/hsi/RemoteSensing/HSI/image1.tif'
-    # outimgfile = '/mnt/d/DataSets/hsi/RemoteSensing/HSI/image1out.tif'
+    inimgfile = '/mnt/d/DataSets/hsi/RemoteSensing/HSI/image1.tif'
+    outimgfile = '/mnt/d/DataSets/hsi/RemoteSensing/HSI/image1out.tif'
 
-    inimgfile = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/train/train/img_2018/image_2018_960_960_1.tif'
-    outimgfile = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/train/train/img_2018/image_2018_960_960_1OO.tif'
+    # inimgfile = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/new/train/train/img_2018/image_2018_960_960_1.tif'
+    # outimgfile = '/mnt/d/DataSets/oi/rsi/RSSRAI2019/new/train/train/img_2018/image_2018_960_960_1a.tif'
+
 
     # Iin = tifffile.imread(inimgfile)
     # tifffile.imsave(outimgfile, Iin)
     # Iout = tifffile.imread(outimgfile)
 
     Iin, Info = tifread(inimgfile, verbose=True)
+    # Iin = tifread(inimgfile, verbose=False)
+    # Iin = np.transpose(Iin, (2, 0, 1))
 
     print("Iin.shape: ", Iin.shape)
     print("min(Iin), min(Iin): ", np.min(Iin), np.max(Iin))
 
-    tifwrite(Iin, outimgfile, Info=Info)
+    tifwrite(outimgfile, Iin, Info=Info)
     Iout, Info = tifread(outimgfile, verbose=True)
+    # Iout = tifread(outimgfile, verbose=False)
 
     print("Iout.shape: ", Iout.shape)
     print("min(Iout), min(Iout): ", np.min(Iout), np.max(Iout))
 
     plt.figure()
     plt.subplot(121)
-    plt.imshow(Iin[:, :, 1])
+    plt.imshow(Iin[:, :])
     plt.subplot(122)
-    plt.imshow(Iout[:, :, 1])
+    plt.imshow(Iout[:, :])
     plt.tight_layout()
     plt.show()

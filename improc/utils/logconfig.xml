@@ -2,7 +2,7 @@
 
 <config>
     <!--  日志保存路径  -->
-    <logpath>/mnt/f/ws/github/iprs3.0/iprs3.0/iprs/utils/logs/</logpath>
+    <logpath>/mnt/f/ws/github/improc/improc/improc/utils/logs/</logpath>
 
     <!-- 每个脚本对应的日志文件大小，单位MB -->
     <logsize>8</logsize>

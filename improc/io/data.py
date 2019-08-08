@@ -35,6 +35,7 @@ def save(data, file):
         scio.savemat(file, {'data': data})
     return 0
 
+
 def load(file):
     """load data from file
 

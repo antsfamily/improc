@@ -72,7 +72,7 @@ def imwriteadv(filepath, A):
     if ext in ['.tif', '.tiff', '.TIF', '.TIFF']:
         tifsave(filepath, A)
     else:
-        A = scipyimsave(filepath)
+        A = scipyimsave(filepath, A)
     # logging.info("---Out imwriteadv.")
 
     return 0

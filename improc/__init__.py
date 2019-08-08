@@ -22,6 +22,7 @@ from .seg.classical import imgs2bw
 
 from . import utils
 from .utils.preprocessing import normalization, denormalization, scalearr, imgdtype
+from .utils.transform import normalize
 
 from . import io
 from .io.tiff import tifread, tifsave
@@ -33,3 +34,5 @@ from .dsp.noise import wgn, awgn, imnoise, matnoise
 
 from . import common
 from .common.typevalue import peakvalue
+from .common.randomfunc import randperm, randperm2d
+
