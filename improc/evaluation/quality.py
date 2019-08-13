@@ -57,29 +57,34 @@ def mse(o, r):
 
 
 def psnr(ref, A, Vpeak=None, mode='simple'):
-    r"""
-    Peak Signal to Noise Ratio.
-        $10 \log10(\frac{V_{peak}^2}{MSE} )$
+    r"""Peak Signal-to-Noise Ratio
 
-        For float data, V_{peak} = 1;
-        FOr interges, V_{peak} = maxN, e.g. uint8: 255, uint16: 65535 ...
+    The Peak Signal-to-Noise Ratio (PSNR) is expressed as
+
+    .. math::
+        {\rm PSNR} = 10 \log10(\frac{V_{peak}^2}{\rm MSE})
+
+    For float data, :math:`V_{peak} = 1`;
+
+    For interges, :math:`V_{peak} = 2^{nbits}`,
+    e.g. uint8: 255, uint16: 65535 ...
 
 
     Parameters
-    ----------
-    ref : {array_like}
+    -----------
+    o : array_like
         Reference data array. For image, it's the original image.
-    A : {array_like}
+    r : array_like
         The data to be compared. For image, it's the reconstructed image.
-    Vpeak : {float, int or None, optional}
+    Vpeak : float, int or None, optional
         The peak value. If None, computes automaticly.
-    mode : {str or None, optional}
-        'simple' or 'rich'. If Not given or False, just return psnr i.e.
-        'simple', else return psnr, mse, Vpeak, imgtype, i.e. 'rich'.
+    mode : str or None, optional
+         'simple' or 'rich'. 'simple' (default) --> just return psnr i.e.
+         'rich' --> return psnr, mse, Vpeak, imgtype.
 
     Returns
     -------
-    out : {float}
+    PSNR : float
         Peak Signal to Noise Ratio value.
 
     """

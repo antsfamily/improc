@@ -7,10 +7,13 @@ Subpackages
 .. toctree::
 
     improc.blkptcs
+    improc.common
+    improc.dsp
     improc.encoding
     improc.evaluation
     improc.io
     improc.seg
+    improc.transform
     improc.utils
 
 Submodules

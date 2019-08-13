@@ -20,13 +20,13 @@ from .evaluation.quality import mse, psnr, showorirec, normalization
 from . import seg
 from .seg.classical import imgs2bw
 
-from . import utils
-from .utils.preprocessing import normalization, denormalization, scalearr, imgdtype
-from .utils.transform import normalize
+from .transform.preprocessing import normalization, denormalization, scalearr, imgdtype
+from .transform.normal import normalize
+from .transform.enhance import histeq
 
 from . import io
 from .io.tiff import tifread, tifsave
-from .io.image import imreadadv, imwriteadv
+from .io.image import imreadadv, imwriteadv, imsaveadv
 from .io.data import load, save
 
 from . import dsp
@@ -35,4 +35,8 @@ from .dsp.noise import wgn, awgn, imnoise, matnoise
 from . import common
 from .common.typevalue import peakvalue
 from .common.randomfunc import randperm, randperm2d
+
+from . import utils
+
+
 

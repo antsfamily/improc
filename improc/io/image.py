@@ -10,6 +10,7 @@ from scipy.misc import imread as scipyimread
 from scipy.misc import imsave as scipyimsave
 from .tiff import tifread, tifsave
 from ..utils.log import *
+import skimage.io as io
 
 
 def imreadadv(filepath, verbose=False):
@@ -76,6 +77,11 @@ def imwriteadv(filepath, A):
     # logging.info("---Out imwriteadv.")
 
     return 0
+
+
+def imsaveadv(filepath, A):
+
+    io.imsave(filepath, A)
 
 
 if __name__ == '__main__':

@@ -12,7 +12,7 @@ import numpy as np
 # from scipy.misc import imread,
 from ..io.image import imreadadv, imwriteadv
 import matplotlib.pyplot as plt
-from ..utils.preprocessing import scalearr, imgdtype
+from ..transform.preprocessing import scalearr, imgdtype
 from ..utils.log import *
 
 
