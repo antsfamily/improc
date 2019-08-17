@@ -27,7 +27,7 @@ from .transform.enhance import histeq
 
 from . import io
 # from .io.tiff import tifread, tifsave
-from .io.image import imreadadv, imsaveadv
+from .io.image import imreadadv, imwriteadv, imsaveadv
 from .io.data import load, save
 
 from . import dsp

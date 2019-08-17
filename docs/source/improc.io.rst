@@ -20,14 +20,6 @@ improc.io.image module
     :undoc-members:
     :show-inheritance:
 
-improc.io.tiff module
----------------------
-
-.. automodule:: improc.io.tiff
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 
 Module contents
 ---------------

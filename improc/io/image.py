@@ -44,6 +44,34 @@ def imreadadv(filepath, verbose=False):
     return A
 
 
+def imwriteadv(filepath, A):
+    """write data to an image file
+
+    write data to an image file
+
+    Parameters
+    ----------
+    filepath : {string}
+        filepath to be writed
+    A : {numpy array}
+        Image data to be writed
+
+    Returns
+    -------
+    number
+        0: success
+    """
+
+    if verbose:
+        logging.info("---In imwriteadv...")
+
+    io.imsave(filepath, A)
+
+    if verbose:
+        print(A.shape, filepath)
+        logging.info("---Out imwriteadv.")
+
+
 def imsaveadv(filepath, A):
     """save data to an image file
 
@@ -52,9 +80,9 @@ def imsaveadv(filepath, A):
     Parameters
     ----------
     filepath : {string}
-        filepath to be writen
+        filepath to be saved
     A : {numpy array}
-        Image data to be writen
+        Image data to be saved
 
     Returns
     -------
