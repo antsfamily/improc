@@ -257,20 +257,15 @@
 <dl class="function">
 <dt id="improc.io.image.imsaveadv">
 <code class="descclassname">improc.io.image.</code><code class="descname">imsaveadv</code><span class="sig-paren">(</span><em>filepath</em>, <em>A</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/io/image.html#imsaveadv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.io.image.imsaveadv" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="improc.io.image.imwriteadv">
-<code class="descclassname">improc.io.image.</code><code class="descname">imwriteadv</code><span class="sig-paren">(</span><em>filepath</em>, <em>A</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/io/image.html#imwriteadv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.io.image.imwriteadv" title="Permalink to this definition">¶</a></dt>
-<dd><p>write image to a file</p>
-<p>write image to a file</p>
+<dd><p>save data to an image file</p>
+<p>save data to an image file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filepath</strong> (<em>{string}</em>) – filepath to be writen</li>
-<li><strong>A</strong> (<em>{numpy array}</em>) – Image data to be writen</li>
+<li><strong>filepath</strong> (<em>{string}</em>) – filepath to be saved</li>
+<li><strong>A</strong> (<em>{numpy array}</em>) – Image data to be saved</li>
 </ul>
 </td>
 </tr>
@@ -284,108 +279,22 @@
 </table>
 </dd></dl>
 
-</div>
-<div class="section" id="module-improc.io.tiff">
-<span id="improc-io-tiff-module"></span><h2>improc.io.tiff module<a class="headerlink" href="#module-improc.io.tiff" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="improc.io.tiff.tifinfo">
-<code class="descclassname">improc.io.tiff.</code><code class="descname">tifinfo</code><span class="sig-paren">(</span><em>filepath</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/io/tiff.html#tifinfo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.io.tiff.tifinfo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get tif file information</p>
-<p>Get tif file information</p>
-<p>ImageDescription
-ImageWidth
-ImageLength
-SamplesPerPixel
-SampleFormat
-Compression
-RowsPerStrip
-XResolution
-YResolution
-Orientation
-PhotometricInterpretation
-PlanarConfiguration</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filepath</strong> (<em>{string}</em>) – tif file path.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Information dict</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="improc.io.tiff.tifread">
-<code class="descclassname">improc.io.tiff.</code><code class="descname">tifread</code><span class="sig-paren">(</span><em>filepath</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/io/tiff.html#tifread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.io.tiff.tifread" title="Permalink to this definition">¶</a></dt>
-<dd><p>read data from tif file</p>
-<p>read data from tif file</p>
+<dt id="improc.io.image.imwriteadv">
+<code class="descclassname">improc.io.image.</code><code class="descname">imwriteadv</code><span class="sig-paren">(</span><em>filepath</em>, <em>A</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/io/image.html#imwriteadv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.io.image.imwriteadv" title="Permalink to this definition">¶</a></dt>
+<dd><p>write data to an image file</p>
+<p>write data to an image file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filepath</strong> (<em>{string}</em>) – tif file path</li>
-<li><strong>verbose</strong> (<em>{bool}</em><em>, </em><em>optional</em>) – show more image information (the default is False)</li>
+<li><strong>filepath</strong> (<em>{string}</em>) – filepath to be writed</li>
+<li><strong>A</strong> (<em>{numpy array}</em>) – Image data to be writed</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">data array <span class="math">\(H×W×C\)</span></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy array</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="improc.io.tiff.tifsave">
-<code class="descclassname">improc.io.tiff.</code><code class="descname">tifsave</code><span class="sig-paren">(</span><em>filepath</em>, <em>A</em>, <em>Info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/io/tiff.html#tifsave"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.io.tiff.tifsave" title="Permalink to this definition">¶</a></dt>
-<dd><p>save array to tif file</p>
-<p>save image array to tif file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filepath</strong> (<em>{str}</em>) – file path for saving data</li>
-<li><strong>A</strong> (<em>{numpy array}</em>) – data (<span class="math">\(H×W×C\)</span>) to be saved</li>
-<li><strong>Info</strong> (<em>{information}</em><em>, </em><em>optional</em>) – image information (the default is None)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">if 0, successed</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">number</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="improc.io.tiff.tifwrite">
-<code class="descclassname">improc.io.tiff.</code><code class="descname">tifwrite</code><span class="sig-paren">(</span><em>filepath</em>, <em>A</em>, <em>Info=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/io/tiff.html#tifwrite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.io.tiff.tifwrite" title="Permalink to this definition">¶</a></dt>
-<dd><p>save array to tif file</p>
-<p>save image array to tif file</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>filepath</strong> (<em>{str}</em>) – file path for saving data</li>
-<li><strong>A</strong> (<em>{numpy array}</em>) – data (<span class="math">\(H×W×C\)</span>) to be saved</li>
-<li><strong>Info</strong> (<em>{information}</em><em>, </em><em>optional</em>) – image information (the default is None)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">if 0, successed</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">0: success</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">number</p>
