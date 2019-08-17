@@ -12,6 +12,14 @@ improc.evaluation.quality module
     :undoc-members:
     :show-inheritance:
 
+improc.evaluation.ssims module
+------------------------------
+
+.. automodule:: improc.evaluation.ssims
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

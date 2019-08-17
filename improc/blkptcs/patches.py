@@ -563,7 +563,7 @@ def selptcs(patches, numsel=None, method=None, thresh=None, sort=None):
     return patches[:, :, :, idxsel], idxsel, selptcs_scores
 
 
-def geocluptcs(patches, TH=None, Rstar=None):
+def geocluptcs(patches, method='std', thresh=None, Rstar=None, sort='descent'):
     r"""
 
     Classifies patches into smooth blocks and rough blocks
@@ -572,9 +572,9 @@ def geocluptcs(patches, TH=None, Rstar=None):
     ----------
     patches : {array_like}
         Image patches, a pH-pW-pC-pN numpy ndarray.
-    TH : {int, float or None, optional}
-        Threshold for .
-    Rstar : {int, float or None, optional}
+    thresh : {float or None, optional}
+        Threshold for spliting smooth block and rough block.
+    Rstar : {float or None, optional}
         Specifies which method to used for evaluating each patch. Option:
         'std'(standard deviation), 'var'(variance),
 
@@ -616,15 +616,14 @@ def geocluptcs(patches, TH=None, Rstar=None):
         raise TypeError('"patches" should be a pH-pW-pC-pN numpy array!')
     pH, pW, pC, pN = patches.shape
     sortptcs, sortptcs_idx, sortptcs_scores = selptcs(
-        patches,
-        method='std', sort='descent')
-    if TH is None:
-        TH = np.mean(sortptcs_scores) / 2
+        patches, method=method, sort=sort)
+    if thresh is None:
+        thresh = np.mean(sortptcs_scores) / 2
 
     # split smooth block and rough block
-    smoothptcs_idx = sortptcs_idx[sortptcs_scores < TH]
+    smoothptcs_idx = sortptcs_idx[sortptcs_scores < thresh]
     smoothptcs = patches[:, :, :, smoothptcs_idx]
-    roughptcs_idx = sortptcs_idx[sortptcs_scores >= TH]
+    roughptcs_idx = sortptcs_idx[sortptcs_scores >= thresh]
     roughptcs = patches[:, :, :, roughptcs_idx]
     rpN = np.size(roughptcs, 3)
     # compute the gradient of rough blocks

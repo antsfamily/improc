@@ -5,8 +5,30 @@
 # @Link    : http://iridescent.ink
 # @Version : $1.1$
 
+import typing
 import numpy as np
 from ..utils.log import *
+from numbers import Real
+from typing import Dict, Tuple
+
+
+TypesRangeDict = {
+    "uint8": (0, 255),
+    "uint16": (0, 65535),
+    "float": (0.0, 1.0),
+    "float16": (0.0, 1.0),
+    "float32": (0.0, 1.0),
+    "float64": (0.0, 1.0),
+}
+
+
+def get_drange(dtype):
+    """This also assumes that image are considered where by convention
+        for floats values are stored within range 0.0 to 1.0."""
+    drange = TypesRangeDict[dtype.name]
+    if drange is None:
+        raise TypeError("{dtype} is a type that cannot be handled.")
+    return drange
 
 
 def peakvalue(A, dtype=None):
@@ -41,7 +63,6 @@ def peakvalue(A, dtype=None):
     if dtype is None:
         logging.info("~~~Using the maximum value!")
         Vpeak = np.max(A)
-
 
     logging.info("---Out peakvalue.")
     return Vpeak

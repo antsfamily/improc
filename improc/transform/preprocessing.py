@@ -29,7 +29,10 @@ def scalearr(X, scaleto=[0, 1], scalefrom=None, istrunc=True, rich=False):
     r"""
     Scale data.
 
-        $x \in [a, b] --> y \in [c, d]$
+    .. math::
+        x \in [a, b] \rightarrow y \in [c, d]
+
+    .. math::
         y = (d-c)*(x-a) / (b-a) + c.
 
     Parameters
