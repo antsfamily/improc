@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>improc.io.tiff &mdash; improc 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"></script>
+        <script type="text/javascript" src="../../../_static/katex_autorenderer.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/katex-math.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> improc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">improc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">improc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>improc.io.tiff</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for improc.io.tiff</h1><div class="highlight"><pre>
+<span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># @Date    : 2019-07-14 16:14:12</span>
+<span class="c1"># @Author  : Yan Liu &amp; Zhi Liu (zhiliu.mind@gmail.com)</span>
+<span class="c1"># @Link    : http://iridescent.ink</span>
+<span class="c1"># @Version : $1.0$</span>
+
+<span class="kn">import</span> <span class="nn">libtiff</span>
+<span class="kn">import</span> <span class="nn">tifffile</span>
+
+
+<div class="viewcode-block" id="tifwrite"><a class="viewcode-back" href="../../../improc.io.html#improc.io.tiff.tifwrite">[docs]</a><span class="k">def</span> <span class="nf">tifwrite</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;save array to tif file</span>
+
+<span class="sd">    save image array to tif file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filepath : {str}</span>
+<span class="sd">        file path for saving data</span>
+<span class="sd">    A : {numpy array}</span>
+<span class="sd">        data (:math:`H×W×C`) to be saved</span>
+<span class="sd">    Info : {information}, optional</span>
+<span class="sd">        image information (the default is None)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    number</span>
+<span class="sd">        if 0, successed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">H</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">C</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">Info</span><span class="p">[</span><span class="s1">&#39;ResolutionUnit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Inch&#39;</span>
+
+    <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffWriter</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
+        <span class="n">tif</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">compress</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">photometric</span><span class="o">=</span><span class="s1">&#39;minisblack&#39;</span><span class="p">)</span>
+
+    <span class="c1"># self, data=None, shape=None, dtype=None, returnoffset=False,</span>
+    <span class="c1">#              photometric=None, planarconfig=None, extrasamples=None, tile=None,</span>
+    <span class="c1">#              contiguous=True, align=16, truncate=False, compress=0,</span>
+    <span class="c1">#              rowsperstrip=None, predictor=False, subsampling=None,</span>
+    <span class="c1">#              colormap=None, description=None, datetime=None, resolution=None,</span>
+    <span class="c1">#              subfiletype=0, software=&#39;tifffile.py&#39;, metadata={},</span>
+    <span class="c1">#              ijmetadata=None, extratags=()</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="tifsave"><a class="viewcode-back" href="../../../improc.io.html#improc.io.tiff.tifsave">[docs]</a><span class="k">def</span> <span class="nf">tifsave</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">Info</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;save array to tif file</span>
+
+<span class="sd">    save image array to tif file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filepath : {str}</span>
+<span class="sd">        file path for saving data</span>
+<span class="sd">    A : {numpy array}</span>
+<span class="sd">        data (:math:`H×W×C`) to be saved</span>
+<span class="sd">    Info : {information}, optional</span>
+<span class="sd">        image information (the default is None)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    number</span>
+<span class="sd">        if 0, successed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffWriter</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
+        <span class="c1"># print(tif.sampleformat)</span>
+        <span class="n">tif</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">A</span><span class="p">,</span>
+                 <span class="n">photometric</span><span class="o">=</span><span class="n">TIFF</span><span class="o">.</span><span class="n">PHOTOMETRIC</span><span class="o">.</span><span class="n">MINISBLACK</span><span class="p">,</span>
+                 <span class="n">planarconfig</span><span class="o">=</span><span class="n">TIFF</span><span class="o">.</span><span class="n">PLANARCONFIG</span><span class="o">.</span><span class="n">CONTIG</span><span class="p">,</span>
+                 <span class="n">compress</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                 <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">TIFF</span><span class="o">.</span><span class="n">RESUNIT</span><span class="o">.</span><span class="n">INCH</span><span class="p">),</span>
+                 <span class="n">rowsperstrip</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                 <span class="c1"># orientation=TIFF.ORIENTATION.TOPLEFT,</span>
+                 <span class="n">contiguous</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="n">tifffile</span><span class="o">.</span><span class="n">imsave</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="tifinfo"><a class="viewcode-back" href="../../../improc.io.html#improc.io.tiff.tifinfo">[docs]</a><span class="k">def</span> <span class="nf">tifinfo</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;Get tif file information</span>
+
+<span class="sd">    Get tif file information</span>
+
+<span class="sd">    ImageDescription</span>
+<span class="sd">    ImageWidth</span>
+<span class="sd">    ImageLength</span>
+<span class="sd">    SamplesPerPixel</span>
+<span class="sd">    SampleFormat</span>
+<span class="sd">    Compression</span>
+<span class="sd">    RowsPerStrip</span>
+<span class="sd">    XResolution</span>
+<span class="sd">    YResolution</span>
+<span class="sd">    Orientation</span>
+<span class="sd">    PhotometricInterpretation</span>
+<span class="sd">    PlanarConfiguration</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filepath : {string}</span>
+<span class="sd">        tif file path.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        Information dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># tif = TIFF.open(filepath, mode=&#39;r&#39;)</span>
+
+    <span class="n">Info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="c1"># Info[&#39;ImageDescription&#39;] = tif.GetField(&#39;ImageDescription&#39;)</span>
+    <span class="c1"># Info[&#39;ImageWidth&#39;] = tif.GetField(&#39;ImageWidth&#39;)</span>
+    <span class="c1"># Info[&#39;ImageLength&#39;] = tif.GetField(&#39;ImageLength&#39;)</span>
+    <span class="c1"># Info[&#39;SamplesPerPixel&#39;] = tif.GetField(&#39;SamplesPerPixel&#39;)</span>
+    <span class="c1"># Info[&#39;BitsPerSample&#39;] = tif.GetField(&#39;BitsPerSample&#39;)</span>
+    <span class="c1"># Info[&#39;SampleFormat&#39;] = tif.GetField(&#39;SampleFormat&#39;)</span>
+    <span class="c1"># Info[&#39;Compression&#39;] = tif.GetField(&#39;Compression&#39;)</span>
+    <span class="c1"># Info[&#39;RowsPerStrip&#39;] = tif.GetField(&#39;RowsPerStrip&#39;)</span>
+    <span class="c1"># Info[&#39;StripByteCounts&#39;] = tif.GetField(&#39;StripByteCounts&#39;)</span>
+    <span class="c1"># Info[&#39;XResolution&#39;] = tif.GetField(&#39;XResolution&#39;)</span>
+    <span class="c1"># Info[&#39;YResolution&#39;] = tif.GetField(&#39;YResolution&#39;)</span>
+    <span class="c1"># Info[&#39;Orientation&#39;] = tif.GetField(&#39;Orientation&#39;)</span>
+    <span class="c1"># # Info[&#39;PhotometricInterpretation&#39;] = tif.GetField(&#39;PhotometricInterpretation&#39;)</span>
+    <span class="c1"># # Info[&#39;PlanarConfiguration&#39;] = tif.GetField(&#39;PlanarConfiguration&#39;)</span>
+
+    <span class="c1"># tif.close()</span>
+
+
+    <span class="k">with</span> <span class="n">tifffile</span><span class="o">.</span><span class="n">TiffFile</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span> <span class="k">as</span> <span class="n">tif</span><span class="p">:</span>
+        <span class="c1"># image_stack = tif.asarray()</span>
+        <span class="k">for</span> <span class="n">page</span> <span class="ow">in</span> <span class="n">tif</span><span class="o">.</span><span class="n">pages</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">tags</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="n">tag_name</span><span class="p">,</span> <span class="n">tag_value</span> <span class="o">=</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">tag</span><span class="o">.</span><span class="n">value</span>
+                <span class="n">Info</span><span class="p">[</span><span class="n">tag_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">tag_value</span>
+
+    <span class="k">return</span> <span class="n">Info</span></div>
+
+
+<div class="viewcode-block" id="tifread"><a class="viewcode-back" href="../../../improc.io.html#improc.io.tiff.tifread">[docs]</a><span class="k">def</span> <span class="nf">tifread</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;read data from tif file</span>
+
+<span class="sd">    read data from tif file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filepath : {string}</span>
+<span class="sd">        tif file path</span>
+<span class="sd">    verbose : {bool}, optional</span>
+<span class="sd">        show more image information (the default is False)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy array</span>
+<span class="sd">        data array :math:`H×W×C`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="n">Info</span> <span class="o">=</span> <span class="n">tifinfo</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+    <span class="n">tif</span> <span class="o">=</span> <span class="n">libtiff</span><span class="o">.</span><span class="n">TIFF</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">tif</span><span class="o">.</span><span class="n">read_image</span><span class="p">()</span>
+    <span class="n">tif</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="c1"># A = tifffile.imread(filepath)</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">Info</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">A</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+    <span class="n">inimgfile</span> <span class="o">=</span> <span class="s1">&#39;/mnt/d/DataSets/hsi/RemoteSensing/HSI/image1.tif&#39;</span>
+    <span class="n">outimgfile</span> <span class="o">=</span> <span class="s1">&#39;/mnt/d/DataSets/hsi/RemoteSensing/HSI/image1out.tif&#39;</span>
+
+    <span class="c1"># inimgfile = &#39;/mnt/d/DataSets/oi/rsi/RSSRAI2019/new/train/train/img_2018/image_2018_960_960_1.tif&#39;</span>
+    <span class="c1"># outimgfile = &#39;/mnt/d/DataSets/oi/rsi/RSSRAI2019/new/train/train/img_2018/image_2018_960_960_1a.tif&#39;</span>
+
+
+    <span class="c1"># Iin = tifffile.imread(inimgfile)</span>
+    <span class="c1"># tifffile.imsave(outimgfile, Iin)</span>
+    <span class="c1"># Iout = tifffile.imread(outimgfile)</span>
+
+    <span class="n">Iin</span><span class="p">,</span> <span class="n">Info</span> <span class="o">=</span> <span class="n">tifread</span><span class="p">(</span><span class="n">inimgfile</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Iin = tifread(inimgfile, verbose=False)</span>
+    <span class="c1"># Iin = np.transpose(Iin, (2, 0, 1))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iin.shape: &quot;</span><span class="p">,</span> <span class="n">Iin</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min(Iin), min(Iin): &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">Iin</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Iin</span><span class="p">))</span>
+
+    <span class="n">tifwrite</span><span class="p">(</span><span class="n">outimgfile</span><span class="p">,</span> <span class="n">Iin</span><span class="p">,</span> <span class="n">Info</span><span class="o">=</span><span class="n">Info</span><span class="p">)</span>
+    <span class="n">Iout</span><span class="p">,</span> <span class="n">Info</span> <span class="o">=</span> <span class="n">tifread</span><span class="p">(</span><span class="n">outimgfile</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># Iout = tifread(outimgfile, verbose=False)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Iout.shape: &quot;</span><span class="p">,</span> <span class="n">Iout</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;min(Iout), min(Iout): &quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">Iout</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Iout</span><span class="p">))</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Iin</span><span class="p">[:,</span> <span class="p">:])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Iout</span><span class="p">[:,</span> <span class="p">:])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Zhi Liu, School of Artificial Intelligence, Xidian University
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

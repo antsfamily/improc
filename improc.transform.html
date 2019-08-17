@@ -1,0 +1,416 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>improc.transform package &mdash; improc 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"></script>
+        <script type="text/javascript" src="_static/katex_autorenderer.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="improc.utils package" href="improc.utils.html" />
+    <link rel="prev" title="improc.seg package" href="improc.seg.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> improc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">improc</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="examples.html">examples package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="improc.html">improc package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="improc.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="improc.blkptcs.html">improc.blkptcs package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.common.html">improc.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.dsp.html">improc.dsp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.encoding.html">improc.encoding package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.evaluation.html">improc.evaluation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.io.html">improc.io package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.seg.html">improc.seg package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">improc.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.utils.html">improc.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="improc.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="improc.html#module-improc.version">improc.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="improc.html#module-improc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">improc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">improc</a> &raquo;</li>
+        
+          <li><a href="improc.html">improc package</a> &raquo;</li>
+        
+      <li>improc.transform package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/improc.transform.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="improc-transform-package">
+<h1>improc.transform package<a class="headerlink" href="#improc-transform-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-improc.transform.enhance">
+<span id="improc-transform-enhance-module"></span><h2>improc.transform.enhance module<a class="headerlink" href="#module-improc.transform.enhance" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="improc.transform.enhance.histeq">
+<code class="descclassname">improc.transform.enhance.</code><code class="descname">histeq</code><span class="sig-paren">(</span><em>A</em>, <em>nbins=256</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/enhance.html#histeq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.enhance.histeq" title="Permalink to this definition">¶</a></dt>
+<dd><p>Histogram equalization for image with 1, 3, or more channels.</p>
+<p>see <a class="reference external" href="https://prateekvjoshi.com/2013/11/22/histogram-equalization-of-rgb-images/">https://prateekvjoshi.com/2013/11/22/histogram-equalization-of-rgb-images/</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>A</strong> (<em>{numpy array}</em>) – image data array for processing</li>
+<li><strong>nbins</strong> (<em>{number}</em><em>, </em><em>optional</em>) – Number of bins for image histogram. Note: this argument is
+ignored for integer images, for which each integer is its own
+bin.</li>
+<li><strong>mask</strong> (<em>{ndarray of bools</em><em> or </em><em>0s and 1s}</em><em>, </em><em>optional</em>) – [description] (the default is None, which [default_description])</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">equalized image array</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-improc.transform.normal">
+<span id="improc-transform-normal-module"></span><h2>improc.transform.normal module<a class="headerlink" href="#module-improc.transform.normal" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="improc.transform.normal.normalize">
+<code class="descclassname">improc.transform.normal.</code><code class="descname">normalize</code><span class="sig-paren">(</span><em>X</em>, <em>mean=None</em>, <em>std=None</em>, <em>axis=None</em>, <em>ver=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/normal.html#normalize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.normal.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>normalization</p>
+<div class="math">
+\[\bar{X} = \frac{X-\mu}{\sigma}
+
+\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>X</strong> (<em>{numpy ndarray}</em>) – data to be normalized,</li>
+<li><strong>mean</strong> (<em>{list</em><em> or </em><em>None}</em><em>, </em><em>optional</em>) – mean value (the default is None, which auto computed)</li>
+<li><strong>std</strong> (<em>{list</em><em> or </em><em>None}</em><em>, </em><em>optional</em>) – standard deviation (the default is None, which auto computed)</li>
+<li><strong>axis</strong> (<em>{bool}</em><em>, </em><em>optional</em>) – specify the axis for computing mean value (the default is None, which all elements)</li>
+<li><strong>axis</strong> – if True, also return the mean and std (the default is False, which all elements)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-improc.transform.preprocessing">
+<span id="improc-transform-preprocessing-module"></span><h2>improc.transform.preprocessing module<a class="headerlink" href="#module-improc.transform.preprocessing" title="Permalink to this headline">¶</a></h2>
+<p>Functions for pre-processing images.</p>
+<p>Functions used by improc functions:</p>
+<dl class="function">
+<dt id="improc.transform.preprocessing.denormalization">
+<code class="descclassname">improc.transform.preprocessing.</code><code class="descname">denormalization</code><span class="sig-paren">(</span><em>X</em>, <em>mod</em>, <em>meanX=None</em>, <em>stdX=None</em>, <em>minX=None</em>, <em>maxX=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/preprocessing.html#denormalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.preprocessing.denormalization" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="improc.transform.preprocessing.imgdtype">
+<code class="descclassname">improc.transform.preprocessing.</code><code class="descname">imgdtype</code><span class="sig-paren">(</span><em>arr</em>, <em>tdtype=None</em>, <em>isscale=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/preprocessing.html#imgdtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.preprocessing.imgdtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an numpy array to an image data type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>arr</strong> (<em>numpy array</em>) – Numpy array that you want to converted.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – The target data type, if not given, does not change. Supports dtype:
+‘uint8’, ‘uint16’, ‘uint32’, ‘uint64’, ‘int64’, ‘int32’, ‘int16’,
+‘int8’, ‘float’, ‘float64’, ‘float32’, ‘float16’. Note: if float,
+arr will be scaled to [0, 1]</li>
+<li><strong>isscale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – <p>Specifies whether to scale data into the target dtype range, If
+not given, or False, does not scale arr data. This is helpfull
+when some elements in arr are beyond the target dtype range, sets
+isscale to True, will scale data to target dtype range; sets False
+or None, will truncate arr into target dtype range.
+e.g. If target dtype: uint8, and isscale=True,</p>
+<blockquote>
+<div>then -1 -&gt; 0, 256 -&gt; 255</div></blockquote>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>arr</strong> – Numpy array with target dtype.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.transform.preprocessing.normalization">
+<code class="descclassname">improc.transform.preprocessing.</code><code class="descname">normalization</code><span class="sig-paren">(</span><em>X</em>, <em>mod</em>, <em>scalefrom=None</em>, <em>scaleto=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/preprocessing.html#normalization"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.preprocessing.normalization" title="Permalink to this definition">¶</a></dt>
+<dd><p>data normalization</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>{data to be normalized} --</strong><strong> [</strong><strong>data to be normalized</strong><strong>]</strong> (<em>X</em>) – </li>
+<li><strong>{</strong><strong>[</strong><strong>type</strong><strong>]</strong><strong>} -- 'zscore'</strong><strong>, </strong><strong>'minmax'</strong> (<em>mod</em>) – </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<li><strong>{</strong><strong>[</strong><strong>type</strong><strong>]</strong><strong>} --</strong><strong> [</strong><strong>description</strong><strong>] </strong><strong>(</strong><strong>default</strong> (<em>scaleto</em>) – {None})</li>
+<li><strong>{</strong><strong>[</strong><strong>type</strong><strong>]</strong><strong>} --</strong><strong> [</strong><strong>description</strong><strong>] </strong><strong>(</strong><strong>default</strong> – {None})</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.transform.preprocessing.scalearr">
+<code class="descclassname">improc.transform.preprocessing.</code><code class="descname">scalearr</code><span class="sig-paren">(</span><em>X, scaleto=[0, 1], scalefrom=None, istrunc=True, rich=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/preprocessing.html#scalearr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.preprocessing.scalearr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale data.</p>
+<div class="math">
+\[x \in [a, b] \rightarrow y \in [c, d]
+
+\]</div>
+<div class="math">
+\[y = (d-c)*(x-a) / (b-a) + c.
+
+\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>X</strong> (<em>array_like</em>) – The data to be scaled.</li>
+<li><strong>scaleto</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Specifies the range of data after beening scaled. Default [0, 1].</li>
+<li><strong>scalefrom</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Specifies the range of data. Default [min(X), max(X)].</li>
+<li><strong>istrunc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Specifies wether to truncate the data to [a, b], For example,
+If scalefrom == [a, b] and ‘istrunc’ is true,
+then X[X &lt; a] == a and X[X &gt; b] == b.</li>
+<li><strong>rich</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If you want to see what the data is scaled from and scaled to,
+then you should set it to true</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>out</strong> (<em>ndarray</em>) – Scaled data array.</li>
+<li><strong>scalefrom, scaleto</strong> (<em>list or tuple</em>) – If rich is true, they will also be returned</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-improc.transform">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-improc.transform" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="improc.utils.html" class="btn btn-neutral float-right" title="improc.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="improc.seg.html" class="btn btn-neutral float-left" title="improc.seg package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Zhi Liu, School of Artificial Intelligence, Xidian University
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

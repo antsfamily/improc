@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>improc.blkptcs package &mdash; improc 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"></script>
+        <script type="text/javascript" src="_static/katex_autorenderer.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="_static/katex-math.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="improc.common package" href="improc.common.html" />
+    <link rel="prev" title="improc package" href="improc.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> improc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">improc</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="examples.html">examples package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="improc.html">improc package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="improc.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">improc.blkptcs package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.common.html">improc.common package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.dsp.html">improc.dsp package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.encoding.html">improc.encoding package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.evaluation.html">improc.evaluation package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.io.html">improc.io package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.seg.html">improc.seg package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.transform.html">improc.transform package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.utils.html">improc.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="improc.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="improc.html#module-improc.version">improc.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="improc.html#module-improc">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tests.html">tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">improc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">improc</a> &raquo;</li>
+        
+          <li><a href="improc.html">improc package</a> &raquo;</li>
+        
+      <li>improc.blkptcs package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/improc.blkptcs.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="improc-blkptcs-package">
+<h1>improc.blkptcs package<a class="headerlink" href="#improc-blkptcs-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-improc.blkptcs.blocks">
+<span id="improc-blkptcs-blocks-module"></span><h2>improc.blkptcs.blocks module<a class="headerlink" href="#module-improc.blkptcs.blocks" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="improc.blkptcs.blocks.blks2imgs">
+<code class="descclassname">improc.blkptcs.blocks.</code><code class="descname">blks2imgs</code><span class="sig-paren">(</span><em>blks</em>, <em>imgsShape</em>, <em>index=None</em>, <em>tofolder=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/blocks.html#blks2imgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.blocks.blks2imgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fight image blocks back to images.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>blks</strong> (<em>{array_like}</em>) – A bH-bW-bC-bN numpy ndarray, where, bH, bW, bC, bN specify height,
+width, channels, number of images respectivelly. If blks Contains
+Gray Images and RGB Images, then bC = 3, and Gray Images is copied.</li>
+<li><strong>imgsShape</strong> (<em>{tuple</em><em> or </em><em>list}</em>) – Specify each image’s size.</li>
+<li><strong>index</strong> (<em>{int</em><em>, </em><em>optional}</em>) – The image that you want to fight back.</li>
+<li><strong>tofolder</strong> (<em>{str</em><em> (</em><em>path</em><em>)</em><em>, </em><em>optional}</em>) – Save specified images into files: image_0.png, image_i.png, … ,
+image_N.png</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> – A list of image numpy ndarray(H-W-C).</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">{ndarray or bool}</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2ptcs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks.()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.blocks.imgs2blks">
+<code class="descclassname">improc.blkptcs.blocks.</code><code class="descname">imgs2blks</code><span class="sig-paren">(</span><em>imgs, blksize=[8, 8, 3], padmode='symmetric'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/blocks.html#imgs2blks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.blocks.imgs2blks" title="Permalink to this definition">¶</a></dt>
+<dd><p>blks, imgsShape = imgs2blks(imgs, blksize) trys to split the imgs(an H-W-C
+-N numpy ndarray, or list of images filepathes) into image blocks(an bH-bW-
+bC-bN ndarray) orderly; imgsShape contains each image’s size in imgs for
+fighting back to images.</p>
+<p>Trys to split some images into blocks orderly (1.channel-wisely, 2.colum-
+wisely, 3.row-wisely).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>imgs</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes}.</em>) – Images to be splited, a H-W-C-N numpy ndarray, or a list of image
+pathes with diffrent image shapes.</li>
+<li><strong>blksize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each block size (rows, cols, channel) that you want to
+split. If not given, blksize=[8, 8, 3].</li>
+<li><strong>padmode</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Padding mode when an image can’t be split fully. ‘symmetric’ or ‘edge’
+can be choosen, see np.pad for more option. The Channel will also be
+pad if it is not enough, e.g., for an H-W-1(gray) image, if you want
+to get blksize=[8,8,3].</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>blks</strong> (<em>{ndarray}</em>) – A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == blksize.</li>
+<li><strong>imgsshape</strong> (<em>{tuple}</em>) – A tuple contains the shape of each image in imgs. Even if all images
+have the same size, imgsshape will still contain each image size like
+((H, W, C), (H, W, C)).</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2ptcs()</span></code>, <a class="reference internal" href="#improc.blkptcs.blocks.imgs2blks" title="improc.blkptcs.blocks.imgs2blks"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code></a>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">blks</span><span class="p">,</span> <span class="n">imgsInfo</span> <span class="o">=</span> <span class="n">imgs2blks</span><span class="p">(</span><span class="n">imgspathes</span><span class="p">,</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;symmetric&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.blocks.padimgs">
+<code class="descclassname">improc.blkptcs.blocks.</code><code class="descname">padimgs</code><span class="sig-paren">(</span><em>imgs</em>, <em>pad_width</em>, <em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/blocks.html#padimgs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.blocks.padimgs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.blocks.pimgs2blks">
+<code class="descclassname">improc.blkptcs.blocks.</code><code class="descname">pimgs2blks</code><span class="sig-paren">(</span><em>pimgs</em>, <em>blksize</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/blocks.html#pimgs2blks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.blocks.pimgs2blks" title="Permalink to this definition">¶</a></dt>
+<dd><p>blks: bH-bW-bC-bN, img1_blk1_bc1, img1_blk1_bc2, img1_blk1_bc3,
+img1_blk2_bc1, img1_blk2_bc2, img1_blk2_bc3, …</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-improc.blkptcs.patches">
+<span id="improc-blkptcs-patches-module"></span><h2>improc.blkptcs.patches module<a class="headerlink" href="#module-improc.blkptcs.patches" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="improc.blkptcs.patches.geocluptcs">
+<code class="descclassname">improc.blkptcs.patches.</code><code class="descname">geocluptcs</code><span class="sig-paren">(</span><em>patches</em>, <em>method='std'</em>, <em>thresh=None</em>, <em>Rstar=None</em>, <em>sort='descent'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/patches.html#geocluptcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.patches.geocluptcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classifies patches into smooth blocks and rough blocks</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>patches</strong> (<em>{array_like}</em>) – Image patches, a pH-pW-pC-pN numpy ndarray.</li>
+<li><strong>thresh</strong> (<em>{float</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Threshold for spliting smooth block and rough block.</li>
+<li><strong>Rstar</strong> (<em>{float</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies which method to used for evaluating each patch. Option:
+‘std’(standard deviation), ‘var’(variance),</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>selpat</strong> (<em>{ndarray}</em>) – A pH-pW-pC-pNx numpy ndarray.</li>
+<li><strong>idxsel</strong> (<em>{ndarray}</em>) – A pNx numpy array, indicates the position of selpat in patches.</li>
+<li><strong>selptcs_scores</strong> (<em>{ndarray}</em>) – A pNx numpy array, indicates the scores of selpat in patches, with
+measurements specfied by method.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#improc.blkptcs.patches.imgs2ptcs" title="improc.blkptcs.patches.imgs2ptcs"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2ptcs()</span></code></a>, <code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">showblks.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">patches</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">101</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># just compute scores:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">scores</span> <span class="o">=</span> <span class="n">geocluptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># compute scores and sort by scores:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">scores</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;descent&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># compute scores and sort by scores, and just select scores &gt; thresh</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">idxsel</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># compute scores and sort by scores, and select scores &gt; thresh, and</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># sort in descending order.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">idxsel</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+<span class="go">    sort=&#39;descent&#39;)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.patches.imgs2ptcs">
+<code class="descclassname">improc.blkptcs.patches.</code><code class="descname">imgs2ptcs</code><span class="sig-paren">(</span><em>imgs</em>, <em>ptcsize</em>, <em>numptcs</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/patches.html#imgs2ptcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.patches.imgs2ptcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample diffrent patches from imgs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>imgs</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes}.</em>) – Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
+pathes with diffrent image shapes.</li>
+<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
+sampled. If not given, ptcsize=[8, 8, 1].</li>
+<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
+<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ptcs</strong> – A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">{ndarray}</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">showblks.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imgblk</span> <span class="k">import</span> <span class="n">imgs2ptcs</span><span class="p">,</span> <span class="n">showblks</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptcsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numptcs</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imgspathes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/mnt/d/DataSets/oi/nsi/classical/BaboonRGB.bmp&#39;</span><span class="p">,</span>
+<span class="go">                 &#39;/mnt/d/DataSets/oi/nsi/classical/LenaRGB.bmp&#39;,]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptcs</span> <span class="o">=</span> <span class="n">imgs2ptcs</span><span class="p">(</span><span class="n">imgspathes</span><span class="p">,</span> <span class="n">ptcsize</span> <span class="p">,</span> <span class="n">numptcs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ptcs</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ptcs</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># show</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">showblks</span><span class="p">(</span><span class="n">ptcs</span><span class="p">,</span> <span class="n">rcsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>See “test_imgs2ptcs.py”, “test_imgs2blks.py”, “test_blks2imgs.py”,
+“test_showblks.py” for more Examples.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.patches.imgsAB2ptcs">
+<code class="descclassname">improc.blkptcs.patches.</code><code class="descname">imgsAB2ptcs</code><span class="sig-paren">(</span><em>imgsA</em>, <em>imgsB</em>, <em>ptcsize</em>, <em>numptcs</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/patches.html#imgsAB2ptcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.patches.imgsAB2ptcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling diffrent patches from imgsA imgsB.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>imgsA/B</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes.}</em>) – Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
+pathes with diffrent image shapes.</li>
+<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
+sampled. If not given, ptcsize=[8, 8, 1].</li>
+<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
+<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>ptcsA</strong> (<em>{ndarray}</em>) – A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</li>
+<li><strong>ptcsB</strong> (<em>{ndarray}</em>) – A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">showblks.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imgblk</span> <span class="k">import</span> <span class="n">imgs2ptcs</span><span class="p">,</span> <span class="n">showblks</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptcsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numptcs</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imgspathesA</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/mnt/d/DataSets/oi/nsi/classical/BaboonRGB.bmp&#39;</span><span class="p">]</span>
+<span class="go">    imgspathesB = [&#39;/mnt/d/DataSets/oi/nsi/classical/LenaRGB.bmp&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptcsA</span><span class="p">,</span> <span class="n">ptcsB</span> <span class="o">=</span> <span class="n">imgsAB2ptcs</span><span class="p">(</span><span class="n">imgspathesA</span><span class="p">,</span> <span class="n">imgspathesB</span><span class="p">,</span> <span class="n">ptcsize</span> <span class="p">,</span> <span class="n">numptcs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ptcsA</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ptcsA</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># show</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">showblks</span><span class="p">(</span><span class="n">ptcsA</span><span class="p">,</span> <span class="n">rcsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>See “test_imgs2ptcs.py”, “test_imgs2blks.py”, “test_blks2imgs.py”,
+“test_showblks.py” for more Examples.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.patches.imgsABC2ptcs">
+<code class="descclassname">improc.blkptcs.patches.</code><code class="descname">imgsABC2ptcs</code><span class="sig-paren">(</span><em>imgsA</em>, <em>imgsB</em>, <em>imgsC</em>, <em>ptcsize</em>, <em>numptcs</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/patches.html#imgsABC2ptcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.patches.imgsABC2ptcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sampling diffrent patches from imgsA imgsB imgsC.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>imgsA/B/C</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes}.</em>) – Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
+pathes with diffrent image shapes.</li>
+<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
+sampled. If not given, ptcsize=[8, 8, 1].</li>
+<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
+<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>ptcsA</strong> (<em>{ndarray}</em>) – A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</li>
+<li><strong>ptcsB</strong> (<em>{ndarray}</em>) – A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</li>
+<li><strong>ptcsC</strong> (<em>{ndarray}</em>) – A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">showblks.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">imgblk</span> <span class="k">import</span> <span class="n">imgs2ptcs</span><span class="p">,</span> <span class="n">showblks</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptcsize</span> <span class="o">=</span> <span class="p">[</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">numptcs</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">imgspathesA</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/mnt/d/DataSets/oi/nsi/classical/BaboonRGB.bmp&#39;</span><span class="p">]</span>
+<span class="go">    imgspathesB = [&#39;/mnt/d/DataSets/oi/nsi/classical/LenaRGB.bmp&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ptcsA</span><span class="p">,</span> <span class="n">ptcsB</span> <span class="o">=</span> <span class="n">imgsAB2ptcs</span><span class="p">(</span><span class="n">imgspathesA</span><span class="p">,</span> <span class="n">imgspathesB</span><span class="p">,</span> <span class="n">ptcsize</span> <span class="p">,</span> <span class="n">numptcs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">ptcsA</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">ptcsA</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># show</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">showblks</span><span class="p">(</span><span class="n">ptcsA</span><span class="p">,</span> <span class="n">rcsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>See “test_imgs2ptcs.py”, “test_imgs2blks.py”, “test_blks2imgs.py”,
+“test_showblks.py” for more Examples.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.patches.sampleimg">
+<code class="descclassname">improc.blkptcs.patches.</code><code class="descname">sampleimg</code><span class="sig-paren">(</span><em>imgA</em>, <em>ptcsize</em>, <em>numSamples</em>, <em>imgB=None</em>, <em>imgC=None</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/patches.html#sampleimg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.patches.sampleimg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.patches.selptcs">
+<code class="descclassname">improc.blkptcs.patches.</code><code class="descname">selptcs</code><span class="sig-paren">(</span><em>patches</em>, <em>numsel=None</em>, <em>method=None</em>, <em>thresh=None</em>, <em>sort=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/patches.html#selptcs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.patches.selptcs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Selects some patches based on std, var…</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>patches</strong> (<em>{array_like}</em>) – Image patches, a pH-pW-pC-pN numpy ndarray.</li>
+<li><strong>numsel</strong> (<em>{int</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – How many patches you want to select. If integer, then returns numsel
+patches; If float in [0,1], then numsel*100 percent of the patches
+will be returned. If not given, does not affect.</li>
+<li><strong>method</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies which method to used for evaluating each patch. Option:
+‘std’(standard deviation), ‘var’(variance),
+the first numsel patch scores will be returned.
+If not given, does nothing.</li>
+<li><strong>thresh</strong> (<em>{float</em><em>, </em><em>optional}</em>) – When method are specified, using thresh as the threshold, and those
+patches whose scores are larger(&gt;=) then thresh will be returned.</li>
+<li><strong>sort</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Sorts the patches according to pathes scores in sort way(‘descent’,
+‘ascent’). If not given, does not affect, i.e. origional order.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><ul class="simple">
+<li><strong>selpat</strong> (<em>{ndarray}</em>) – A pH-pW-pC-pNx numpy ndarray.</li>
+<li><strong>idxsel</strong> (<em>{ndarray}</em>) – A pNx numpy array, indicates the position of selpat in patches.</li>
+<li><strong>selptcs_scores</strong> (<em>{ndarray}</em>) – A pNx numpy array, indicates the scores of selpat in patches, with
+measurements specfied by method.</li>
+</ul>
+</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#improc.blkptcs.patches.imgs2ptcs" title="improc.blkptcs.patches.imgs2ptcs"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2ptcs()</span></code></a>, <code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">showblks.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">patches</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">101</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># just compute scores:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">scores</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># compute scores and sort by scores:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">scores</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;descent&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># compute scores and sort by scores, and just select scores &gt; thresh</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">idxsel</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># compute scores and sort by scores, and select scores &gt; thresh, and</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># sort in descending order.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selpat</span><span class="p">,</span> <span class="n">idxsel</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+<span class="go">    sort=&#39;descent&#39;)</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-improc.blkptcs.utils">
+<span id="improc-blkptcs-utils-module"></span><h2>improc.blkptcs.utils module<a class="headerlink" href="#module-improc.blkptcs.utils" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-improc.blkptcs.visual">
+<span id="improc-blkptcs-visual-module"></span><h2>improc.blkptcs.visual module<a class="headerlink" href="#module-improc.blkptcs.visual" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="improc.blkptcs.visual.showblks">
+<code class="descclassname">improc.blkptcs.visual.</code><code class="descname">showblks</code><span class="sig-paren">(</span><em>blks</em>, <em>rcsize=None</em>, <em>stride=None</em>, <em>plot=True</em>, <em>bgcolor='w'</em>, <em>cmap=None</em>, <em>title=None</em>, <em>xlabel=None</em>, <em>ylabel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/visual.html#showblks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.visual.showblks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trys to show image blocks in one image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>blks</strong> (<em>{array_like}</em>) – Blocks to be shown, a bH-bW-bC-bN numpy ndarray.</li>
+<li><strong>rcsize</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies how many rows and cols of blocks that you want to show,
+e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed
+automaticly.</li>
+<li><strong>stride</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The step size (blank pixels nums) in row and col between two blocks.
+If not given, stride=(1,1).</li>
+<li><strong>plot</strong> (<em>{bool</em><em>, </em><em>optional}</em>) – True for ploting, False for silent and returns a H-W-C numpy ndarray
+for showing.</li>
+<li><strong>bgcolor</strong> (<em>{char</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The background color, ‘w’ for white, ‘k’ for black. Default, ‘w’.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> – A H-W-C numpy ndarray for showing.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">{ndarray or bool}</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2ptcs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">blks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">101</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">showblks</span><span class="p">(</span><span class="n">blks</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.blkptcs.visual.showfilters">
+<code class="descclassname">improc.blkptcs.visual.</code><code class="descname">showfilters</code><span class="sig-paren">(</span><em>filters</em>, <em>fsize=None</em>, <em>rcsize=None</em>, <em>stride=None</em>, <em>plot=None</em>, <em>bgcolor='w'</em>, <em>title=None</em>, <em>isscale=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/blkptcs/visual.html#showfilters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.blkptcs.visual.showfilters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trys to show weight filters in one image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>filters</strong> (<em>{array_like}</em>) – Weights to be shown, a fdim-by-numf numpy ndarray.</li>
+<li><strong>fsize</strong> (<em>{int tuple list</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the height and width of one filter, e.g. (hf, wf, cf). If not
+given, fsize=(hf, wf, cf) will be computed automaticly, but may wrong.</li>
+<li><strong>rcsize</strong> (<em>{int tuple list</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies how many rows and cols of filters that you want to show,
+e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed
+automaticly.</li>
+<li><strong>stride</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The step size (blank pixels nums) in row and col between two filters.
+If not given, stride=(1,1).</li>
+<li><strong>plot</strong> (<em>{bool</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – True for ploting, False for silent and returns a H-W-C numpy ndarray
+for showing. If not given, plot = True.</li>
+<li><strong>bgcolor</strong> (<em>{char</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The background color, ‘w’ for white, ‘k’ for black. Default, ‘w’.</li>
+<li><strong>title</strong> (<em>{str</em><em> or </em><em>None}</em>) – If plot, title is used to specify the title.</li>
+<li><strong>isscale</strong> (<em>{bool</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – If True, scale to [0, 255], else does nothing.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>out</strong> – A H-W-C numpy ndarray for showing.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">{ndarray or bool}</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2ptcs()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">imgs2blks()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">blks2imgs.()</span></code></p>
+</div>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">filters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="p">(</span><span class="mi">192</span><span class="p">,</span> <span class="mi">101</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">showfilters</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-improc.blkptcs">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-improc.blkptcs" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="improc.common.html" class="btn btn-neutral float-right" title="improc.common package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="improc.html" class="btn btn-neutral float-left" title="improc package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Zhi Liu, School of Artificial Intelligence, Xidian University
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>improc.blkptcs.visual &mdash; improc 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"></script>
+        <script type="text/javascript" src="../../../_static/katex_autorenderer.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/katex-math.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> improc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">improc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">improc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>improc.blkptcs.visual</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for improc.blkptcs.visual</h1><div class="highlight"><pre>
+<span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># @Date    : 2015-09-31 21:38:26</span>
+<span class="c1"># @Author  : Zhi Liu (zhiliu.mind@gmail.com)</span>
+<span class="c1"># @Link    : http://iridescent.ink</span>
+<span class="c1"># @Version : $1.1$</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># from scipy.misc import imread,</span>
+<span class="kn">from</span> <span class="nn">..io.image</span> <span class="k">import</span> <span class="n">imreadadv</span><span class="p">,</span> <span class="n">imwriteadv</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">..transform.preprocessing</span> <span class="k">import</span> <span class="n">scalearr</span><span class="p">,</span> <span class="n">imgdtype</span>
+<span class="kn">from</span> <span class="nn">..utils.log</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">Functions to visualize blocks or patches.</span>
+
+<span class="sd">Functions can visualize 4-D numpy array:</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :nosignatures:</span>
+
+<span class="sd">    showblks</span>
+<span class="sd">    showfilters</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="showblks"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.visual.showblks">[docs]</a><span class="k">def</span> <span class="nf">showblks</span><span class="p">(</span><span class="n">blks</span><span class="p">,</span> <span class="n">rcsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    Trys to show image blocks in one image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    blks : {array_like}</span>
+<span class="sd">        Blocks to be shown, a bH-bW-bC-bN numpy ndarray.</span>
+<span class="sd">    rcsize : {int tuple or None, optional}</span>
+<span class="sd">        Specifies how many rows and cols of blocks that you want to show,</span>
+<span class="sd">        e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed</span>
+<span class="sd">        automaticly.</span>
+<span class="sd">    stride : {int tuple or None, optional}</span>
+<span class="sd">        The step size (blank pixels nums) in row and col between two blocks.</span>
+<span class="sd">        If not given, stride=(1,1).</span>
+<span class="sd">    plot : {bool, optional}</span>
+<span class="sd">        True for ploting, False for silent and returns a H-W-C numpy ndarray</span>
+<span class="sd">        for showing.</span>
+<span class="sd">    bgcolor : {char or None, optional}</span>
+<span class="sd">        The background color, &#39;w&#39; for white, &#39;k&#39; for black. Default, &#39;w&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : {ndarray or bool}</span>
+<span class="sd">        A H-W-C numpy ndarray for showing.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    imgs2ptcs, imgs2blks, blks2imgs.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; blks = np.uint8(np.random.randint(0, 255, (8, 8, 3, 101)))</span>
+<span class="sd">    &gt;&gt;&gt; showblks(blks, bgcolor=&#39;k&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In showblks...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># print(blks.min(), blks.max(), &quot;&#39;&#39;&#39;&quot;, blks.shape, np.mean(blks))</span>
+    <span class="k">if</span> <span class="n">blks</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">blks</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">blks</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">blks</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&quot;blks&quot; should be a pH-pW-pC-pN numpy array!&#39;</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">bN</span> <span class="o">=</span> <span class="n">blks</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">if</span> <span class="n">rcsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">bN</span><span class="p">))</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bN</span> <span class="o">/</span> <span class="n">rows</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">bN</span> <span class="o">%</span> <span class="n">cols</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="n">rows</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">rows</span> <span class="o">=</span> <span class="n">rcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">rcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># step size</span>
+    <span class="k">if</span> <span class="n">stride</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">stride</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># background color</span>
+    <span class="k">if</span> <span class="n">bgcolor</span> <span class="o">==</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span>
+        <span class="n">bgcolor_value</span> <span class="o">=</span> <span class="mi">255</span>
+    <span class="k">elif</span> <span class="n">bgcolor</span> <span class="o">==</span> <span class="s1">&#39;k&#39;</span><span class="p">:</span>
+        <span class="n">bgcolor_value</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">bN</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cols</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">blks</span><span class="p">,</span>
+                   <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                       <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cols</span> <span class="o">-</span> <span class="n">bN</span><span class="p">)),</span>
+                   <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="n">bgcolor_value</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">blks</span><span class="p">,</span>
+                   <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+                   <span class="s1">&#39;constant&#39;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="n">bgcolor_value</span><span class="p">)</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">:</span><span class="n">rows</span> <span class="o">*</span> <span class="n">cols</span><span class="p">]</span>
+
+    <span class="n">aH</span><span class="p">,</span> <span class="n">aW</span><span class="p">,</span> <span class="n">aC</span><span class="p">,</span> <span class="n">aN</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">,</span> <span class="n">aH</span><span class="p">,</span> <span class="n">aW</span><span class="p">,</span> <span class="n">aC</span><span class="p">)</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span>
+        <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">rows</span> <span class="o">*</span> <span class="n">aH</span><span class="p">,</span> <span class="n">cols</span> <span class="o">*</span> <span class="n">aW</span><span class="p">,</span> <span class="n">aC</span><span class="p">)</span>
+
+    <span class="n">aH</span><span class="p">,</span> <span class="n">aW</span><span class="p">,</span> <span class="n">aC</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">aH</span> <span class="o">-</span> <span class="n">stride</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">:</span><span class="n">aW</span> <span class="o">-</span> <span class="n">stride</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">:]</span>
+    <span class="k">if</span> <span class="n">aC</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Show &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">bN</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; blocks in &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span> <span class="o">+</span> \
+            <span class="s1">&#39; rows &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; cols, with stride&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">stride</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out showblks.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">A</span>    <span class="c1"># H-W-C</span></div>
+
+
+<div class="viewcode-block" id="showfilters"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.visual.showfilters">[docs]</a><span class="k">def</span> <span class="nf">showfilters</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">fsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rcsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">isscale</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    Trys to show weight filters in one image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filters : {array_like}</span>
+<span class="sd">        Weights to be shown, a fdim-by-numf numpy ndarray.</span>
+<span class="sd">    fsize : {int tuple list or None, optional}</span>
+<span class="sd">        Specifies the height and width of one filter, e.g. (hf, wf, cf). If not</span>
+<span class="sd">        given, fsize=(hf, wf, cf) will be computed automaticly, but may wrong.</span>
+<span class="sd">    rcsize : {int tuple list or None, optional}</span>
+<span class="sd">        Specifies how many rows and cols of filters that you want to show,</span>
+<span class="sd">        e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed</span>
+<span class="sd">        automaticly.</span>
+<span class="sd">    stride : {int tuple or None, optional}</span>
+<span class="sd">        The step size (blank pixels nums) in row and col between two filters.</span>
+<span class="sd">        If not given, stride=(1,1).</span>
+<span class="sd">    plot : {bool or None, optional}</span>
+<span class="sd">        True for ploting, False for silent and returns a H-W-C numpy ndarray</span>
+<span class="sd">        for showing. If not given, plot = True.</span>
+<span class="sd">    bgcolor : {char or None, optional}</span>
+<span class="sd">        The background color, &#39;w&#39; for white, &#39;k&#39; for black. Default, &#39;w&#39;.</span>
+<span class="sd">    title : {str or None}</span>
+<span class="sd">        If plot, title is used to specify the title.</span>
+<span class="sd">    isscale : {bool or None, optional}</span>
+<span class="sd">        If True, scale to [0, 255], else does nothing.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    out : {ndarray or bool}</span>
+<span class="sd">        A H-W-C numpy ndarray for showing.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    imgs2ptcs, imgs2blks, blks2imgs.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; filters = np.uint8(np.random.randint(0, 255, (192, 101)))</span>
+<span class="sd">    &gt;&gt;&gt; showfilters(filters, bgcolor=&#39;k&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In showfilters...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">filters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;You should give me filters&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">filters</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;filters should be a fdim-by-numfs numpy array!&#39;</span><span class="p">)</span>
+
+    <span class="n">fdim</span><span class="p">,</span> <span class="n">numfs</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">fsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">cf</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fdim</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fdim</span><span class="p">)):</span>  <span class="c1"># not square</span>
+            <span class="k">if</span> <span class="n">fdim</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>   <span class="c1"># 3 channels</span>
+                <span class="n">cf</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="n">hwf</span> <span class="o">=</span> <span class="n">fdim</span> <span class="o">/</span> <span class="n">cf</span>
+        <span class="n">hf</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">hwf</span><span class="p">))</span>
+        <span class="n">wf</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hwf</span> <span class="o">/</span> <span class="n">hf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">hwf</span> <span class="o">%</span> <span class="n">wf</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">hf</span> <span class="o">=</span> <span class="n">hf</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">fsize</span> <span class="o">=</span> <span class="p">(</span><span class="n">hf</span><span class="p">,</span> <span class="n">wf</span><span class="p">,</span> <span class="n">cf</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">fsize</span><span class="p">)</span> <span class="o">!=</span> <span class="n">fdim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;I can&#39;t inference the size of each filter!&quot;</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="ow">not</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">fsize</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">fsize</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;fsize should be a tuple list, like (8, 10, 3)&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">isscale</span><span class="p">:</span>
+        <span class="n">filters</span> <span class="o">=</span> <span class="n">scalearr</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+    <span class="n">filters</span> <span class="o">=</span> <span class="n">filters</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">fsize</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">fsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">numfs</span><span class="p">))</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out showfilters.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">showblks</span><span class="p">(</span><span class="n">filters</span><span class="p">,</span> <span class="n">rcsize</span><span class="o">=</span><span class="n">rcsize</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span>
+                    <span class="n">plot</span><span class="o">=</span><span class="n">plot</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="n">bgcolor</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Zhi Liu, School of Artificial Intelligence, Xidian University
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,892 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>improc.blkptcs.patches &mdash; improc 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/contrib/auto-render.min.js"></script>
+        <script type="text/javascript" src="../../../_static/katex_autorenderer.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/katex-math.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> improc
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">improc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">improc</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>improc.blkptcs.patches</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for improc.blkptcs.patches</h1><div class="highlight"><pre>
+<span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="c1"># @Date    : 2015-09-31 21:38:26</span>
+<span class="c1"># @Author  : Zhi Liu (zhiliu.mind@gmail.com)</span>
+<span class="c1"># @Link    : http://iridescent.ink</span>
+<span class="c1"># @Version : $1.1$</span>
+
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># from scipy.misc import imread,</span>
+<span class="kn">from</span> <span class="nn">..io.image</span> <span class="k">import</span> <span class="n">imreadadv</span><span class="p">,</span> <span class="n">imwriteadv</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">..transform.preprocessing</span> <span class="k">import</span> <span class="n">scalearr</span><span class="p">,</span> <span class="n">imgdtype</span>
+
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="k">import</span> <span class="n">_hw1n2hwn</span><span class="p">,</span> <span class="n">_imageinfo</span>
+<span class="kn">from</span> <span class="nn">..utils.log</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="kn">from</span> <span class="nn">..common.randomfunc</span> <span class="k">import</span> <span class="n">randperm2d</span>
+
+
+<span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">Functions to sample some images into patches.</span>
+
+<span class="sd">Functions can sample different size images randomly:</span>
+
+<span class="sd">.. autosummary::</span>
+<span class="sd">    :nosignatures:</span>
+
+<span class="sd">    imgs2ptcs</span>
+<span class="sd">    imgsAB2ptcs</span>
+<span class="sd">    selptcs</span>
+<span class="sd">    geocluptcs</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_cmpNumSamples</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numImages</span><span class="p">):</span>
+    <span class="n">numSamples</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">numptcs</span> <span class="o">/</span> <span class="n">numImages</span><span class="p">))</span>
+    <span class="n">rest</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numImages</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numImages</span><span class="p">):</span>
+        <span class="n">numSamples</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">rest</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">numSamples</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">numImages</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">rest</span>
+    <span class="k">return</span> <span class="n">numSamples</span>
+
+
+<div class="viewcode-block" id="sampleimg"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.patches.sampleimg">[docs]</a><span class="k">def</span> <span class="nf">sampleimg</span><span class="p">(</span><span class="n">imgA</span><span class="p">,</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numSamples</span><span class="p">,</span> <span class="n">imgB</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">imgC</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">imgSize</span> <span class="o">=</span> <span class="n">imgA</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">imgSize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">imgSize</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">imgSize</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])[</span><span class="mi">0</span><span class="p">:</span><span class="n">imgSize</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">:</span><span class="n">imgSize</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">ys</span><span class="p">,</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">randperm2d</span><span class="p">(</span><span class="n">imgSize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">imgSize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">numSamples</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">imgSize</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="n">zs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">numSamples</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">zs</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">imgSize</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">numSamples</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">imgB</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">patches1imgA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numSamples</span><span class="p">],</span> <span class="n">imgA</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">numSamples</span><span class="p">),</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">zs</span><span class="p">):</span>
+            <span class="n">patches1imgA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgA</span><span class="p">[</span>
+                <span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z</span><span class="p">:</span><span class="n">z</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">patches1imgA</span>
+    <span class="k">if</span> <span class="n">imgC</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">patches1imgA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numSamples</span><span class="p">],</span> <span class="n">imgA</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">patches1imgB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numSamples</span><span class="p">],</span> <span class="n">imgB</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">numSamples</span><span class="p">),</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">zs</span><span class="p">):</span>
+            <span class="n">patches1imgA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgA</span><span class="p">[</span>
+                <span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z</span><span class="p">:</span><span class="n">z</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">patches1imgB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgB</span><span class="p">[</span>
+                <span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z</span><span class="p">:</span><span class="n">z</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">patches1imgA</span><span class="p">,</span> <span class="n">patches1imgB</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">patches1imgA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numSamples</span><span class="p">],</span> <span class="n">imgA</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">patches1imgB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numSamples</span><span class="p">],</span> <span class="n">imgB</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">patches1imgC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numSamples</span><span class="p">],</span> <span class="n">imgC</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">numSamples</span><span class="p">),</span> <span class="n">ys</span><span class="p">,</span> <span class="n">xs</span><span class="p">,</span> <span class="n">zs</span><span class="p">):</span>
+            <span class="n">patches1imgA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgA</span><span class="p">[</span>
+                <span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z</span><span class="p">:</span><span class="n">z</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">patches1imgB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgB</span><span class="p">[</span>
+                <span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z</span><span class="p">:</span><span class="n">z</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+            <span class="n">patches1imgC</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">imgC</span><span class="p">[</span>
+                <span class="n">y</span><span class="p">:</span><span class="n">y</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">z</span><span class="p">:</span><span class="n">z</span> <span class="o">+</span> <span class="n">ptcsize</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="n">patches1imgA</span><span class="p">,</span> <span class="n">patches1imgB</span><span class="p">,</span> <span class="n">patches1imgC</span></div>
+
+
+<div class="viewcode-block" id="imgs2ptcs"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.patches.imgs2ptcs">[docs]</a><span class="k">def</span> <span class="nf">imgs2ptcs</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numptcs</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    Sample diffrent patches from imgs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    imgs : {array_like, or list of image pathes}.</span>
+<span class="sd">        Images to be sampled, a H-W-C-N numpy ndarray, or a list of image</span>
+<span class="sd">        pathes with diffrent image shapes.</span>
+<span class="sd">    ptcsize : {int tuple, list or None, optional}</span>
+<span class="sd">        Specifies the each patch size (rows, cols, channel) that you want to</span>
+<span class="sd">        sampled. If not given, ptcsize=[8, 8, 1].</span>
+<span class="sd">    numptcs : {int or None, optional}</span>
+<span class="sd">        The number of patches that you want to sample, if None, numptcs=100.</span>
+<span class="sd">    seed : {int or None, optional}</span>
+<span class="sd">        Random seed, default None(differ each time.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ptcs : {ndarray}</span>
+<span class="sd">        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    imgs2blks, blks2imgs, showblks.</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from matplotlib import pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; from imgblk import imgs2ptcs, showblks</span>
+<span class="sd">    &gt;&gt;&gt; ptcsize = [128, 128, 3]</span>
+<span class="sd">    &gt;&gt;&gt; numptcs = 20</span>
+<span class="sd">    &gt;&gt;&gt; imgspathes = [&#39;/mnt/d/DataSets/oi/nsi/classical/BaboonRGB.bmp&#39;,</span>
+<span class="sd">                     &#39;/mnt/d/DataSets/oi/nsi/classical/LenaRGB.bmp&#39;,]</span>
+<span class="sd">    &gt;&gt;&gt; ptcs = imgs2ptcs(imgspathes, ptcsize , numptcs)</span>
+<span class="sd">    &gt;&gt;&gt; print(ptcs.dtype, ptcs.shape)</span>
+<span class="sd">    &gt;&gt;&gt; # show</span>
+<span class="sd">    &gt;&gt;&gt; showblks(ptcs, rcsize=(10,10))</span>
+
+<span class="sd">    See &quot;test_imgs2ptcs.py&quot;, &quot;test_imgs2blks.py&quot;, &quot;test_blks2imgs.py&quot;,</span>
+<span class="sd">    &quot;test_showblks.py&quot; for more Examples.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ptcsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ptcsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">numptcs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numptcs</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">ptcsize</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ptcsize</span><span class="p">)</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In imgs2ptcs...&quot;</span><span class="p">)</span>
+    <span class="c1"># numpy ndarray H-W-C-N</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">numimgs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">numSamples</span> <span class="o">=</span> <span class="n">_cmpNumSamples</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numimgs</span><span class="p">)</span>
+
+        <span class="n">ptcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">imgs</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">cpos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numimgs</span><span class="p">):</span>
+            <span class="n">ptcs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sampleimg</span><span class="p">(</span>
+                <span class="n">imgs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+            <span class="n">cpos</span> <span class="o">+=</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">ptcs</span>
+    <span class="c1"># image path list</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imgs</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">numimgs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">imgs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numimgs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgs2ptcs...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">numSamples</span> <span class="o">=</span> <span class="n">_cmpNumSamples</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numimgs</span><span class="p">)</span>
+        <span class="c1"># get image data type</span>
+        <span class="n">flag</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">ndimA</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+            <span class="n">ptcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;bad image pathes list type,&#39;</span>
+                <span class="s1">&#39;each element of the list should be string&#39;</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">cpos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">imgpath</span> <span class="ow">in</span> <span class="n">imgs</span><span class="p">:</span>
+            <span class="n">flag</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">img</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgpath</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">imgpath</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ndim</span> <span class="o">==</span> <span class="n">ndimA</span><span class="p">:</span>
+                    <span class="n">ptcs</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">sampleimg</span><span class="p">(</span>
+                        <span class="n">img</span><span class="p">,</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+                    <span class="n">cpos</span> <span class="o">+=</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                        <span class="s1">&#39;I have got images with different&#39;</span> <span class="o">+</span>
+                        <span class="s1">&#39;ndim:&#39;</span><span class="p">,</span> <span class="n">ndimA</span><span class="p">,</span> <span class="n">ndim</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Not an image!&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgs2ptcs...&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ptcs</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;&quot;imgs&quot; should be a path list or H-W-C-N numpy ndarray!&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgs2ptcs...&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="imgsAB2ptcs"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.patches.imgsAB2ptcs">[docs]</a><span class="k">def</span> <span class="nf">imgsAB2ptcs</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="n">imgsB</span><span class="p">,</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numptcs</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    Sampling diffrent patches from imgsA imgsB.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    imgsA/B : {array_like, or list of image pathes.}</span>
+<span class="sd">        Images to be sampled, a H-W-C-N numpy ndarray, or a list of image</span>
+<span class="sd">        pathes with diffrent image shapes.</span>
+<span class="sd">    ptcsize : {int tuple, list or None, optional}</span>
+<span class="sd">        Specifies the each patch size (rows, cols, channel) that you want to</span>
+<span class="sd">        sampled. If not given, ptcsize=[8, 8, 1].</span>
+<span class="sd">    numptcs : {int or None, optional}</span>
+<span class="sd">        The number of patches that you want to sample, if None, numptcs=100.</span>
+<span class="sd">    seed : {int or None, optional}</span>
+<span class="sd">        Random seed, default None(differ each time.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ptcsA : {ndarray}</span>
+<span class="sd">        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</span>
+
+<span class="sd">    ptcsB : {ndarray}</span>
+<span class="sd">        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    imgs2blks, blks2imgs, showblks.</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from matplotlib import pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; from imgblk import imgs2ptcs, showblks</span>
+<span class="sd">    &gt;&gt;&gt; ptcsize = [128, 128, 3]</span>
+<span class="sd">    &gt;&gt;&gt; numptcs = 20</span>
+<span class="sd">    &gt;&gt;&gt; imgspathesA = [&#39;/mnt/d/DataSets/oi/nsi/classical/BaboonRGB.bmp&#39;]</span>
+<span class="sd">        imgspathesB = [&#39;/mnt/d/DataSets/oi/nsi/classical/LenaRGB.bmp&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; ptcsA, ptcsB = imgsAB2ptcs(imgspathesA, imgspathesB, ptcsize , numptcs)</span>
+<span class="sd">    &gt;&gt;&gt; print(ptcsA.dtype, ptcsA.shape)</span>
+<span class="sd">    &gt;&gt;&gt; # show</span>
+<span class="sd">    &gt;&gt;&gt; showblks(ptcsA, rcsize=(10,10))</span>
+
+<span class="sd">    See &quot;test_imgs2ptcs.py&quot;, &quot;test_imgs2blks.py&quot;, &quot;test_blks2imgs.py&quot;,</span>
+<span class="sd">    &quot;test_showblks.py&quot; for more Examples.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In imgsAB2ptcs...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ptcsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ptcsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">numptcs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numptcs</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="c1"># numpy ndarray H-W-C-N</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">imgsA</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">numimgs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">numSamples</span> <span class="o">=</span> <span class="n">_cmpNumSamples</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numimgs</span><span class="p">)</span>
+
+        <span class="n">ptcsA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">imgsA</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">ptcsB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">imgsB</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">cpos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numimgs</span><span class="p">):</span>
+            <span class="n">ptcA</span><span class="p">,</span> <span class="n">ptcB</span> <span class="o">=</span> <span class="n">sampleimg</span><span class="p">(</span><span class="n">imgsA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numSamples</span><span class="p">[</span>
+                <span class="n">i</span><span class="p">],</span> <span class="n">imgsB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+            <span class="n">ptcsA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcA</span>
+            <span class="n">ptcsB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcB</span>
+            <span class="n">cpos</span> <span class="o">+=</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgsAB2ptcs...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ptcsA</span><span class="p">,</span> <span class="n">ptcsB</span>
+
+    <span class="c1"># image path list</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">numimgs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">imgsA</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numimgs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;~~~No Images!&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgsAB2ptcs...&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">numSamples</span> <span class="o">=</span> <span class="n">_cmpNumSamples</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numimgs</span><span class="p">)</span>
+        <span class="c1"># get image data type</span>
+        <span class="n">flag</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">ndimA</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgsA</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+            <span class="n">ptcsA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">ptcsB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;bad image pathes list type,&#39;</span>
+                <span class="s1">&#39;each element of the list should be string&#39;</span><span class="p">)</span>
+
+        <span class="n">cpos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numimgs</span><span class="p">):</span>
+            <span class="n">imgpathA</span> <span class="o">=</span> <span class="n">imgsA</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+            <span class="n">imgpathB</span> <span class="o">=</span> <span class="n">imgsB</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+ <span class="c1">#           print(imgpathA, imgpathB)</span>
+            <span class="n">flag</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">imgB</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgpathB</span><span class="p">)</span>
+            <span class="n">flag</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ndim</span><span class="p">,</span> <span class="n">imgA</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgpathA</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">ndim</span> <span class="o">==</span> <span class="n">ndimA</span><span class="p">:</span>
+
+                    <span class="n">ptcA</span><span class="p">,</span> <span class="n">ptcB</span> <span class="o">=</span> <span class="n">sampleimg</span><span class="p">(</span><span class="n">imgA</span><span class="p">,</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numSamples</span><span class="p">[</span>
+                        <span class="n">n</span><span class="p">],</span> <span class="n">imgB</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+                    <span class="n">ptcsA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcA</span>
+                    <span class="n">ptcsB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcB</span>
+                    <span class="n">cpos</span> <span class="o">+=</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                        <span class="s1">&#39;I have got images with different&#39;</span> <span class="o">+</span>
+                        <span class="s1">&#39;ndim:&#39;</span><span class="p">,</span> <span class="n">ndimA</span><span class="p">,</span> <span class="n">ndim</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Not an image!&#39;</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgsAB2ptcs...&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ptcsA</span><span class="p">,</span> <span class="n">ptcsB</span>
+        <span class="c1"># return patches</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;&quot;imgs&quot; should be a path list or H-W-C-N numpy ndarray!&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="imgsABC2ptcs"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.patches.imgsABC2ptcs">[docs]</a><span class="k">def</span> <span class="nf">imgsABC2ptcs</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="n">imgsB</span><span class="p">,</span> <span class="n">imgsC</span><span class="p">,</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numptcs</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    Sampling diffrent patches from imgsA imgsB imgsC.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    imgsA/B/C : {array_like, or list of image pathes}.</span>
+<span class="sd">        Images to be sampled, a H-W-C-N numpy ndarray, or a list of image</span>
+<span class="sd">        pathes with diffrent image shapes.</span>
+<span class="sd">    ptcsize : {int tuple, list or None, optional}</span>
+<span class="sd">        Specifies the each patch size (rows, cols, channel) that you want to</span>
+<span class="sd">        sampled. If not given, ptcsize=[8, 8, 1].</span>
+<span class="sd">    numptcs : {int or None, optional}</span>
+<span class="sd">        The number of patches that you want to sample, if None, numptcs=100.</span>
+<span class="sd">    seed : {int or None, optional}</span>
+<span class="sd">        Random seed, default None(differ each time.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ptcsA : {ndarray}</span>
+<span class="sd">        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</span>
+
+<span class="sd">    ptcsB : {ndarray}</span>
+<span class="sd">        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</span>
+<span class="sd">    ptcsC : {ndarray}</span>
+<span class="sd">        A bH-bW-bC-bN numpy ndarray, (bH, bW, bC) == ptcsize.</span>
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    imgs2blks, blks2imgs, showblks.</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">    &gt;&gt;&gt; from matplotlib import pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; from imgblk import imgs2ptcs, showblks</span>
+<span class="sd">    &gt;&gt;&gt; ptcsize = [128, 128, 3]</span>
+<span class="sd">    &gt;&gt;&gt; numptcs = 20</span>
+<span class="sd">    &gt;&gt;&gt; imgspathesA = [&#39;/mnt/d/DataSets/oi/nsi/classical/BaboonRGB.bmp&#39;]</span>
+<span class="sd">        imgspathesB = [&#39;/mnt/d/DataSets/oi/nsi/classical/LenaRGB.bmp&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; ptcsA, ptcsB = imgsAB2ptcs(imgspathesA, imgspathesB, ptcsize , numptcs)</span>
+<span class="sd">    &gt;&gt;&gt; print(ptcsA.dtype, ptcsA.shape)</span>
+<span class="sd">    &gt;&gt;&gt; # show</span>
+<span class="sd">    &gt;&gt;&gt; showblks(ptcsA, rcsize=(10,10))</span>
+
+<span class="sd">    See &quot;test_imgs2ptcs.py&quot;, &quot;test_imgs2blks.py&quot;, &quot;test_blks2imgs.py&quot;,</span>
+<span class="sd">    &quot;test_showblks.py&quot; for more Examples.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---IN imgsABC2ptcs...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">ptcsize</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ptcsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">numptcs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numptcs</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="c1"># numpy ndarray H-W-C-N</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">imgsA</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">numimgs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">numSamples</span> <span class="o">=</span> <span class="n">_cmpNumSamples</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numimgs</span><span class="p">)</span>
+
+        <span class="n">ptcsA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">imgsA</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">ptcsB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">imgsB</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">ptcsC</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">imgsC</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+
+        <span class="n">cpos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numimgs</span><span class="p">):</span>
+            <span class="c1"># print(i, numimgs)</span>
+            <span class="c1"># print(imgsA.shape, imgsB.shape, imgsC.shape)</span>
+            <span class="n">ptcA</span><span class="p">,</span> <span class="n">ptcB</span><span class="p">,</span> <span class="n">ptcC</span> <span class="o">=</span> <span class="n">sampleimg</span><span class="p">(</span><span class="n">imgsA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>
+                                         <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                                         <span class="n">imgsB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span>
+                                         <span class="n">imgsC</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+            <span class="c1"># print(ptcA.shape, ptcB.shape, ptcC.shape)</span>
+            <span class="c1"># print(i, numSamples[i], ptcA.shape, ptcB.shape, ptcC.shape)</span>
+            <span class="n">ptcsA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcA</span>
+            <span class="n">ptcsB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcB</span>
+            <span class="n">ptcsC</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcC</span>
+            <span class="n">cpos</span> <span class="o">+=</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgsABC2ptcs...&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ptcsA</span><span class="p">,</span> <span class="n">ptcsB</span><span class="p">,</span> <span class="n">ptcsC</span>
+    <span class="c1"># image path list</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">imgsA</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">numimgs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">imgsA</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">numimgs</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;~~~No images!&quot;</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgsABC2ptcs...&quot;</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">numSamples</span> <span class="o">=</span> <span class="n">_cmpNumSamples</span><span class="p">(</span><span class="n">numptcs</span><span class="p">,</span> <span class="n">numimgs</span><span class="p">)</span>
+        <span class="c1"># get image data type</span>
+        <span class="n">flag</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">ndimA</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgsA</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+            <span class="n">ptcsA</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">dtype</span><span class="p">)</span>
+            <span class="n">ptcsB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ptcsize</span> <span class="o">+</span> <span class="p">[</span><span class="n">numptcs</span><span class="p">],</span> <span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s1">&#39;bad image pathes list type,&#39;</span>
+                <span class="s1">&#39;each element of the list should be string&#39;</span><span class="p">)</span>
+
+        <span class="n">cpos</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numimgs</span><span class="p">):</span>
+            <span class="n">imgpathA</span> <span class="o">=</span> <span class="n">imgsA</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+            <span class="n">imgpathB</span> <span class="o">=</span> <span class="n">imgsB</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+            <span class="n">imgpathC</span> <span class="o">=</span> <span class="n">imgsC</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+            <span class="n">flag</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ndimA</span><span class="p">,</span> <span class="n">imgA</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgpathA</span><span class="p">)</span>
+            <span class="n">flag</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ndimB</span><span class="p">,</span> <span class="n">imgB</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgpathB</span><span class="p">)</span>
+            <span class="n">flag</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">ndimC</span><span class="p">,</span> <span class="n">imgC</span> <span class="o">=</span> <span class="n">_imageinfo</span><span class="p">(</span><span class="n">imgpathC</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">flag</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">ndimC</span> <span class="o">==</span> <span class="n">ndimA</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ndimB</span> <span class="o">==</span> <span class="n">ndimA</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">ndimB</span> <span class="o">==</span> <span class="n">ndimC</span><span class="p">):</span>
+
+                    <span class="n">ptcA</span><span class="p">,</span> <span class="n">ptcB</span><span class="p">,</span> <span class="n">ptcC</span> <span class="o">=</span> <span class="n">sampleimg</span><span class="p">(</span>
+                        <span class="n">imgA</span><span class="p">,</span> <span class="n">ptcsize</span><span class="p">,</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">],</span> <span class="n">imgB</span><span class="p">,</span> <span class="n">imgC</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+                    <span class="n">ptcsA</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcA</span>
+                    <span class="n">ptcsB</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcB</span>
+                    <span class="n">ptcsC</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">cpos</span><span class="p">:</span><span class="n">cpos</span> <span class="o">+</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">]]</span> <span class="o">=</span> <span class="n">ptcC</span>
+                    <span class="n">cpos</span> <span class="o">+=</span> <span class="n">numSamples</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                        <span class="s1">&#39;I have got images with different dim </span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1">, </span><span class="si">%f</span><span class="s1"> &#39;</span>
+                        <span class="o">%</span> <span class="p">(</span><span class="n">ndimA</span><span class="p">,</span> <span class="n">ndimB</span><span class="p">,</span> <span class="n">ndimC</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;Not an image!&#39;</span><span class="p">)</span>
+
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imgsAB2ptcs...&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ptcsA</span><span class="p">,</span> <span class="n">ptcsB</span><span class="p">,</span> <span class="n">ptcsC</span>
+        <span class="c1"># return patches</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="s1">&#39;&quot;imgs&quot; should be a path list or H-W-C-N numpy ndarray!&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="selptcs"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.patches.selptcs">[docs]</a><span class="k">def</span> <span class="nf">selptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">numsel</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+<span class="sd">    Selects some patches based on std, var...</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    patches : {array_like}</span>
+<span class="sd">        Image patches, a pH-pW-pC-pN numpy ndarray.</span>
+<span class="sd">    numsel : {int, float or None, optional}</span>
+<span class="sd">        How many patches you want to select. If integer, then returns numsel</span>
+<span class="sd">        patches; If float in [0,1], then numsel*100 percent of the patches</span>
+<span class="sd">        will be returned. If not given, does not affect.</span>
+<span class="sd">    method : {str or None, optional}</span>
+<span class="sd">        Specifies which method to used for evaluating each patch. Option:</span>
+<span class="sd">        &#39;std&#39;(standard deviation), &#39;var&#39;(variance),</span>
+<span class="sd">        the first numsel patch scores will be returned.</span>
+<span class="sd">        If not given, does nothing.</span>
+<span class="sd">    thresh : {float, optional}</span>
+<span class="sd">        When method are specified, using thresh as the threshold, and those</span>
+<span class="sd">        patches whose scores are larger(&gt;=) then thresh will be returned.</span>
+<span class="sd">    sort : {str or None, optional}</span>
+<span class="sd">        Sorts the patches according to pathes scores in sort way(&#39;descent&#39;,</span>
+<span class="sd">        &#39;ascent&#39;). If not given, does not affect, i.e. origional order.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    selpat : {ndarray}</span>
+<span class="sd">        A pH-pW-pC-pNx numpy ndarray.</span>
+<span class="sd">    idxsel : {ndarray}</span>
+<span class="sd">        A pNx numpy array, indicates the position of selpat in patches.</span>
+<span class="sd">    selptcs_scores: {ndarray}</span>
+<span class="sd">        A pNx numpy array, indicates the scores of selpat in patches, with</span>
+<span class="sd">        measurements specfied by method.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    imgs2ptcs, imgs2blks, blks2imgs, showblks.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; patches = np.uint8(np.random.randint(0, 255, (8, 8, 3, 101)))</span>
+<span class="sd">    &gt;&gt;&gt; # just compute scores:</span>
+<span class="sd">    &gt;&gt;&gt; selpat, _, scores = selptcs(patches, method=&#39;std&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # compute scores and sort by scores:</span>
+<span class="sd">    &gt;&gt;&gt; selpat, _, scores = selptcs(patches, method=&#39;std&#39;, sort=&#39;descent&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # compute scores and sort by scores, and just select scores &gt; thresh</span>
+<span class="sd">    &gt;&gt;&gt; selpat, idxsel, _ = selptcs(patches, method=&#39;std&#39;, thresh=15)</span>
+<span class="sd">    &gt;&gt;&gt; # compute scores and sort by scores, and select scores &gt; thresh, and</span>
+<span class="sd">    &gt;&gt;&gt; # sort in descending order.</span>
+<span class="sd">    &gt;&gt;&gt; selpat, idxsel, _ = selptcs(patches, method=&#39;std&#39;, thresh=15,</span>
+<span class="sd">        sort=&#39;descent&#39;)</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In selptcs...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">pH</span><span class="p">,</span> <span class="n">pW</span><span class="p">,</span> <span class="n">pC</span><span class="p">,</span> <span class="n">pN</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&quot;patches&quot; should be a pH-pW-pC-pN numpy ndarray.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">numsel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">numsel</span> <span class="o">=</span> <span class="n">pN</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">numsel</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">numsel</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">numsel</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">numsel</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">numsel</span> <span class="o">*</span> <span class="n">pN</span><span class="p">)</span>
+
+    <span class="n">idxsel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pN</span><span class="p">))</span>
+    <span class="c1"># check method</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out selptcs.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">patches</span><span class="p">,</span> <span class="n">idxsel</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">min</span><span class="p">(</span><span class="n">numsel</span><span class="p">,</span> <span class="n">pN</span><span class="p">)],</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;var&#39;</span><span class="p">:</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="n">pN</span><span class="p">))</span>  <span class="c1"># pH*pW*pC-pN</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">selptcs_scores</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>             <span class="c1"># (pN,)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;std&#39;</span><span class="p">:</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="n">pN</span><span class="p">))</span>  <span class="c1"># pH*pW*pC-pN</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">selptcs_scores</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>             <span class="c1"># (pN,)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;method&#39;</span> <span class="o">+</span> <span class="s1">&#39; does not support now!&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">thresh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">idxsel</span> <span class="o">=</span> <span class="n">idxsel</span><span class="p">[</span><span class="n">selptcs_scores</span> <span class="o">&gt;=</span> <span class="n">thresh</span><span class="p">]</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">selptcs_scores</span><span class="p">[</span><span class="n">idxsel</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">sort</span> <span class="o">==</span> <span class="s1">&#39;ascent&#39;</span><span class="p">:</span>
+        <span class="n">idxsel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">selptcs_scores</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">selptcs_scores</span><span class="p">[</span><span class="n">idxsel</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">sort</span> <span class="o">==</span> <span class="s1">&#39;descent&#39;</span><span class="p">:</span>
+        <span class="n">idxsel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">selptcs_scores</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">idxsel</span> <span class="o">=</span> <span class="n">idxsel</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">selptcs_scores</span><span class="p">[</span><span class="n">idxsel</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">sort</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">idxsel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">numsel</span><span class="p">,</span> <span class="n">pN</span><span class="p">)))</span>
+        <span class="n">selptcs_scores</span> <span class="o">=</span> <span class="n">selptcs_scores</span><span class="p">[</span><span class="n">idxsel</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;&quot;sort&quot; should be ascent, descent or None!&#39;</span><span class="p">)</span>
+    <span class="n">idxsel</span> <span class="o">=</span> <span class="n">idxsel</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">min</span><span class="p">(</span><span class="n">numsel</span><span class="p">,</span> <span class="n">pN</span><span class="p">)]</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out selptcs.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">patches</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">idxsel</span><span class="p">],</span> <span class="n">idxsel</span><span class="p">,</span> <span class="n">selptcs_scores</span></div>
+
+
+<div class="viewcode-block" id="geocluptcs"><a class="viewcode-back" href="../../../improc.blkptcs.html#improc.blkptcs.patches.geocluptcs">[docs]</a><span class="k">def</span> <span class="nf">geocluptcs</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;std&#39;</span><span class="p">,</span> <span class="n">thresh</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">Rstar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="s1">&#39;descent&#39;</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;</span>
+
+<span class="sd">    Classifies patches into smooth blocks and rough blocks</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    patches : {array_like}</span>
+<span class="sd">        Image patches, a pH-pW-pC-pN numpy ndarray.</span>
+<span class="sd">    thresh : {float or None, optional}</span>
+<span class="sd">        Threshold for spliting smooth block and rough block.</span>
+<span class="sd">    Rstar : {float or None, optional}</span>
+<span class="sd">        Specifies which method to used for evaluating each patch. Option:</span>
+<span class="sd">        &#39;std&#39;(standard deviation), &#39;var&#39;(variance),</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    selpat : {ndarray}</span>
+<span class="sd">        A pH-pW-pC-pNx numpy ndarray.</span>
+<span class="sd">    idxsel : {ndarray}</span>
+<span class="sd">        A pNx numpy array, indicates the position of selpat in patches.</span>
+<span class="sd">    selptcs_scores: {ndarray}</span>
+<span class="sd">        A pNx numpy array, indicates the scores of selpat in patches, with</span>
+<span class="sd">        measurements specfied by method.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    imgs2ptcs, imgs2blks, blks2imgs, showblks.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; patches = np.uint8(np.random.randint(0, 255, (8, 8, 3, 101)))</span>
+<span class="sd">    &gt;&gt;&gt; # just compute scores:</span>
+<span class="sd">    &gt;&gt;&gt; selpat, _, scores = geocluptcs(patches, method=&#39;std&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # compute scores and sort by scores:</span>
+<span class="sd">    &gt;&gt;&gt; selpat, _, scores = selptcs(patches, method=&#39;std&#39;, sort=&#39;descent&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; # compute scores and sort by scores, and just select scores &gt; thresh</span>
+<span class="sd">    &gt;&gt;&gt; selpat, idxsel, _ = selptcs(patches, method=&#39;std&#39;, thresh=15)</span>
+<span class="sd">    &gt;&gt;&gt; # compute scores and sort by scores, and select scores &gt; thresh, and</span>
+<span class="sd">    &gt;&gt;&gt; # sort in descending order.</span>
+<span class="sd">    &gt;&gt;&gt; selpat, idxsel, _ = selptcs(patches, method=&#39;std&#39;, thresh=15,</span>
+<span class="sd">        sort=&#39;descent&#39;)</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In geocluptcs...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">patches</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">patches</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;&quot;patches&quot; should be a pH-pW-pC-pN numpy array!&#39;</span><span class="p">)</span>
+    <span class="n">pH</span><span class="p">,</span> <span class="n">pW</span><span class="p">,</span> <span class="n">pC</span><span class="p">,</span> <span class="n">pN</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">sortptcs</span><span class="p">,</span> <span class="n">sortptcs_idx</span><span class="p">,</span> <span class="n">sortptcs_scores</span> <span class="o">=</span> <span class="n">selptcs</span><span class="p">(</span>
+        <span class="n">patches</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">thresh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">thresh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sortptcs_scores</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="c1"># split smooth block and rough block</span>
+    <span class="n">smoothptcs_idx</span> <span class="o">=</span> <span class="n">sortptcs_idx</span><span class="p">[</span><span class="n">sortptcs_scores</span> <span class="o">&lt;</span> <span class="n">thresh</span><span class="p">]</span>
+    <span class="n">smoothptcs</span> <span class="o">=</span> <span class="n">patches</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">smoothptcs_idx</span><span class="p">]</span>
+    <span class="n">roughptcs_idx</span> <span class="o">=</span> <span class="n">sortptcs_idx</span><span class="p">[</span><span class="n">sortptcs_scores</span> <span class="o">&gt;=</span> <span class="n">thresh</span><span class="p">]</span>
+    <span class="n">roughptcs</span> <span class="o">=</span> <span class="n">patches</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">roughptcs_idx</span><span class="p">]</span>
+    <span class="n">rpN</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="n">roughptcs</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="c1"># compute the gradient of rough blocks</span>
+    <span class="k">if</span> <span class="n">pC</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># gray patches</span>
+        <span class="c1"># dh: pH-pW-rpN, given arr with type uint8, If g&lt;0, then np.gradient</span>
+        <span class="c1">#   return wrong (e.g.,-255 -&gt; 1, -127.5 -&gt; 0.5), so, convert to float</span>
+        <span class="c1">#   , or scale to [0,1]</span>
+        <span class="n">dh</span><span class="p">,</span> <span class="n">dw</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">_hw1n2hwn</span><span class="p">(</span><span class="n">roughptcs</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span>
+            <span class="n">dh</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="n">rpN</span><span class="p">),</span>
+            <span class="n">dw</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="n">rpN</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">rpN</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pC</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dh</span><span class="p">,</span> <span class="n">dw</span><span class="p">,</span> <span class="n">dc</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">roughptcs</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span>
+            <span class="n">dh</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="n">rpN</span><span class="p">),</span>
+            <span class="n">dw</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="n">rpN</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span>
+            <span class="n">G</span><span class="p">,</span> <span class="n">dc</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="n">rpN</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">pH</span> <span class="o">*</span> <span class="n">pW</span> <span class="o">*</span> <span class="n">pC</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">rpN</span><span class="p">)</span>
+    <span class="c1"># compute Singular vector and value</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">Angle</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="mi">10</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rpN</span><span class="p">):</span>
+        <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">G</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">k</span><span class="p">])</span>  <span class="c1"># 64*2 or 192*3</span>
+        <span class="n">R</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">eps</span><span class="p">))</span>
+        <span class="n">Angle</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
+    <span class="n">Angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Angle</span><span class="p">)</span>
+    <span class="c1"># classify rough patches</span>
+    <span class="n">dominantptcs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dominantptcs_idx</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">Rstar</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">Rstar</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="n">stochasticptcs_idx</span> <span class="o">=</span> <span class="n">roughptcs_idx</span><span class="p">[</span><span class="n">R</span> <span class="o">&lt;</span> <span class="n">Rstar</span><span class="p">]</span>
+    <span class="n">stochasticptcs</span> <span class="o">=</span> <span class="n">patches</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">stochasticptcs_idx</span><span class="p">]</span>
+    <span class="n">dom_idx</span> <span class="o">=</span> <span class="n">roughptcs_idx</span><span class="p">[</span><span class="n">R</span> <span class="o">&gt;=</span> <span class="n">Rstar</span><span class="p">]</span>
+    <span class="n">dom_angle</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">[</span><span class="n">R</span> <span class="o">&gt;=</span> <span class="n">Rstar</span><span class="p">]</span>  <span class="c1"># (-pi/2, pi/2)</span>
+
+    <span class="c1"># divide into 0, pi/6, pi/3 pi/2(-pi/2), 2pi/3(-pi/3), 5pi/6(-pi/6),</span>
+    <span class="c1"># so delta = pi/12</span>
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">12</span>
+    <span class="c1"># 0 rad patches</span>
+    <span class="n">dominantptcs_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dom_idx</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">dom_angle</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">delta</span><span class="p">])</span>
+    <span class="n">dominantptcs_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dom_idx</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">dom_angle</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">delta</span><span class="p">])</span>
+    <span class="n">dominantptcs_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dom_idx</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">dom_angle</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">delta</span><span class="p">])</span>
+    <span class="n">dominantptcs_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="n">dom_idx</span><span class="p">[</span><span class="nb">abs</span><span class="p">((</span><span class="nb">abs</span><span class="p">(</span><span class="n">dom_angle</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="n">delta</span><span class="p">])</span>
+    <span class="n">dominantptcs_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dom_idx</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">dom_angle</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">delta</span><span class="p">])</span>
+    <span class="n">dominantptcs_idx</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dom_idx</span><span class="p">[</span><span class="nb">abs</span><span class="p">(</span><span class="n">dom_angle</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">6</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">delta</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dominantptcs_idx</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dominantptcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">patches</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="n">dominantptcs_idx</span><span class="p">[</span><span class="n">k</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dominantptcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">smoothptcs_idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">smoothptcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stochasticptcs_idx</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">stochasticptcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out geocluptcs.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">smoothptcs</span><span class="p">,</span> <span class="n">dominantptcs</span><span class="p">,</span> <span class="n">stochasticptcs</span><span class="p">,</span>\
+        <span class="n">smoothptcs_idx</span><span class="p">,</span> <span class="n">dominantptcs_idx</span><span class="p">,</span> <span class="n">stochasticptcs_idx</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017-2018, Zhi Liu, School of Artificial Intelligence, Xidian University
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
