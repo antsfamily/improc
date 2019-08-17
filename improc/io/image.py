@@ -6,9 +6,7 @@
 # @Version : $1.0$
 
 import os
-from scipy.misc import imread as scipyimread
-from scipy.misc import imsave as scipyimsave
-from .tiff import tifread, tifsave
+# from .tiff import tifread, tifsave
 from ..utils.log import *
 import skimage.io as io
 
@@ -34,12 +32,10 @@ def imreadadv(filepath, verbose=False):
     if verbose:
         logging.info("---In imreadadv...")
 
-    ext = os.path.splitext(filepath)[-1]
+    # ext = os.path.splitext(filepath)[-1]
+    # if ext in ['.tif', '.tiff', '.TIF', '.TIFF']:
 
-    if ext in ['.tif', '.tiff', '.TIF', '.TIFF']:
-        A = tifread(filepath)
-    else:
-        A = scipyimread(filepath)
+    A = io.imread(filepath)
 
     if verbose:
         print(A.shape, filepath)
@@ -48,10 +44,10 @@ def imreadadv(filepath, verbose=False):
     return A
 
 
-def imwriteadv(filepath, A):
-    """write image to a file
+def imsaveadv(filepath, A):
+    """save data to an image file
 
-    write image to a file
+    save data to an image file
 
     Parameters
     ----------
@@ -66,22 +62,14 @@ def imwriteadv(filepath, A):
         0: success
     """
 
-    # logging.info("---In imwriteadv...")
-
-    ext = os.path.splitext(filepath)[-1]
-
-    if ext in ['.tif', '.tiff', '.TIF', '.TIFF']:
-        tifsave(filepath, A)
-    else:
-        A = scipyimsave(filepath, A)
-    # logging.info("---Out imwriteadv.")
-
-    return 0
-
-
-def imsaveadv(filepath, A):
+    if verbose:
+        logging.info("---In imsaveadv...")
 
     io.imsave(filepath, A)
+
+    if verbose:
+        print(A.shape, filepath)
+        logging.info("---Out imsaveadv.")
 
 
 if __name__ == '__main__':

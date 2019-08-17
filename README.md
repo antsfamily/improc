@@ -14,6 +14,7 @@ improc is an image processing tool for :
 you can install it by:
 
 ```python
+pip install -r requirements.txt
 python setup.py sdist
 sudo python setup.py install --record files.txt
 ```
