@@ -7,9 +7,7 @@
 from __future__ import division, print_function, absolute_import
 import numpy as np
 import improc as imp
-import cv2
 from skimage import exposure
-
 
 
 def _histeq_gray(A, nbins=256, mask=None):
@@ -17,6 +15,7 @@ def _histeq_gray(A, nbins=256, mask=None):
     H = (H * (nbins - 1)).astype(A.dtype)
 
     return H
+
 
 def histeq(A, nbins=256, mask=None):
     r"""histeq
@@ -42,20 +41,19 @@ def histeq(A, nbins=256, mask=None):
         equalized image array
     """
 
-
-    H = A.copy() # H-W-C
+    H = A.copy()  # H-W-C
     if np.ndim(A) == 2:
         # cv2.equalizeHist(A, H)
         H = _histeq_gray(A, nbins=nbins, mask=mask)
 
-    if np.ndim(A)==3 and A.shape[2] == 3:
+    if np.ndim(A) == 3 and A.shape[2] == 3:
         # ycrcb = cv2.cvtColor(H, cv2.COLOR_BGR2YCR_CB)
         # channels = cv2.split(ycrcb)
         # cv2.equalizeHist(channels[0], channels[0])
         # cv2.merge(channels, ycrcb)
         # cv2.cvtColor(ycrcb, cv2.COLOR_YCR_CB2BGR, H)
         H = exposure.equalize_hist(A, nbins=nbins, mask=mask)
-    if np.ndim(A)==3 and A.shape[2] > 3:
+    if np.ndim(A) == 3 and A.shape[2] > 3:
         for i in range(4):
             H[:, :, i] = _histeq_gray(A[:, :, i], nbins=nbins, mask=mask)
             # hh = H[:, :, i].copy()
@@ -65,6 +63,8 @@ def histeq(A, nbins=256, mask=None):
 
 
 if __name__ == '__main__':
+
+    import cv2
 
     import matplotlib.pyplot as plt
 
@@ -79,9 +79,9 @@ if __name__ == '__main__':
 
     eq1 = exposure.equalize_hist(im)
     eq2 = im.copy()
-    eq2[:,:,0] = imp.histeq(im[:,:,0])
-    eq2[:,:,1] = imp.histeq(im[:,:,1])
-    eq2[:,:,2] = imp.histeq(im[:,:,2])
+    eq2[:, :, 0] = imp.histeq(im[:, :, 0])
+    eq2[:, :, 1] = imp.histeq(im[:, :, 1])
+    eq2[:, :, 2] = imp.histeq(im[:, :, 2])
 
     plt.figure()
     plt.subplot(221)
@@ -102,13 +102,13 @@ if __name__ == '__main__':
     im1o = imp.imreadadv('/mnt/d/DataSets/oi/rsi/RSSRAI2019/our/val/img_2017/image_2017_960_960_1.tif')
     im2o = imp.imreadadv('/mnt/d/DataSets/oi/rsi/RSSRAI2019/our/val/img_2018/image_2018_960_960_1.tif')
 
-    im1 = im1o[:,:,0:3]
+    im1 = im1o[:, :, 0:3]
     eq = exposure.equalize_hist(im)
     im1 = imp.scalearr(im1, scaleto=(0, 255), scalefrom=None)
     im1 = im1.astype('uint8')
     eq1 = imp.histeq(im1)
 
-    im2 = im2o[:,:,0:3]
+    im2 = im2o[:, :, 0:3]
     im2 = imp.scalearr(im2, scaleto=(0, 255), scalefrom=None)
     im2 = im2.astype('uint8')
     eq2 = imp.histeq(im2)
@@ -129,12 +129,12 @@ if __name__ == '__main__':
     plt.tight_layout()
     plt.show()
 
-    im1 = im1o[:,:,3]
+    im1 = im1o[:, :, 3]
     im1 = imp.scalearr(im1, scaleto=(0, 255), scalefrom=None)
     im1 = im1.astype('uint8')
     eq1 = imp.histeq(im1)
 
-    im2 = im2o[:,:,3]
+    im2 = im2o[:, :, 3]
     im2 = imp.scalearr(im2, scaleto=(0, 255), scalefrom=None)
     im2 = im2.astype('uint8')
     eq2 = imp.histeq(im2)
@@ -165,19 +165,18 @@ if __name__ == '__main__':
     im2 = im2.astype('uint8')
     eq2 = imp.histeq(im2)
 
-
     plt.figure()
     plt.subplot(221)
-    plt.imshow(im1[:,:,0:3])
+    plt.imshow(im1[:, :, 0:3])
     plt.title('Original')
     plt.subplot(222)
-    plt.imshow(eq1[:,:,0:3])
+    plt.imshow(eq1[:, :, 0:3])
     plt.title('After histeq(each channel)')
     plt.subplot(223)
-    plt.imshow(im2[:,:,0:3])
+    plt.imshow(im2[:, :, 0:3])
     plt.title('Original')
     plt.subplot(224)
-    plt.imshow(eq2[:,:,0:3])
+    plt.imshow(eq2[:, :, 0:3])
     plt.title('After histeq(each channel)')
     plt.tight_layout()
     plt.show()

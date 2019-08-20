@@ -17,6 +17,11 @@ HORIZONTAL_SOBEL_3x3 = np.array(
     [[-1, -2, -1], [0, 0, 0], [1, 2, 1]],
     dtype=float)
 
+KER_DICT = dict()
+
+KER_DICT['blur3x3_mean1'] = np.full((3, 3), 1.0 / 9.0, dtype=float)
+KER_DICT['sharpen3x3_type1'] = np.array([[-1., -1., -1.], [-1., 9., -1.], [-1., -1., -1.]]) / 9.
+
 
 def convolve(image, kernel):
     r"""Performs the convolution using provided kernel.
@@ -43,7 +48,6 @@ def convolve(image, kernel):
         - Kernel Not2 DArray
     """
 
-
     if kernel.ndim != 2:
         raise ValueError('Kernel is not an 2d-array, it a' + str(kernel.ndim) + '-d array.')
     if kernel.shape[:2] > image.shape[:2]:
@@ -65,3 +69,13 @@ def convolve(image, kernel):
     output = output[kernel.shape[0] // 2: -(kernel.shape[0] // 2),
                     kernel.shape[1] // 2: -(kernel.shape[1] // 2)]
     return output
+
+
+if __name__ == '__main__':
+
+    print(BOX_BLUR_3X3)
+    print(BOX_BLUR_5X5)
+    print(GAUSSIAN_BLUR_3x3)
+    print(VERTICAL_SOBEL_3x3)
+    print(HORIZONTAL_SOBEL_3x3)
+    print(KER_DICT)

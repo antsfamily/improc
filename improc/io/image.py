@@ -44,7 +44,7 @@ def imreadadv(filepath, verbose=False):
     return A
 
 
-def imwriteadv(filepath, A):
+def imwriteadv(filepath, A, verbose=False):
     """write data to an image file
 
     write data to an image file
@@ -72,7 +72,7 @@ def imwriteadv(filepath, A):
         logging.info("---Out imwriteadv.")
 
 
-def imsaveadv(filepath, A):
+def imsaveadv(filepath, A, verbose=False):
     """save data to an image file
 
     save data to an image file

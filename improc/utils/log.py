@@ -29,6 +29,8 @@ class logger:
 
     # 日志文件名：由用例脚本的名称，结合日志保存路径，得到日志文件的绝对路径
     logname = os.path.join(logpath, sys.argv[0].split('/')[-1].split('.')[0])
+    if logname == logpath:
+        logname = logpath + '/temp'
 
     # 初始化logger
     log = logging.getLogger()

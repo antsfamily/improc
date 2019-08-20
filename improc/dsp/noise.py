@@ -6,11 +6,11 @@
 # @Version : $1.0$
 from __future__ import division, print_function, absolute_import
 import numpy as np
-from ..utils.log import *
-from ..common.typevalue import peakvalue
+from improc.utils.log import *
+from improc.common.typevalue import peakvalue
 
 
-def matnoise(mat, noise='wgn', PEAK=None, SNR=30):
+def matnoise(mat, noise='wgn', PEAK=None, SNR=30, verbose=False):
     r"""add noise to an matrix
 
     Add noise to an matrix (real or complex)
@@ -28,8 +28,18 @@ def matnoise(mat, noise='wgn', PEAK=None, SNR=30):
         Peak value (the default is None--> max)
     SNR : {float number}
         Signal-to-noise ratio (default: {30})
+    verbose : {bool}
+        If True, show log information
+
+    Returns
+    -------
+    {numpy array}
+        ndarray with added noise.
+
     """
-    logging.info("---In matnoise...")
+
+    if verbose is True:
+        logging.info("---In matnoise...")
 
     dtype = mat.dtype
     if dtype in ('complex128', 'complex64', 'complex'):
@@ -50,13 +60,14 @@ def matnoise(mat, noise='wgn', PEAK=None, SNR=30):
             PEAK = np.max(mat.flatten())
         mat = awgn(mat, SNR=SNR, PEAK=PEAK, pMode='db', measMode='measured')
 
-    logging.info("---Out matnoise.")
+    if verbose is True:
+        logging.info("---Out matnoise.")
 
     mat = mat.astype(dtype)
     return mat
 
 
-def imnoise(img, noise='wgn', PEAK=None, SNR=30):
+def imnoise(img, noise='wgn', PEAK=None, SNR=30, verbose=False):
     """Add noise to image
 
     Add noise to image
@@ -71,6 +82,8 @@ def imnoise(img, noise='wgn', PEAK=None, SNR=30):
         Peak value (the default is None --> auto detection)
     SNR : {float number}, optional
         Signal-to-noise ratio (the default is 30, which [default_description])
+    verbose : {bool}
+        If True, show log information
 
     Returns
     -------
@@ -78,7 +91,10 @@ def imnoise(img, noise='wgn', PEAK=None, SNR=30):
         Images with added noise.
 
     """
-    logging.info("---In imnoise...")
+
+    if verbose is True:
+        logging.info("---In imnoise...")
+
     dtype = img.dtype
 
     if np.ndim(img) == 3:
@@ -88,12 +104,13 @@ def imnoise(img, noise='wgn', PEAK=None, SNR=30):
         PEAK = peakvalue(img, img.dtype)
     # print(PEAK, "===")
     img = awgn(img, SNR, PEAK=PEAK, pMode='db', measMode='measured')
-    logging.info("---Out imnoise.")
+    if verbose is True:
+        logging.info("---Out imnoise.")
     img = img.astype(dtype)
     return img
 
 
-def awgn(sig, SNR=30, PEAK=1, pMode='db', measMode='measured'):
+def awgn(sig, SNR=30, PEAK=1, pMode='db', measMode='measured', verbose=False):
     """AWGN Add white Gaussian noise to a signal.
 
     Y = AWGN(X,SNR) adds white Gaussian noise to X.  The SNR is in dB.
@@ -112,6 +129,8 @@ def awgn(sig, SNR=30, PEAK=1, pMode='db', measMode='measured'):
         [description] (the default is 'db')
     measMode : {string}, optional
         [description] (the default is 'measured', which [default_description])
+    verbose : {bool}
+        If True, show log information
 
     Returns
     -------
@@ -125,7 +144,8 @@ def awgn(sig, SNR=30, PEAK=1, pMode='db', measMode='measured'):
     TypeError
         Input signal shape wrong
     """
-    logging.info("---In awgn...")
+    if verbose is True:
+        logging.info("---In awgn...")
 
     # --- Set default values
     sigPower = 0
@@ -161,12 +181,13 @@ def awgn(sig, SNR=30, PEAK=1, pMode='db', measMode='measured'):
     # print(nn.min(), nn.max())
     # y = sig
     y = sig + nn
-    logging.info("---Out awgn.")
+    if verbose is True:
+        logging.info("---Out awgn.")
 
     return y
 
 
-def wgn(shape, p, PEAK=1, pMode='dbw', dtype='real', seed=None):
+def wgn(shape, p, PEAK=1, pMode='dbw', dtype='real', seed=None, verbose=False):
     """WGN Generate white Gaussian noise.
 
     Y = WGN((M,N),P) generates an M-by-N matrix of white Gaussian noise. P
@@ -188,13 +209,16 @@ def wgn(shape, p, PEAK=1, pMode='dbw', dtype='real', seed=None):
         data type, real or complex (the default is 'real', which means real-valued)
     seed : {integer}, optional
         Seed for random number generator. (the default is None, which means different each time)
+    verbose : {bool}
+        If True, show log information
 
     Returns
     -------
     numpy array
         Matrix of white Gaussian noise (real or complex).
     """
-    logging.info("---In wgn...")
+    if verbose is True:
+        logging.info("---In wgn...")
 
     # print(shape)
     if pMode is 'linear':
@@ -212,7 +236,8 @@ def wgn(shape, p, PEAK=1, pMode='dbw', dtype='real', seed=None):
             (_func(shape) + 1j * _func(shape))
     else:
         y = (np.sqrt(PEAK * noisePower)) * _func(shape)
-    logging.info("---Out wgn.")
+    if verbose is True:
+        logging.info("---Out wgn.")
     return y
 
 
@@ -228,3 +253,32 @@ def _func(ab):
     if len(ab) == 5:
         n = np.random.randn(ab[0], ab[1], ab[2], ab[3], ab[4])
     return n
+
+
+if __name__ == '__main__':
+
+    import matplotlib.pyplot as plt
+    import matplotlib.image as img
+
+    A = img.imread('../../data/imgs/LenaRGB.tif')
+    print(A.shape)
+
+    NA10 = matnoise(A, noise='wgn', PEAK=255, SNR=10)
+    NA20 = matnoise(A, noise='wgn', PEAK=255, SNR=20)
+    NA60 = matnoise(A, noise='wgn', PEAK=255, SNR=60)
+
+    plt.figure()
+    plt.subplot(221)
+    plt.imshow(A)
+    plt.title('original')
+    plt.subplot(222)
+    plt.imshow(NA10)
+    plt.title('AWG, 10dB')
+    plt.subplot(223)
+    plt.imshow(NA20)
+    plt.title('AWG, 20dB')
+    plt.subplot(224)
+    plt.imshow(NA60)
+    plt.title('AWG, 60dB')
+    plt.tight_layout()
+    plt.show()

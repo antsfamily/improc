@@ -23,7 +23,8 @@ from .seg.classical import imgs2bw
 
 from .transform.preprocessing import normalization, denormalization, scalearr, imgdtype
 from .transform.normal import normalize
-from .transform.enhance import histeq
+from .transform.color import convert_colorspace
+
 
 from . import io
 # from .io.tiff import tifread, tifsave
@@ -33,8 +34,11 @@ from .io.data import load, save
 from . import dsp
 from .dsp.noise import wgn, awgn, imnoise, matnoise
 from .dsp.kernels import convolve, BOX_BLUR_3X3, BOX_BLUR_5X5, GAUSSIAN_BLUR_3x3, VERTICAL_SOBEL_3x3, HORIZONTAL_SOBEL_3x3
-from .dsp.filters import sobelfilter, filtering
+from .dsp.filters import sobelfilter, filtering2d, imfilter2d
 
+from . import enhancement
+from .enhancement.enhance import imenhance
+from .enhancement.histogram import histeq
 
 from . import common
 from .common.typevalue import peakvalue, get_drange
