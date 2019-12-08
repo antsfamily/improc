@@ -163,14 +163,48 @@
 <span class="c1"># @Version : $1.0$</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">improc.dsp.kernels</span> <span class="k">import</span> <span class="n">convolve</span><span class="p">,</span> <span class="n">VERTICAL_SOBEL_3x3</span><span class="p">,</span> <span class="n">HORIZONTAL_SOBEL_3x3</span>
+<span class="kn">from</span> <span class="nn">improc.dsp.kernels</span> <span class="k">import</span> <span class="n">convolve</span><span class="p">,</span> <span class="n">VERTICAL_SOBEL_3x3</span><span class="p">,</span> <span class="n">HORIZONTAL_SOBEL_3x3</span><span class="p">,</span> <span class="n">KER_DICT</span>
 
 
-<div class="viewcode-block" id="filtering"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.filters.filtering">[docs]</a><span class="k">def</span> <span class="nf">filtering</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+<div class="viewcode-block" id="filtering2d"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.filters.filtering2d">[docs]</a><span class="k">def</span> <span class="nf">filtering2d</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;filter data</span>
+
+<span class="sd">    filter A with kernel K</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    A : {ndarray}</span>
+<span class="sd">        data to be filtered</span>
+<span class="sd">    K : {2d-array}</span>
+<span class="sd">        kernel for filtering</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ndarray</span>
+<span class="sd">        filtered data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;edge&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;edge&quot;</span><span class="p">)</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">A</span></div>
 
 
-<div class="viewcode-block" id="sobelfilter"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.filters.sobelfilter">[docs]</a><span class="k">def</span> <span class="nf">sobelfilter</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="imfilter2d"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.filters.imfilter2d">[docs]</a><span class="k">def</span> <span class="nf">imfilter2d</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">K</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ftype</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">K</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">KER_DICT</span><span class="p">[</span><span class="n">ftype</span><span class="p">]</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">filtering2d</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">A</span></div>
+
+
+<div class="viewcode-block" id="sobelfilter"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.filters.sobelfilter">[docs]</a><span class="k">def</span> <span class="nf">sobelfilter</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">gmod</span><span class="o">=</span><span class="s1">&#39;absadd&#39;</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">r&quot;&quot;&quot;sobel filtering</span>
 
 <span class="sd">    filter A with sobel operator</span>
@@ -181,10 +215,22 @@
 <span class="sd">    .. math::</span>
 <span class="sd">       G_h=\left[\begin{array}{ccc}{-1} &amp; {0} &amp; {+1} \\ {-2} &amp; {0} &amp; {+2} \\ {-1} &amp; {0} &amp; {+1}\end{array}\right] * A</span>
 
+<span class="sd">    .. math::</span>
+<span class="sd">       G=\sqrt{G_h^2 + G_v^2}</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    A : {2d or 3d array}</span>
 <span class="sd">        image to be filtered :math:`H×W×C`.</span>
+
+<span class="sd">    gmod: {str}</span>
+
+<span class="sd">        - &#39;add&#39; --&gt; :math:`G=G_h+G_v`,</span>
+<span class="sd">        - &#39;absadd&#39; --&gt; :math:`G=|G_h|+|G_v|`,</span>
+<span class="sd">        - &#39;squaddsqrt&#39; --&gt; :math:`G=\sqrt{G_h^2 + G_v^2}`,</span>
+<span class="sd">        - `hvfilt` --&gt; apply sobel filter on hrizontal and vertical</span>
+<span class="sd">        - `vhfilt` --&gt; apply sobel filter on vertical and hrizontal</span>
+<span class="sd">        - default `absadd`</span>
 
 <span class="sd">    full: {bool}</span>
 <span class="sd">        If True, then return Gh+Gv, Gh, Gv else return Gh+Gv</span>
@@ -210,10 +256,123 @@
     <span class="n">Gh</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">HORIZONTAL_SOBEL_3x3</span><span class="p">)</span>
     <span class="n">Gv</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">VERTICAL_SOBEL_3x3</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="n">gmod</span> <span class="ow">is</span> <span class="s1">&#39;add&#39;</span><span class="p">:</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">Gh</span> <span class="o">+</span> <span class="n">Gv</span>
+    <span class="k">if</span> <span class="n">gmod</span> <span class="ow">is</span> <span class="s1">&#39;absadd&#39;</span><span class="p">:</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Gh</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Gv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gmod</span> <span class="ow">is</span> <span class="s1">&#39;squaddsqrt&#39;</span><span class="p">:</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Gh</span> <span class="o">*</span> <span class="n">Gh</span> <span class="o">+</span> <span class="n">Gv</span> <span class="o">*</span> <span class="n">Gv</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gmod</span> <span class="ow">is</span> <span class="s1">&#39;hvfilt&#39;</span><span class="p">:</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">Gh</span><span class="p">,</span> <span class="n">VERTICAL_SOBEL_3x3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">gmod</span> <span class="ow">is</span> <span class="s1">&#39;vhfilt&#39;</span><span class="p">:</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">Gv</span><span class="p">,</span> <span class="n">HORIZONTAL_SOBEL_3x3</span><span class="p">)</span>
+
     <span class="k">if</span> <span class="n">full</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Gh</span> <span class="o">+</span> <span class="n">Gv</span><span class="p">,</span> <span class="n">Gh</span><span class="p">,</span> <span class="n">Gv</span>
+        <span class="k">return</span> <span class="n">G</span><span class="p">,</span> <span class="n">Gh</span><span class="p">,</span> <span class="n">Gv</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">Gh</span> <span class="o">+</span> <span class="n">Gv</span></div>
+        <span class="k">return</span> <span class="n">G</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">img</span>
+    <span class="kn">import</span> <span class="nn">improc</span> <span class="k">as</span> <span class="nn">imp</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../../data/imgs/LenaRGB.tif&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">Ab</span> <span class="o">=</span> <span class="n">imfilter2d</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ftype</span><span class="o">=</span><span class="s1">&#39;blur3x3_mean1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+    <span class="n">As</span> <span class="o">=</span> <span class="n">imfilter2d</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">ftype</span><span class="o">=</span><span class="s1">&#39;sharpen3x3_type1&#39;</span><span class="p">)</span>
+    <span class="n">AbAs</span> <span class="o">=</span> <span class="n">imfilter2d</span><span class="p">(</span><span class="n">Ab</span><span class="p">,</span> <span class="n">ftype</span><span class="o">=</span><span class="s1">&#39;sharpen3x3_type1&#39;</span><span class="p">)</span>
+
+    <span class="n">As</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">As</span>
+    <span class="n">As</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">scalearr</span><span class="p">(</span><span class="n">As</span><span class="p">,</span> <span class="n">scaleto</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">scalefrom</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+
+    <span class="n">AbAs</span> <span class="o">=</span> <span class="n">Ab</span> <span class="o">+</span> <span class="n">AbAs</span>
+    <span class="n">AbAs</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">scalearr</span><span class="p">(</span><span class="n">AbAs</span><span class="p">,</span> <span class="n">scaleto</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span> <span class="n">scalefrom</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">Ab</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">Ab</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">As</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">As</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">AbAs</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">AbAs</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Ab</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">As</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">AbAs</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">Gh</span><span class="p">,</span> <span class="n">Gv</span> <span class="o">=</span> <span class="n">sobelfilter</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">full</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Gh</span> <span class="o">*</span> <span class="n">Gh</span> <span class="o">+</span> <span class="n">Gv</span> <span class="o">*</span> <span class="n">Gv</span><span class="p">)</span>
+    <span class="n">Gh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Gh</span><span class="p">)</span>
+    <span class="n">Gv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Gv</span><span class="p">)</span>
+    <span class="n">G</span> <span class="o">=</span> <span class="n">Gh</span> <span class="o">+</span> <span class="n">Gv</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">G</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">G</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">G</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Gh</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">Gh</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">Gh</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">Gv</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">Gv</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">Gv</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+    <span class="n">G_u8</span> <span class="o">=</span> <span class="p">(</span><span class="mf">255.</span> <span class="o">*</span> <span class="n">G</span> <span class="o">/</span> <span class="n">G</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+    <span class="n">Gh_u8</span> <span class="o">=</span> <span class="p">(</span><span class="mf">255.</span> <span class="o">*</span> <span class="n">Gh</span> <span class="o">/</span> <span class="n">Gh</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+    <span class="n">Gv_u8</span> <span class="o">=</span> <span class="p">(</span><span class="mf">255.</span> <span class="o">*</span> <span class="n">Gv</span> <span class="o">/</span> <span class="n">Gv</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+
+    <span class="n">G_mu_u8</span> <span class="o">=</span> <span class="p">(</span><span class="mf">255.</span> <span class="o">*</span> <span class="p">(</span><span class="n">G</span> <span class="o">-</span> <span class="n">G</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">G</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+    <span class="n">Gh_mu_u8</span> <span class="o">=</span> <span class="p">(</span><span class="mf">255.</span> <span class="o">*</span> <span class="p">(</span><span class="n">Gh</span> <span class="o">-</span> <span class="n">Gh</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">Gh</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+    <span class="n">Gv_mu_u8</span> <span class="o">=</span> <span class="p">(</span><span class="mf">255.</span> <span class="o">*</span> <span class="p">(</span><span class="n">Gv</span> <span class="o">-</span> <span class="n">Gv</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="o">/</span> <span class="n">Gv</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Gh</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_h|$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Gv</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_v|$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_h|+|G_v|$&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Gh_u8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_h|$, u8&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Gv_u8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_v|$, u8&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">G_u8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$\sqrt{G_h^2+G_v^2}$, u8&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Gh_mu_u8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_h|-\mu_{G_h}$, u8&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Gv_mu_u8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_v|-\mu_{G_v}$, u8&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">G_mu_u8</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">r&#39;$|G_h|+|G_v| - \mu_{|G_h|+|G_v|}$, u8&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
            </div>

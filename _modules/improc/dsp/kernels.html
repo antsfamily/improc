@@ -174,6 +174,11 @@
     <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
     <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
+<span class="n">KER_DICT</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+<span class="n">KER_DICT</span><span class="p">[</span><span class="s1">&#39;blur3x3_mean1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">9.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">KER_DICT</span><span class="p">[</span><span class="s1">&#39;sharpen3x3_type1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">9.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">]])</span> <span class="o">/</span> <span class="mf">9.</span>
+
 
 <div class="viewcode-block" id="convolve"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.kernels.convolve">[docs]</a><span class="k">def</span> <span class="nf">convolve</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">kernel</span><span class="p">):</span>
     <span class="sd">r&quot;&quot;&quot;Performs the convolution using provided kernel.</span>
@@ -182,8 +187,7 @@
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    image : {2d or 3d array}</span>
-<span class="sd">        image to be convolved :math:`H×W×C`. In case when image has multiple channels kernel is going to be used</span>
-<span class="sd">        separately for each image channel.</span>
+<span class="sd">        image to be convolved :math:`H\times W \times C`. In case when image has multiple channels, the kernel is going to be used for each image channel.</span>
 <span class="sd">    kernel : {2d array}</span>
 <span class="sd">        kernel used for convolution</span>
 
@@ -199,7 +203,6 @@
 <span class="sd">        - Kernel Shape Not Odd Error</span>
 <span class="sd">        - Kernel Not2 DArray</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-
 
     <span class="k">if</span> <span class="n">kernel</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Kernel is not an 2d-array, it a&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">kernel</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-d array.&#39;</span><span class="p">)</span>
@@ -222,6 +225,16 @@
     <span class="n">output</span> <span class="o">=</span> <span class="n">output</span><span class="p">[</span><span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">),</span>
                     <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span> <span class="o">-</span><span class="p">(</span><span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)]</span>
     <span class="k">return</span> <span class="n">output</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">BOX_BLUR_3X3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">BOX_BLUR_5X5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">GAUSSIAN_BLUR_3x3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">VERTICAL_SOBEL_3x3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">HORIZONTAL_SOBEL_3x3</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">KER_DICT</span><span class="p">)</span>
 </pre></div>
 
            </div>

@@ -100,6 +100,7 @@
 <li class="toctree-l4"><a class="reference internal" href="improc.common.html">improc.common package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">improc.dsp package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.encoding.html">improc.encoding package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.enhancement.html">improc.enhancement package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.evaluation.html">improc.evaluation package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.io.html">improc.io package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.seg.html">improc.seg package</a></li>
@@ -193,13 +194,38 @@
 <div class="section" id="module-improc.dsp.filters">
 <span id="improc-dsp-filters-module"></span><h2>improc.dsp.filters module<a class="headerlink" href="#module-improc.dsp.filters" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="improc.dsp.filters.filtering">
-<code class="descclassname">improc.dsp.filters.</code><code class="descname">filtering</code><span class="sig-paren">(</span><em>X</em>, <em>K</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/filters.html#filtering"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.filters.filtering" title="Permalink to this definition">¶</a></dt>
+<dt id="improc.dsp.filters.filtering2d">
+<code class="descclassname">improc.dsp.filters.</code><code class="descname">filtering2d</code><span class="sig-paren">(</span><em>A</em>, <em>K</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/filters.html#filtering2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.filters.filtering2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>filter data</p>
+<p>filter A with kernel K</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>A</strong> (<em>{ndarray}</em>) – data to be filtered</li>
+<li><strong>K</strong> (<em>{2d-array}</em>) – kernel for filtering</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">filtered data</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="improc.dsp.filters.imfilter2d">
+<code class="descclassname">improc.dsp.filters.</code><code class="descname">imfilter2d</code><span class="sig-paren">(</span><em>A</em>, <em>K=None</em>, <em>ftype='mean'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/filters.html#imfilter2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.filters.imfilter2d" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="improc.dsp.filters.sobelfilter">
-<code class="descclassname">improc.dsp.filters.</code><code class="descname">sobelfilter</code><span class="sig-paren">(</span><em>A</em>, <em>full=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/filters.html#sobelfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.filters.sobelfilter" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">improc.dsp.filters.</code><code class="descname">sobelfilter</code><span class="sig-paren">(</span><em>A</em>, <em>gmod='absadd'</em>, <em>full=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/filters.html#sobelfilter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.filters.sobelfilter" title="Permalink to this definition">¶</a></dt>
 <dd><p>sobel filtering</p>
 <p>filter A with sobel operator</p>
 <div class="math">
@@ -210,12 +236,25 @@
 \[G_h=\left[\begin{array}{ccc}{-1} & {0} & {+1} \\ {-2} & {0} & {+2} \\ {-1} & {0} & {+1}\end{array}\right] * A
 
 \]</div>
+<div class="math">
+\[G=\sqrt{G_h^2 + G_v^2}
+
+\]</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>A</strong> (<em>{2d</em><em> or </em><em>3d array}</em>) – image to be filtered <span class="math">\(H×W×C\)</span>.</li>
+<li><strong>gmod</strong> (<em>{str}</em>) – <ul>
+<li>‘add’ –&gt; <span class="math">\(G=G_h+G_v\)</span>,</li>
+<li>’absadd’ –&gt; <span class="math">\(G=|G_h|+|G_v|\)</span>,</li>
+<li>’squaddsqrt’ –&gt; <span class="math">\(G=\sqrt{G_h^2 + G_v^2}\)</span>,</li>
+<li><cite>hvfilt</cite> –&gt; apply sobel filter on hrizontal and vertical</li>
+<li><cite>vhfilt</cite> –&gt; apply sobel filter on vertical and hrizontal</li>
+<li>default <cite>absadd</cite></li>
+</ul>
+</li>
 <li><strong>full</strong> (<em>{bool}</em>) – If True, then return Gh+Gv, Gh, Gv else return Gh+Gv</li>
 </ul>
 </td>
@@ -244,8 +283,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>image</strong> (<em>{2d</em><em> or </em><em>3d array}</em>) – image to be convolved <span class="math">\(H×W×C\)</span>. In case when image has multiple channels kernel is going to be used
-separately for each image channel.</li>
+<li><strong>image</strong> (<em>{2d</em><em> or </em><em>3d array}</em>) – image to be convolved <span class="math">\(H\times W \times C\)</span>. In case when image has multiple channels, the kernel is going to be used for each image channel.</li>
 <li><strong>kernel</strong> (<em>{2d array}</em>) – kernel used for convolution</li>
 </ul>
 </td>
@@ -256,7 +294,7 @@ separately for each image channel.</li>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">ndarray</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.7)"><strong>ValueError</strong></a> – <ul class="simple">
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.8)"><strong>ValueError</strong></a> – <ul class="simple">
 <li>Kernel Bigger Than Image Error
     - Kernel Shape Not Odd Error
     - Kernel Not2 DArray</li>
@@ -273,7 +311,7 @@ separately for each image channel.</li>
 <span id="improc-dsp-noise-module"></span><h2>improc.dsp.noise module<a class="headerlink" href="#module-improc.dsp.noise" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="improc.dsp.noise.awgn">
-<code class="descclassname">improc.dsp.noise.</code><code class="descname">awgn</code><span class="sig-paren">(</span><em>sig</em>, <em>SNR=30</em>, <em>PEAK=1</em>, <em>pMode='db'</em>, <em>measMode='measured'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#awgn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.awgn" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">improc.dsp.noise.</code><code class="descname">awgn</code><span class="sig-paren">(</span><em>sig</em>, <em>SNR=30</em>, <em>PEAK=1</em>, <em>pMode='db'</em>, <em>measMode='measured'</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#awgn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.awgn" title="Permalink to this definition">¶</a></dt>
 <dd><p>AWGN Add white Gaussian noise to a signal.</p>
 <p>Y = AWGN(X,SNR) adds white Gaussian noise to X.  The SNR is in dB.
 The power of X is assumed to be 0 dBW.  If X is complex, then
@@ -288,6 +326,7 @@ AWGN adds complex noise.</p>
 <li><strong>PEAK</strong> (<em>{float number}</em><em>, </em><em>optional</em>) – Peak value (the default is 1)</li>
 <li><strong>pMode</strong> (<em>{string}</em><em>, </em><em>optional</em>) – [description] (the default is ‘db’)</li>
 <li><strong>measMode</strong> (<em>{string}</em><em>, </em><em>optional</em>) – [description] (the default is ‘measured’, which [default_description])</li>
+<li><strong>verbose</strong> (<em>{bool}</em>) – If True, show log information</li>
 </ul>
 </td>
 </tr>
@@ -298,8 +337,8 @@ AWGN adds complex noise.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IOError" title="(in Python v3.7)"><strong>IOError</strong></a> – No input signal</li>
-<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.7)"><strong>TypeError</strong></a> – Input signal shape wrong</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IOError" title="(in Python v3.8)"><strong>IOError</strong></a> – No input signal</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#TypeError" title="(in Python v3.8)"><strong>TypeError</strong></a> – Input signal shape wrong</li>
 </ul>
 </td>
 </tr>
@@ -309,7 +348,7 @@ AWGN adds complex noise.</p>
 
 <dl class="function">
 <dt id="improc.dsp.noise.imnoise">
-<code class="descclassname">improc.dsp.noise.</code><code class="descname">imnoise</code><span class="sig-paren">(</span><em>img</em>, <em>noise='wgn'</em>, <em>PEAK=None</em>, <em>SNR=30</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#imnoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.imnoise" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">improc.dsp.noise.</code><code class="descname">imnoise</code><span class="sig-paren">(</span><em>img</em>, <em>noise='wgn'</em>, <em>PEAK=None</em>, <em>SNR=30</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#imnoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.imnoise" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add noise to image</p>
 <p>Add noise to image</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -321,6 +360,7 @@ AWGN adds complex noise.</p>
 <li><strong>noise</strong> (<em>{string}</em><em>, </em><em>optional</em>) – noise type (the default is ‘wgn’, which [default_description])</li>
 <li><strong>PEAK</strong> (<em>{float number}</em><em>, </em><em>optional</em>) – Peak value (the default is None –&gt; auto detection)</li>
 <li><strong>SNR</strong> (<em>{float number}</em><em>, </em><em>optional</em>) – Signal-to-noise ratio (the default is 30, which [default_description])</li>
+<li><strong>verbose</strong> (<em>{bool}</em>) – If True, show log information</li>
 </ul>
 </td>
 </tr>
@@ -336,7 +376,7 @@ AWGN adds complex noise.</p>
 
 <dl class="function">
 <dt id="improc.dsp.noise.matnoise">
-<code class="descclassname">improc.dsp.noise.</code><code class="descname">matnoise</code><span class="sig-paren">(</span><em>mat</em>, <em>noise='wgn'</em>, <em>PEAK=None</em>, <em>SNR=30</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#matnoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.matnoise" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">improc.dsp.noise.</code><code class="descname">matnoise</code><span class="sig-paren">(</span><em>mat</em>, <em>noise='wgn'</em>, <em>PEAK=None</em>, <em>SNR=30</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#matnoise"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.matnoise" title="Permalink to this definition">¶</a></dt>
 <dd><p>add noise to an matrix</p>
 <p>Add noise to an matrix (real or complex)</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -347,11 +387,18 @@ AWGN adds complex noise.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Keyword Arguments:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first last simple">
+<tr class="field-even field"><td>&#160;</td><td class="field-body"><ul class="first simple">
 <li><strong>noise</strong> (<em>{string}</em>) – type of noise (default: {‘wgn’})</li>
 <li><strong>PEAK</strong> (<em>{float number}</em><em>, </em><em>optional</em>) – Peak value (the default is None–&gt; max)</li>
 <li><strong>SNR</strong> (<em>{float number}</em>) – Signal-to-noise ratio (default: {30})</li>
+<li><strong>verbose</strong> (<em>{bool}</em>) – If True, show log information</li>
 </ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">ndarray with added noise.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">{numpy array}</p>
 </td>
 </tr>
 </tbody>
@@ -360,7 +407,7 @@ AWGN adds complex noise.</p>
 
 <dl class="function">
 <dt id="improc.dsp.noise.wgn">
-<code class="descclassname">improc.dsp.noise.</code><code class="descname">wgn</code><span class="sig-paren">(</span><em>shape</em>, <em>p</em>, <em>PEAK=1</em>, <em>pMode='dbw'</em>, <em>dtype='real'</em>, <em>seed=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#wgn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.wgn" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">improc.dsp.noise.</code><code class="descname">wgn</code><span class="sig-paren">(</span><em>shape</em>, <em>p</em>, <em>PEAK=1</em>, <em>pMode='dbw'</em>, <em>dtype='real'</em>, <em>seed=None</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/dsp/noise.html#wgn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.dsp.noise.wgn" title="Permalink to this definition">¶</a></dt>
 <dd><p>WGN Generate white Gaussian noise.</p>
 <p>Y = WGN((M,N),P) generates an M-by-N matrix of white Gaussian noise. P
 specifies the power of the output noise in dBW. The unit of measure for
@@ -377,6 +424,7 @@ assumed that there is a load of 1 Ohm.</p>
 <li><strong>pMode</strong> (<em>{string}</em><em>, </em><em>optional</em>) – Power mode of the output noise (the default is ‘dbw’)</li>
 <li><strong>dtype</strong> (<em>{string}</em><em>, </em><em>optional</em>) – data type, real or complex (the default is ‘real’, which means real-valued)</li>
 <li><strong>seed</strong> (<em>{integer}</em><em>, </em><em>optional</em>) – Seed for random number generator. (the default is None, which means different each time)</li>
+<li><strong>verbose</strong> (<em>{bool}</em>) – If True, show log information</li>
 </ul>
 </td>
 </tr>

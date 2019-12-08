@@ -163,11 +163,11 @@
 <span class="c1"># @Version : $1.0$</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">..utils.log</span> <span class="k">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">..common.typevalue</span> <span class="k">import</span> <span class="n">peakvalue</span>
+<span class="kn">from</span> <span class="nn">improc.utils.log</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">improc.common.typevalue</span> <span class="k">import</span> <span class="n">peakvalue</span>
 
 
-<div class="viewcode-block" id="matnoise"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.matnoise">[docs]</a><span class="k">def</span> <span class="nf">matnoise</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="s1">&#39;wgn&#39;</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+<div class="viewcode-block" id="matnoise"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.matnoise">[docs]</a><span class="k">def</span> <span class="nf">matnoise</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="s1">&#39;wgn&#39;</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">r&quot;&quot;&quot;add noise to an matrix</span>
 
 <span class="sd">    Add noise to an matrix (real or complex)</span>
@@ -185,8 +185,18 @@
 <span class="sd">        Peak value (the default is None--&gt; max)</span>
 <span class="sd">    SNR : {float number}</span>
 <span class="sd">        Signal-to-noise ratio (default: {30})</span>
+<span class="sd">    verbose : {bool}</span>
+<span class="sd">        If True, show log information</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    {numpy array}</span>
+<span class="sd">        ndarray with added noise.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In matnoise...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In matnoise...&quot;</span><span class="p">)</span>
 
     <span class="n">dtype</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">dtype</span>
     <span class="k">if</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;complex128&#39;</span><span class="p">,</span> <span class="s1">&#39;complex64&#39;</span><span class="p">,</span> <span class="s1">&#39;complex&#39;</span><span class="p">):</span>
@@ -207,13 +217,14 @@
             <span class="n">PEAK</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
         <span class="n">mat</span> <span class="o">=</span> <span class="n">awgn</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="n">SNR</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="n">PEAK</span><span class="p">,</span> <span class="n">pMode</span><span class="o">=</span><span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="n">measMode</span><span class="o">=</span><span class="s1">&#39;measured&#39;</span><span class="p">)</span>
 
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out matnoise.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out matnoise.&quot;</span><span class="p">)</span>
 
     <span class="n">mat</span> <span class="o">=</span> <span class="n">mat</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mat</span></div>
 
 
-<div class="viewcode-block" id="imnoise"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.imnoise">[docs]</a><span class="k">def</span> <span class="nf">imnoise</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="s1">&#39;wgn&#39;</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+<div class="viewcode-block" id="imnoise"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.imnoise">[docs]</a><span class="k">def</span> <span class="nf">imnoise</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="s1">&#39;wgn&#39;</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Add noise to image</span>
 
 <span class="sd">    Add noise to image</span>
@@ -228,6 +239,8 @@
 <span class="sd">        Peak value (the default is None --&gt; auto detection)</span>
 <span class="sd">    SNR : {float number}, optional</span>
 <span class="sd">        Signal-to-noise ratio (the default is 30, which [default_description])</span>
+<span class="sd">    verbose : {bool}</span>
+<span class="sd">        If True, show log information</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -235,7 +248,10 @@
 <span class="sd">        Images with added noise.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In imnoise...&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In imnoise...&quot;</span><span class="p">)</span>
+
     <span class="n">dtype</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">dtype</span>
 
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
@@ -245,12 +261,13 @@
         <span class="n">PEAK</span> <span class="o">=</span> <span class="n">peakvalue</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">img</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="c1"># print(PEAK, &quot;===&quot;)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">awgn</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">SNR</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="n">PEAK</span><span class="p">,</span> <span class="n">pMode</span><span class="o">=</span><span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="n">measMode</span><span class="o">=</span><span class="s1">&#39;measured&#39;</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imnoise.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out imnoise.&quot;</span><span class="p">)</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">img</span></div>
 
 
-<div class="viewcode-block" id="awgn"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.awgn">[docs]</a><span class="k">def</span> <span class="nf">awgn</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pMode</span><span class="o">=</span><span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="n">measMode</span><span class="o">=</span><span class="s1">&#39;measured&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="awgn"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.awgn">[docs]</a><span class="k">def</span> <span class="nf">awgn</span><span class="p">(</span><span class="n">sig</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pMode</span><span class="o">=</span><span class="s1">&#39;db&#39;</span><span class="p">,</span> <span class="n">measMode</span><span class="o">=</span><span class="s1">&#39;measured&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;AWGN Add white Gaussian noise to a signal.</span>
 
 <span class="sd">    Y = AWGN(X,SNR) adds white Gaussian noise to X.  The SNR is in dB.</span>
@@ -269,6 +286,8 @@
 <span class="sd">        [description] (the default is &#39;db&#39;)</span>
 <span class="sd">    measMode : {string}, optional</span>
 <span class="sd">        [description] (the default is &#39;measured&#39;, which [default_description])</span>
+<span class="sd">    verbose : {bool}</span>
+<span class="sd">        If True, show log information</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -282,7 +301,8 @@
 <span class="sd">    TypeError</span>
 <span class="sd">        Input signal shape wrong</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In awgn...&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In awgn...&quot;</span><span class="p">)</span>
 
     <span class="c1"># --- Set default values</span>
     <span class="n">sigPower</span> <span class="o">=</span> <span class="mi">0</span>
@@ -318,12 +338,13 @@
     <span class="c1"># print(nn.min(), nn.max())</span>
     <span class="c1"># y = sig</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">sig</span> <span class="o">+</span> <span class="n">nn</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out awgn.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out awgn.&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">y</span></div>
 
 
-<div class="viewcode-block" id="wgn"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.wgn">[docs]</a><span class="k">def</span> <span class="nf">wgn</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pMode</span><span class="o">=</span><span class="s1">&#39;dbw&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;real&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="wgn"><a class="viewcode-back" href="../../../improc.dsp.html#improc.dsp.noise.wgn">[docs]</a><span class="k">def</span> <span class="nf">wgn</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pMode</span><span class="o">=</span><span class="s1">&#39;dbw&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;real&#39;</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;WGN Generate white Gaussian noise.</span>
 
 <span class="sd">    Y = WGN((M,N),P) generates an M-by-N matrix of white Gaussian noise. P</span>
@@ -345,13 +366,16 @@
 <span class="sd">        data type, real or complex (the default is &#39;real&#39;, which means real-valued)</span>
 <span class="sd">    seed : {integer}, optional</span>
 <span class="sd">        Seed for random number generator. (the default is None, which means different each time)</span>
+<span class="sd">    verbose : {bool}</span>
+<span class="sd">        If True, show log information</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    numpy array</span>
 <span class="sd">        Matrix of white Gaussian noise (real or complex).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In wgn...&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---In wgn...&quot;</span><span class="p">)</span>
 
     <span class="c1"># print(shape)</span>
     <span class="k">if</span> <span class="n">pMode</span> <span class="ow">is</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
@@ -369,7 +393,8 @@
             <span class="p">(</span><span class="n">_func</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">_func</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">PEAK</span> <span class="o">*</span> <span class="n">noisePower</span><span class="p">))</span> <span class="o">*</span> <span class="n">_func</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out wgn.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">verbose</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;---Out wgn.&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">y</span></div>
 
 
@@ -385,6 +410,35 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ab</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
         <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">ab</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ab</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">ab</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">ab</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">ab</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">n</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.image</span> <span class="k">as</span> <span class="nn">img</span>
+
+    <span class="n">A</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../../data/imgs/LenaRGB.tif&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">NA10</span> <span class="o">=</span> <span class="n">matnoise</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="s1">&#39;wgn&#39;</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">NA20</span> <span class="o">=</span> <span class="n">matnoise</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="s1">&#39;wgn&#39;</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">NA60</span> <span class="o">=</span> <span class="n">matnoise</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="s1">&#39;wgn&#39;</span><span class="p">,</span> <span class="n">PEAK</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">SNR</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;original&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">NA10</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;AWG, 10dB&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">NA20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;AWG, 20dB&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">NA60</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;AWG, 60dB&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
            </div>

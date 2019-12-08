@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="improc.io package" href="improc.io.html" />
-    <link rel="prev" title="improc.encoding package" href="improc.encoding.html" /> 
+    <link rel="prev" title="improc.enhancement package" href="improc.enhancement.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -100,6 +100,7 @@
 <li class="toctree-l4"><a class="reference internal" href="improc.common.html">improc.common package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.dsp.html">improc.dsp package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.encoding.html">improc.encoding package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.enhancement.html">improc.enhancement package</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">improc.evaluation package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.io.html">improc.io package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.seg.html">improc.seg package</a></li>
@@ -214,7 +215,7 @@
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>MSE</strong> – Mean Squared Error</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </td>
 </tr>
 </tbody>
@@ -245,8 +246,8 @@ e.g. uint8: 255, uint16: 65535 …</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>o</strong> (<em>array_like</em>) – Reference data array. For image, it’s the original image.</li>
 <li><strong>r</strong> (<em>array_like</em>) – The data to be compared. For image, it’s the reconstructed image.</li>
-<li><strong>Vpeak</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional</em>) – The peak value. If None, computes automaticly.</li>
-<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional</em>) – ‘simple’ or ‘rich’. ‘simple’ (default) –&gt; just return psnr i.e.
+<li><strong>Vpeak</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional</em>) – The peak value. If None, computes automaticly.</li>
+<li><strong>mode</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional</em>) – ‘simple’ or ‘rich’. ‘simple’ (default) –&gt; just return psnr i.e.
 ‘rich’ –&gt; return psnr, mse, Vpeak, imgtype.</li>
 </ul>
 </td>
@@ -254,7 +255,7 @@ e.g. uint8: 255, uint16: 65535 …</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>PSNR</strong> – Peak Signal to Noise Ratio value.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)">float</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)">float</a></p>
 </td>
 </tr>
 </tbody>
@@ -316,7 +317,7 @@ by Wang et al.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>X</strong> (<em>{ndarray}</em>) – reconstructed</li>
 <li><strong>Y</strong> (<em>{ndarray}</em>) – referenced</li>
-<li><strong>win</strong> (<em>{</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.7)"><em>type</em></a><em>]</em><em>}</em><em>, </em><em>optional</em>) – [description] (the default is None, which [default_description])</li>
+<li><strong>win</strong> (<em>{</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.8)"><em>type</em></a><em>]</em><em>}</em><em>, </em><em>optional</em>) – [description] (the default is None, which [default_description])</li>
 <li><strong>winsize</strong> (<em>{number}</em><em>, </em><em>optional</em>) – [description] (the default is 11, which [default_description])</li>
 <li><strong>L</strong> (<em>{integer}</em><em>, </em><em>optional</em>) – the dynamic range of the pixel-values (typically this is <span class="math">\(2 ^{\# \text { bits per pixel }}-1\)</span>. (the default is 255)</li>
 <li><strong>k1</strong> (<em>{number}</em><em>, </em><em>optional</em>) – [description] (the default is 0.01, which [default_description])</li>
@@ -352,7 +353,7 @@ whether to average (the default is True, which average the result)</li>
         <a href="improc.io.html" class="btn btn-neutral float-right" title="improc.io package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="improc.encoding.html" class="btn btn-neutral float-left" title="improc.encoding package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="improc.enhancement.html" class="btn btn-neutral float-left" title="improc.enhancement package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

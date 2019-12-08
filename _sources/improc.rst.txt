@@ -10,6 +10,7 @@ Subpackages
     improc.common
     improc.dsp
     improc.encoding
+    improc.enhancement
     improc.evaluation
     improc.io
     improc.seg

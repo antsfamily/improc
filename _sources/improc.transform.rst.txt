@@ -4,10 +4,10 @@ improc.transform package
 Submodules
 ----------
 
-improc.transform.enhance module
--------------------------------
+improc.transform.color module
+-----------------------------
 
-.. automodule:: improc.transform.enhance
+.. automodule:: improc.transform.color
     :members:
     :undoc-members:
     :show-inheritance:

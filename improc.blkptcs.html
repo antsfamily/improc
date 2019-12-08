@@ -100,6 +100,7 @@
 <li class="toctree-l4"><a class="reference internal" href="improc.common.html">improc.common package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.dsp.html">improc.dsp package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.encoding.html">improc.encoding package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.enhancement.html">improc.enhancement package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.evaluation.html">improc.evaluation package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.io.html">improc.io package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.seg.html">improc.seg package</a></li>
@@ -241,9 +242,9 @@ wisely, 3.row-wisely).</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>imgs</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes}.</em>) – Images to be splited, a H-W-C-N numpy ndarray, or a list of image
 pathes with diffrent image shapes.</li>
-<li><strong>blksize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each block size (rows, cols, channel) that you want to
+<li><strong>blksize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each block size (rows, cols, channel) that you want to
 split. If not given, blksize=[8, 8, 3].</li>
-<li><strong>padmode</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Padding mode when an image can’t be split fully. ‘symmetric’ or ‘edge’
+<li><strong>padmode</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Padding mode when an image can’t be split fully. ‘symmetric’ or ‘edge’
 can be choosen, see np.pad for more option. The Channel will also be
 pad if it is not enough, e.g., for an H-W-1(gray) image, if you want
 to get blksize=[8,8,3].</li>
@@ -296,8 +297,8 @@ img1_blk2_bc1, img1_blk2_bc2, img1_blk2_bc3, …</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>patches</strong> (<em>{array_like}</em>) – Image patches, a pH-pW-pC-pN numpy ndarray.</li>
-<li><strong>thresh</strong> (<em>{float</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Threshold for spliting smooth block and rough block.</li>
-<li><strong>Rstar</strong> (<em>{float</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies which method to used for evaluating each patch. Option:
+<li><strong>thresh</strong> (<em>{float</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Threshold for spliting smooth block and rough block.</li>
+<li><strong>Rstar</strong> (<em>{float</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies which method to used for evaluating each patch. Option:
 ‘std’(standard deviation), ‘var’(variance),</li>
 </ul>
 </td>
@@ -345,10 +346,10 @@ measurements specfied by method.</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>imgs</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes}.</em>) – Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
 pathes with diffrent image shapes.</li>
-<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
+<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
 sampled. If not given, ptcsize=[8, 8, 1].</li>
-<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
-<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
+<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
+<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
 </ul>
 </td>
 </tr>
@@ -393,10 +394,10 @@ sampled. If not given, ptcsize=[8, 8, 1].</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>imgsA/B</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes.}</em>) – Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
 pathes with diffrent image shapes.</li>
-<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
+<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
 sampled. If not given, ptcsize=[8, 8, 1].</li>
-<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
-<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
+<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
+<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
 </ul>
 </td>
 </tr>
@@ -442,10 +443,10 @@ sampled. If not given, ptcsize=[8, 8, 1].</li>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>imgsA/B/C</strong> (<em>{array_like</em><em>, or </em><em>list of image pathes}.</em>) – Images to be sampled, a H-W-C-N numpy ndarray, or a list of image
 pathes with diffrent image shapes.</li>
-<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
+<li><strong>ptcsize</strong> (<em>{int tuple</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the each patch size (rows, cols, channel) that you want to
 sampled. If not given, ptcsize=[8, 8, 1].</li>
-<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
-<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
+<li><strong>numptcs</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – The number of patches that you want to sample, if None, numptcs=100.</li>
+<li><strong>seed</strong> (<em>{int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Random seed, default None(differ each time.</li>
 </ul>
 </td>
 </tr>
@@ -496,16 +497,16 @@ sampled. If not given, ptcsize=[8, 8, 1].</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>patches</strong> (<em>{array_like}</em>) – Image patches, a pH-pW-pC-pN numpy ndarray.</li>
-<li><strong>numsel</strong> (<em>{int</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – How many patches you want to select. If integer, then returns numsel
+<li><strong>numsel</strong> (<em>{int</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – How many patches you want to select. If integer, then returns numsel
 patches; If float in [0,1], then numsel*100 percent of the patches
 will be returned. If not given, does not affect.</li>
-<li><strong>method</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies which method to used for evaluating each patch. Option:
+<li><strong>method</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies which method to used for evaluating each patch. Option:
 ‘std’(standard deviation), ‘var’(variance),
 the first numsel patch scores will be returned.
 If not given, does nothing.</li>
 <li><strong>thresh</strong> (<em>{float</em><em>, </em><em>optional}</em>) – When method are specified, using thresh as the threshold, and those
 patches whose scores are larger(&gt;=) then thresh will be returned.</li>
-<li><strong>sort</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Sorts the patches according to pathes scores in sort way(‘descent’,
+<li><strong>sort</strong> (<em>{str</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Sorts the patches according to pathes scores in sort way(‘descent’,
 ‘ascent’). If not given, does not affect, i.e. origional order.</li>
 </ul>
 </td>
@@ -558,14 +559,14 @@ measurements specfied by method.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>blks</strong> (<em>{array_like}</em>) – Blocks to be shown, a bH-bW-bC-bN numpy ndarray.</li>
-<li><strong>rcsize</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies how many rows and cols of blocks that you want to show,
+<li><strong>rcsize</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies how many rows and cols of blocks that you want to show,
 e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed
 automaticly.</li>
-<li><strong>stride</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The step size (blank pixels nums) in row and col between two blocks.
+<li><strong>stride</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – The step size (blank pixels nums) in row and col between two blocks.
 If not given, stride=(1,1).</li>
 <li><strong>plot</strong> (<em>{bool</em><em>, </em><em>optional}</em>) – True for ploting, False for silent and returns a H-W-C numpy ndarray
 for showing.</li>
-<li><strong>bgcolor</strong> (<em>{char</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The background color, ‘w’ for white, ‘k’ for black. Default, ‘w’.</li>
+<li><strong>bgcolor</strong> (<em>{char</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – The background color, ‘w’ for white, ‘k’ for black. Default, ‘w’.</li>
 </ul>
 </td>
 </tr>
@@ -598,18 +599,18 @@ for showing.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>filters</strong> (<em>{array_like}</em>) – Weights to be shown, a fdim-by-numf numpy ndarray.</li>
-<li><strong>fsize</strong> (<em>{int tuple list</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the height and width of one filter, e.g. (hf, wf, cf). If not
+<li><strong>fsize</strong> (<em>{int tuple list</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies the height and width of one filter, e.g. (hf, wf, cf). If not
 given, fsize=(hf, wf, cf) will be computed automaticly, but may wrong.</li>
-<li><strong>rcsize</strong> (<em>{int tuple list</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies how many rows and cols of filters that you want to show,
+<li><strong>rcsize</strong> (<em>{int tuple list</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – Specifies how many rows and cols of filters that you want to show,
 e.g. (rows, cols). If not given, rcsize=(rows, clos) will be computed
 automaticly.</li>
-<li><strong>stride</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The step size (blank pixels nums) in row and col between two filters.
+<li><strong>stride</strong> (<em>{int tuple</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – The step size (blank pixels nums) in row and col between two filters.
 If not given, stride=(1,1).</li>
-<li><strong>plot</strong> (<em>{bool</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – True for ploting, False for silent and returns a H-W-C numpy ndarray
+<li><strong>plot</strong> (<em>{bool</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – True for ploting, False for silent and returns a H-W-C numpy ndarray
 for showing. If not given, plot = True.</li>
-<li><strong>bgcolor</strong> (<em>{char</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – The background color, ‘w’ for white, ‘k’ for black. Default, ‘w’.</li>
+<li><strong>bgcolor</strong> (<em>{char</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – The background color, ‘w’ for white, ‘k’ for black. Default, ‘w’.</li>
 <li><strong>title</strong> (<em>{str</em><em> or </em><em>None}</em>) – If plot, title is used to specify the title.</li>
-<li><strong>isscale</strong> (<em>{bool</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a><em>, </em><em>optional}</em>) – If True, scale to [0, 255], else does nothing.</li>
+<li><strong>isscale</strong> (<em>{bool</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a><em>, </em><em>optional}</em>) – If True, scale to [0, 255], else does nothing.</li>
 </ul>
 </td>
 </tr>

@@ -100,6 +100,7 @@
 <li class="toctree-l4"><a class="reference internal" href="improc.common.html">improc.common package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.dsp.html">improc.dsp package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.encoding.html">improc.encoding package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="improc.enhancement.html">improc.enhancement package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.evaluation.html">improc.evaluation package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.io.html">improc.io package</a></li>
 <li class="toctree-l4"><a class="reference internal" href="improc.seg.html">improc.seg package</a></li>
@@ -190,30 +191,34 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-improc.transform.enhance">
-<span id="improc-transform-enhance-module"></span><h2>improc.transform.enhance module<a class="headerlink" href="#module-improc.transform.enhance" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-improc.transform.color">
+<span id="improc-transform-color-module"></span><h2>improc.transform.color module<a class="headerlink" href="#module-improc.transform.color" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
-<dt id="improc.transform.enhance.histeq">
-<code class="descclassname">improc.transform.enhance.</code><code class="descname">histeq</code><span class="sig-paren">(</span><em>A</em>, <em>nbins=256</em>, <em>mask=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/enhance.html#histeq"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.enhance.histeq" title="Permalink to this definition">¶</a></dt>
-<dd><p>Histogram equalization for image with 1, 3, or more channels.</p>
-<p>see <a class="reference external" href="https://prateekvjoshi.com/2013/11/22/histogram-equalization-of-rgb-images/">https://prateekvjoshi.com/2013/11/22/histogram-equalization-of-rgb-images/</a></p>
+<dt id="improc.transform.color.convert_colorspace">
+<code class="descclassname">improc.transform.color.</code><code class="descname">convert_colorspace</code><span class="sig-paren">(</span><em>A</em>, <em>mode=None</em>, <em>drange=None</em>, <em>todrange=False</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/improc/transform/color.html#convert_colorspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#improc.transform.color.convert_colorspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert color sapce</p>
+<p>Valid color spaces are:
+‘RGB’, ‘HSV’, ‘RGB CIE’, ‘XYZ’, ‘YUV’, ‘YIQ’, ‘YPbPr’, ‘YCbCr’, ‘YDbDr’</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>A</strong> (<em>{numpy array}</em>) – image data array for processing</li>
-<li><strong>nbins</strong> (<em>{number}</em><em>, </em><em>optional</em>) – Number of bins for image histogram. Note: this argument is
-ignored for integer images, for which each integer is its own
-bin.</li>
-<li><strong>mask</strong> (<em>{ndarray of bools</em><em> or </em><em>0s and 1s}</em><em>, </em><em>optional</em>) – [description] (the default is None, which [default_description])</li>
+<li><strong>A</strong> (<em>{ndarray}</em>) – The image (<span class="math">\(H×W×C\)</span>) to convert, if <span class="math">\(C=1\)</span>, then do nothing; if <span class="math">\(C=3\)</span>, do convertion;
+if <span class="math">\(C&gt;3\)</span>, only the first three channels are processed.</li>
+<li><strong>mode</strong> (<em>{str}</em>) – If you want to convert color from space X to Y, just specify
+<code class="docutils literal notranslate"><span class="pre">mode</span></code> to <code class="docutils literal notranslate"><span class="pre">'X2Y'</span></code>, where, <code class="docutils literal notranslate"><span class="pre">X,</span> <span class="pre">Y</span></code> can be any color spaces mentioned above.
+(default, do nothing)</li>
+<li><strong>drange</strong> (<em>{list</em><em> or </em><em>tuple}</em>) – the dynamic range of the pixel-values (typically this is <span class="math">\(2 ^{\# \text { bits per pixel }}-1\)</span>.)</li>
+<li><strong>todrange</strong> (<em>{bool}</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> then convert the convert colorspace image to the range of drange.</li>
+<li><strong>verbose</strong> (<em>{bool}</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> then show log information.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">equalized image array</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The converted image.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">numpy array</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">ndarray</p>
 </td>
 </tr>
 </tbody>
@@ -268,11 +273,11 @@ bin.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>arr</strong> (<em>numpy array</em>) – Numpy array that you want to converted.</li>
-<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – The target data type, if not given, does not change. Supports dtype:
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – The target data type, if not given, does not change. Supports dtype:
 ‘uint8’, ‘uint16’, ‘uint32’, ‘uint64’, ‘int64’, ‘int32’, ‘int16’,
 ‘int8’, ‘float’, ‘float64’, ‘float32’, ‘float16’. Note: if float,
 arr will be scaled to [0, 1]</li>
-<li><strong>isscale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – <p>Specifies whether to scale data into the target dtype range, If
+<li><strong>isscale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em>, or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – <p>Specifies whether to scale data into the target dtype range, If
 not given, or False, does not scale arr data. This is helpfull
 when some elements in arr are beyond the target dtype range, sets
 isscale to True, will scale data to target dtype range; sets False
@@ -337,12 +342,12 @@ e.g. If target dtype: uint8, and isscale=True,</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>X</strong> (<em>array_like</em>) – The data to be scaled.</li>
-<li><strong>scaleto</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Specifies the range of data after beening scaled. Default [0, 1].</li>
-<li><strong>scalefrom</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a><em>, </em><em>optional</em>) – Specifies the range of data. Default [min(X), max(X)].</li>
-<li><strong>istrunc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Specifies wether to truncate the data to [a, b], For example,
+<li><strong>scaleto</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – Specifies the range of data after beening scaled. Default [0, 1].</li>
+<li><strong>scalefrom</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a><em>, </em><em>optional</em>) – Specifies the range of data. Default [min(X), max(X)].</li>
+<li><strong>istrunc</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Specifies wether to truncate the data to [a, b], For example,
 If scalefrom == [a, b] and ‘istrunc’ is true,
 then X[X &lt; a] == a and X[X &gt; b] == b.</li>
-<li><strong>rich</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If you want to see what the data is scaled from and scaled to,
+<li><strong>rich</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If you want to see what the data is scaled from and scaled to,
 then you should set it to true</li>
 </ul>
 </td>
