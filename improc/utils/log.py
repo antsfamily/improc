@@ -12,6 +12,8 @@ import logging.handlers
 import logging
 import os
 import sys
+import improc
+import re
 
 
 class logger:
@@ -27,8 +29,20 @@ class logger:
     # 读取日志文件保存个数
     lognum = int(root.find('lognum').text)
 
+    if logpath is None:
+        logpath = improc.__file__
+        # print(os.sep, improc.__file__)
+        pos = [i.start() for i in re.finditer(os.sep, logpath)]
+        logpath = logpath[0:pos[-2]]
+    logpath = logpath + '/logs/'
+    # print(logpath)
+
+    if not os.path.exists(logpath):
+        os.mkdir(logpath)
+
     # 日志文件名：由用例脚本的名称，结合日志保存路径，得到日志文件的绝对路径
     logname = os.path.join(logpath, sys.argv[0].split('/')[-1].split('.')[0])
+
     if logname == logpath:
         logname = logpath + '/temp'
 

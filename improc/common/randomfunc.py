@@ -30,7 +30,7 @@ def randperm(start, end, number):
     return P[0:number]
 
 
-def randperm2d(H, W, number, population=None):
+def randperm2d(H, W, number, population=None, mask=None):
     """randperm 2d function
 
     genarates diffrent random interges in range [start, end)
@@ -49,16 +49,19 @@ def randperm2d(H, W, number, population=None):
     """
 
     if population is None:
-        population = range(0, H * W)
+        population = np.array(range(0, H * W)).reshape(H, W)
+    population = np.array(population)
+    if mask is not None and np.sum(mask) != 0:
+        population = population[mask > 0]
 
-    population = np.array(population).flatten()
+    population = population.flatten()
     population = np.random.permutation(population)
 
     Ph = np.floor(population / W).astype('int')
     Pw = np.floor(population - Ph * W).astype('int')
 
     # print(Pw + Ph * W)
-    return Ph, Pw
+    return Ph[0:number], Pw[0:number]
 
 
 if __name__ == '__main__':
@@ -66,7 +69,11 @@ if __name__ == '__main__':
     R = randperm(2, 10, 8)
     print(R)
 
-    Rh, Rw = randperm2d(5, 6, 8)
+    mask = np.zeros((5, 6))
+    mask[3, 4] = 0
+    mask[2, 5] = 0
+
+    Rh, Rw = randperm2d(5, 6, 4, mask=mask)
 
     print(Rh)
     print(Rw)

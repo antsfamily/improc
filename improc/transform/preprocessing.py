@@ -23,6 +23,7 @@ Functions used by improc functions:
 
 
 import numpy as np
+from improc.utils.const import EPS
 
 
 def scalearr(X, scaleto=[0, 1], scalefrom=None, istrunc=True, rich=False):
@@ -78,9 +79,9 @@ def scalearr(X, scaleto=[0, 1], scalefrom=None, istrunc=True, rich=False):
         X[X > b] = b
 
     if rich:
-        return (X - a) * (d - c) / (b - a) + c, scalefrom, scaleto
+        return (X - a) * (d - c) / (b - a + EPS) + c, scalefrom, scaleto
     else:
-        return (X - a) * (d - c) / (b - a) + c
+        return (X - a) * (d - c) / (b - a + EPS) + c
 
 
 def imgdtype(arr, tdtype=None, isscale=False):

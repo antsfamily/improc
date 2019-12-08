@@ -13,7 +13,6 @@ from improc.transform.preprocessing import scalearr
 
 def imenhance(A, ftype='mean'):
 
-
     Af = imfilter2d(A, K=None, ftype=ftype)
 
     L = get_drange(A.dtype)
@@ -21,10 +20,7 @@ def imenhance(A, ftype='mean'):
     if ftype.find('sharpen') != -1:
         Af = scalearr(A + Af, scaleto=L, scalefrom=L)
 
-
     return Af.astype(A.dtype)
-
-
 
 
 if __name__ == '__main__':

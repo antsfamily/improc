@@ -17,7 +17,7 @@ def _histeq_gray(A, nbins=256, mask=None):
     return H
 
 
-def histeq(A, nbins=256, mask=None):
+def histeq(A, nbins=256, mask=None, mod=None):
     r"""histeq
 
     Histogram equalization for image with 1, 3, or more channels.
@@ -34,6 +34,10 @@ def histeq(A, nbins=256, mask=None):
         bin.
     mask : {ndarray of bools or 0s and 1s}, optional
         [description] (the default is None, which [default_description])
+    mod : {str}
+        If ``mod`` is ``'eachchannel'``, histogram equalization for each channel of A.
+        If ``mod`` is ``None`` and the channel numbers of A is large than 3,
+        the first three channel are treated as RGB.
 
     Returns
     -------
@@ -42,23 +46,29 @@ def histeq(A, nbins=256, mask=None):
     """
 
     H = A.copy()  # H-W-C
-    if np.ndim(A) == 2:
-        # cv2.equalizeHist(A, H)
-        H = _histeq_gray(A, nbins=nbins, mask=mask)
 
-    if np.ndim(A) == 3 and A.shape[2] == 3:
-        # ycrcb = cv2.cvtColor(H, cv2.COLOR_BGR2YCR_CB)
-        # channels = cv2.split(ycrcb)
-        # cv2.equalizeHist(channels[0], channels[0])
-        # cv2.merge(channels, ycrcb)
-        # cv2.cvtColor(ycrcb, cv2.COLOR_YCR_CB2BGR, H)
-        H = exposure.equalize_hist(A, nbins=nbins, mask=mask)
-    if np.ndim(A) == 3 and A.shape[2] > 3:
-        for i in range(4):
+    if mod is None:
+        if np.ndim(A) == 2:
+            # cv2.equalizeHist(A, H)
+            H = _histeq_gray(A, nbins=nbins, mask=mask)
+
+        if np.ndim(A) == 3 and A.shape[2] == 3:
+            # ycrcb = cv2.cvtColor(H, cv2.COLOR_BGR2YCR_CB)
+            # channels = cv2.split(ycrcb)
+            # cv2.equalizeHist(channels[0], channels[0])
+            # cv2.merge(channels, ycrcb)
+            # cv2.cvtColor(ycrcb, cv2.COLOR_YCR_CB2BGR, H)
+            H = exposure.equalize_hist(A, nbins=nbins, mask=mask)
+        if np.ndim(A) == 3 and A.shape[2] > 3:
+            for i in range(A.shape[2]):
+                H[:, :, i] = _histeq_gray(A[:, :, i], nbins=nbins, mask=mask)
+                # hh = H[:, :, i].copy()
+                # cv2.equalizeHist(hh, hh)
+                # H[:, :, i] = hh
+    if mod is 'eachchannel':
+        for i in range(A.shape[2]):
             H[:, :, i] = _histeq_gray(A[:, :, i], nbins=nbins, mask=mask)
-            # hh = H[:, :, i].copy()
-            # cv2.equalizeHist(hh, hh)
-            # H[:, :, i] = hh
+
     return H
 
 

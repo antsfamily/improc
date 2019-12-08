@@ -30,8 +30,7 @@ def convolve(image, kernel):
     Parameters
     ----------
     image : {2d or 3d array}
-        image to be convolved :math:`H×W×C`. In case when image has multiple channels kernel is going to be used
-        separately for each image channel.
+        image to be convolved :math:`H\times W \times C`. In case when image has multiple channels, the kernel is going to be used for each image channel.
     kernel : {2d array}
         kernel used for convolution
 
